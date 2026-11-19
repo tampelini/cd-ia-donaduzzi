@@ -5131,8 +5131,8 @@ vec3 ambiente(vec3 c, vec3 wp, vec3 n, float kNeve) {
       // painel ao lado da avenida, de frente para a câmera (dá para passar por baixo, entre os postes)
       const g = new T.Group(); g.position.set(m.x, 0, m.z - 14); g.rotation.y = YAW; g.scale.setScalar(1.35); cena.add(g);
       [-5.2, 5.2].forEach((dx) => {
-        const p = new T.Mesh(new T.CylinderGeometry(0.28, 0.32, 10, 8), mat(0x3a3a42)); p.position.set(dx, 5, 0); g.add(p);
-        const wx = m.x + dx * 1.35 * Math.cos(YAW), wz = m.z - 14 - dx * 1.35 * Math.sin(YAW);
+        const p = new T.Mesh(new T.CylinderGeometry(0.28, 0.32, 10, 8), mat(0x3a3a42)); p.position.set(dx, 5, -0.7); g.add(p); // postes atrás do painel
+        const lz = -0.7 * 1.35, wx = m.x + dx * 1.35 * Math.cos(YAW) + lz * Math.sin(YAW), wz = m.z - 14 - dx * 1.35 * Math.sin(YAW) + lz * Math.cos(YAW);
         estaticos.push({ t: "c", x: wx, z: wz, r: 0.6, h: 13 }); sombrasEst.push([wx, wz, 0.8, 0.8, 10]);
       });
       const fundo = new T.Mesh(new T.BoxGeometry(12, 7.2, 0.35), mat(0x9e2238)); fundo.position.set(0, 6.6, -0.2); g.add(fundo);
@@ -5765,7 +5765,7 @@ void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
       rampa(-190, -60, Math.PI, 10, 8, 3);
       rampa(30, 50, Math.PI / 2, 9, 7, 2.6);
       // lombadas na Av. Max Planck e na avenida principal
-      lombada(60, -88, Math.PI / 2, 2.6, 15.6, 0.45); lombada(125, -88, Math.PI / 2, 2.6, 15.6, 0.45); lombada(85, 22, Math.PI / 2, 2.6, 10, 0.45);
+      lombada(85, 22, Math.PI / 2, 2.6, 10, 0.45);
       const B = 0xf6efe2, J = 0x3a4152;
       // 8 Central de Vendas (perto da rotatória, junto à rodovia)
       caixa(10, 4.4, 7, B, 14, 0.3, -6);
