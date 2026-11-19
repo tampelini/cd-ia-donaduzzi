@@ -4168,28 +4168,74 @@ ${htmlProximo("cd")}
   let musicaLigada = lerLS("bp-musica") === "1"; // começa desligada; liga no botão ♫ ou na tecla B
   const Som = (() => {
     let ativo = false, pronto = false, mestre, filtro, mus, chuvaG, ventoG, ventoF, eco, timer = 0, prox = 0, passo = 0;
-    // cada ambiente tem a sua trilha: dia = natureza calma (flauta e passarinhos), noite = caixinha de música e grilos,
-    // chuva = piano suave, neve = sininhos, vento = arpejos rápidos e agudos, sem grave
-    const EST = {
-      dia: { bpm: 66, ac: [[60, 64, 67, 71], [57, 60, 64, 67], [53, 57, 60, 64], [55, 59, 62, 64]], baixo: [48, 45, 41, 43], esc: [72, 74, 76, 79, 81, 84, 86], filtro: 5200, eco: 0.32 },
-      noite: { bpm: 54, ac: [[57, 60, 64, 71], [53, 57, 60, 64], [50, 53, 57, 64], [52, 55, 59, 62]], baixo: [45, 41, 38, 40], esc: [69, 72, 74, 76, 79, 81], filtro: 2000, eco: 0.42 },
-      chuva: { bpm: 60, ac: [[50, 53, 57, 60], [46, 50, 53, 57], [53, 57, 60, 64], [48, 52, 55, 60]], baixo: [38, 34, 41, 36], esc: [62, 65, 67, 69, 72, 74, 77], filtro: 2700, eco: 0.36 },
-      neve: { bpm: 58, ac: [[55, 59, 62, 66], [52, 55, 59, 62], [48, 52, 55, 59], [50, 54, 57, 64]], baixo: [43, 40, 36, 38], esc: [79, 81, 83, 86, 88, 91, 93], filtro: 4600, eco: 0.45 },
-      vento: { bpm: 112, ac: [[69, 72, 76, 79], [65, 69, 72, 76], [67, 72, 76, 79], [67, 71, 74, 79]], baixo: null, esc: [81, 84, 86, 88, 91, 93], filtro: 7500, eco: 0.22 },
+    // Trilha no espírito das músicas calmas de jogos de mundo aberto (piano abafado, acordes com 7ª e 9ª, muito espaço
+    // e reverberação). As peças são originais, escritas aqui nota por nota como uma partitura MIDI; nenhuma melodia
+    // de outro jogo é copiada. Cada ambiente tem a sua peça: tocam, descansam um pouco e voltam com pequenas variações.
+    const PECAS = {
+      dia: { // "Clareira": Ré maior com 4ª aumentada, piano e cordas suaves, passarinhos ao fundo
+        bpm: 70, filtro: 6500, lh: { pat: [0, 1, 2, 3, 2, 1, 2, 3], passo: 1, vel: 0.3 }, pad: "B", amb: "passaros",
+        ac: { D: [50, 57, 64, 66], G: [43, 50, 54, 61], Bm: [47, 54, 57, 62], As: [45, 52, 59, 62], Em: [40, 47, 54, 55], Fm: [42, 49, 52, 57], Ad: [45, 52, 59, 61], A6: [45, 52, 57, 66], G7: [43, 50, 54, 59] },
+        sec: {
+          I: { c: ["D", "D"], m: ["", ""] },
+          A: { c: ["D", "D", "G", "G7", "Bm", "Bm", "G7", "As"], m: ["0 78 3,3 76 1,4 74 4", "0 69 2,2 71 2,4 73 4", "0 74 3,3 73 1,4 71 2,6 73 2", "0 71 4,4 69 4", "0 66 2,2 69 2,4 74 4", "0 73 3,3 71 1,4 69 4", "0 71 2,2 73 2,4 74 2,6 76 2", "0 76 8"] },
+          B: { c: ["Em", "Fm", "G7", "Ad", "Bm", "G", "Em", "A6"], m: ["0 79 3,3 78 1,4 76 4", "0 73 2,2 76 2,4 78 4", "0 79 2,2 78 2,4 74 2,6 71 2", "0 71 6,6 73 2", "0 74 3,3 76 1,4 78 4", "0 73 4,4 71 2,6 69 2", "0 66 2,2 67 2,4 71 4", "0 69 8"] },
+        },
+        forma: ["I", "A", "A+", "B", "A", "F:D:74"],
+      },
+      noite: { // "Vagalumes": Lá dórico, lento, notas soltas no agudo, grilos
+        bpm: 56, filtro: 2600, lh: { pat: [0, 1, 2, 3], passo: 2, vel: 0.26 }, pad: "*", amb: "grilos",
+        ac: { Am: [45, 52, 59, 60], F: [41, 48, 52, 59], C: [48, 55, 59, 64], G: [47, 55, 59, 62], Dm: [50, 57, 64, 65], Em: [40, 47, 55, 62] },
+        sec: {
+          I: { c: ["Am", "F"], m: ["", ""] },
+          A: { c: ["Am", "F", "C", "G", "Am", "F", "Dm", "Em"], m: ["0 76 6", "0 71 4,4 72 4", "0 74 4,4 76 4", "0 79 8", "0 81 2,2 79 2,4 76 4", "0 72 8", "0 77 4,4 76 2,6 74 2", "0 71 8"] },
+          B: { c: ["F", "C", "Dm", "Am", "F", "C", "G", "Em"], m: ["0 72 4,4 76 4", "0 79 6", "0 77 2,2 76 2,4 74 4", "0 72 8", "0 69 4,4 72 4", "0 76 6,6 79 2", "0 74 8", "0 71 8"] },
+        },
+        forma: ["I", "A", "B", "A+", "F:Am:69"],
+      },
+      chuva: { // "Janela": Fá maior, arpejos contínuos de piano, como gotas
+        bpm: 64, filtro: 3400, lh: { pat: [0, 1, 2, 3, 1, 2, 3, 2], passo: 1, vel: 0.28 }, pad: "", amb: "",
+        ac: { F: [41, 48, 52, 57], Em: [40, 47, 50, 55], Dm: [38, 45, 52, 53], Bb: [46, 53, 57, 62], C6: [48, 55, 57, 64], Am: [45, 52, 55, 60], Gm: [43, 50, 57, 58], Cs: [48, 53, 55, 60] },
+        sec: {
+          I: { c: ["F", "Em"], m: ["", ""] },
+          A: { c: ["F", "Em", "Dm", "Bb", "F", "Am", "Gm", "Cs"], m: ["0 72 2,2 69 2,4 67 2,6 69 2", "0 71 4,4 67 4", "0 69 2,2 65 2,4 64 2,6 65 2", "0 65 6,6 62 2", "0 72 2,2 74 2,4 76 4", "0 72 4,4 71 2,6 72 2", "0 74 4,4 70 2,6 69 2", "0 67 8"] },
+          B: { c: ["Bb", "C6", "Am", "Dm", "Bb", "C6", "F", "F"], m: ["0 74 4,4 72 4", "0 76 6,6 74 2", "0 72 4,4 76 4", "0 77 8", "0 74 2,2 72 2,4 70 4", "0 69 4,4 67 4", "0 69 4,4 72 4", "0 69 8"] },
+        },
+        forma: ["I", "A", "B", "A+", "F:F:69"],
+      },
+      neve: { // "Flocos": Mi maior, sininhos no agudo sobre piano em semínimas
+        bpm: 60, filtro: 5200, lh: { pat: [0, 2, 1, 3], passo: 2, vel: 0.24 }, pad: "*", amb: "", mel: "sino",
+        ac: { E: [40, 47, 54, 56], Cm: [49, 56, 59, 63], A: [45, 52, 56, 59], Bs: [47, 52, 56, 59] },
+        sec: {
+          I: { c: ["E", "A"], m: ["", ""] },
+          A: { c: ["E", "Cm", "A", "Bs", "E", "Cm", "A", "Bs"], m: ["0 88 2,2 87 2,4 83 4", "2 80 2,4 83 4", "0 85 2,2 83 2,4 80 2,6 78 2", "0 80 8", "0 88 2,2 90 2,4 92 4", "0 87 4,4 85 4", "0 83 2,2 85 2,4 80 4", "0 83 8"] },
+        },
+        forma: ["I", "A", "A", "F:E:83"],
+      },
+      vento: { // "Rajada": Lá menor, rápido, arpejos em semicolcheias no agudo, sem grave
+        bpm: 100, filtro: 8000, lh: { pat: [0, 2, 1, 3, 2, 1, 3, 2], passo: 0.5, vel: 0.22, curto: true }, pad: "", amb: "", sem_grave: true,
+        ac: { Am: [69, 71, 72, 76], F: [65, 69, 72, 76], C: [67, 72, 76, 79], Gs: [67, 72, 74, 79], Dm: [65, 69, 72, 74], Em: [67, 71, 74, 76] },
+        sec: {
+          A: { c: ["Am", "F", "C", "Gs", "Am", "F", "Dm", "Em"], m: ["0 84 2,2 83 2,4 81 4", "0 81 2,2 79 2,4 77 4", "0 79 2,2 81 2,4 84 4", "0 83 6,6 79 2", "0 84 2,2 86 2,4 88 4", "0 84 4,4 81 4", "0 81 2,2 79 2,4 77 2,6 76 2", "0 76 8"] },
+        },
+        forma: ["A", "A", "A+"],
+      },
     };
     const estiloAtual = () => (AMB.clima === "limpo" ? AMB.per : AMB.clima);
-    let E = EST.dia, nomeE = "dia", S16 = 60 / E.bpm / 4, compasso = 0;
+    const EST = PECAS; // usado em aplicar() para o filtro geral
     const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
-    let ruidoBuf = null;
+    let ruidoBuf = null, rev = null, revIn = null;
     function ctx() { if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)(); return ac; }
     function montar() {
       if (pronto) return; pronto = true; const a = ctx();
-      const comp = a.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3; comp.connect(a.destination);
+      const comp = a.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 2.5; comp.connect(a.destination);
       mestre = a.createGain(); mestre.gain.value = 0; mestre.connect(comp);
-      filtro = a.createBiquadFilter(); filtro.type = "lowpass"; filtro.frequency.value = 6000; filtro.Q.value = 0.4; filtro.connect(mestre);
+      filtro = a.createBiquadFilter(); filtro.type = "lowpass"; filtro.frequency.value = 6000; filtro.Q.value = 0.3; filtro.connect(mestre);
       mus = a.createGain(); mus.gain.value = 0; mus.connect(filtro);
-      eco = a.createDelay(2); eco.delayTime.value = S16 * 3; const fb = a.createGain(); fb.gain.value = 0.34; const ret = a.createGain(); ret.gain.value = 0.34;
-      eco.connect(fb); fb.connect(eco); eco.connect(ret); ret.connect(mus);
+      // reverberação de sala grande: resposta ao impulso gerada aqui (ruído com decaimento, agudos somem antes)
+      const L = Math.floor(a.sampleRate * 4.2), ir = a.createBuffer(2, L, a.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); let lp = 0; for (let i = 0; i < L; i++) { const k = i / L, w = Math.random() * 2 - 1; lp += (w - lp) * (0.55 - 0.45 * k); d[i] = lp * Math.pow(1 - k, 2.4) * (i < a.sampleRate * 0.012 ? i / (a.sampleRate * 0.012) : 1); } }
+      rev = a.createConvolver(); rev.buffer = ir; revIn = a.createGain(); revIn.gain.value = 0.55; revIn.connect(rev); rev.connect(mus);
+      eco = a.createDelay(2); eco.delayTime.value = 0.64; const fb = a.createGain(); fb.gain.value = 0.28; eco.connect(fb); fb.connect(eco); eco.connect(revIn);
       ruidoBuf = a.createBuffer(1, a.sampleRate * 2, a.sampleRate); const d = ruidoBuf.getChannelData(0);
       let b0 = 0, b1 = 0, b2 = 0; for (let i = 0; i < d.length; i++) { const w = Math.random() * 2 - 1; b0 = 0.99765 * b0 + w * 0.099; b1 = 0.963 * b1 + w * 0.2965; b2 = 0.57 * b2 + w * 1.0526; d[i] = (b0 + b1 + b2 + w * 0.1848) * 0.18; }
       const fonte = (tipo, f, q) => { const n = a.createBufferSource(); n.buffer = ruidoBuf; n.loop = true; const fl = a.createBiquadFilter(); fl.type = tipo; fl.frequency.value = f; fl.Q.value = q; const g = a.createGain(); g.gain.value = 0; n.connect(fl); fl.connect(g); g.connect(mestre); n.start(); return [g, fl]; };
@@ -4197,75 +4243,124 @@ ${htmlProximo("cd")}
       [ventoG, ventoF] = fonte("bandpass", 420, 0.9);
     }
     const env = (g, t, pico, ataque, dur) => { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pico, t + ataque); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); };
-    function osc(tipo, f, t, dur, pico, ataque, dest, det) {
-      const a = ac, o = a.createOscillator(), g = a.createGain(); o.type = tipo; o.frequency.value = f; if (det) o.detune.value = det;
+    function osc(tipo, f, t, dur, pico, ataque, dest) {
+      const a = ac, o = a.createOscillator(), g = a.createGain(); o.type = tipo; o.frequency.value = f;
       o.connect(g); g.connect(dest || mus); env(g, t, pico, ataque, dur); o.start(t); o.stop(t + dur + 0.05); return o;
     }
-    const comEco = (o, k) => { const g = ac.createGain(); g.gain.value = k; o.connect(g); g.connect(eco); };
-    function ruido(t, dur, pico, tipo, f) {
-      const a = ac, n = a.createBufferSource(); n.buffer = ruidoBuf; const fl = a.createBiquadFilter(); fl.type = tipo; fl.frequency.value = f; const g = a.createGain();
-      n.connect(fl); fl.connect(g); g.connect(mus); env(g, t, pico, 0.004, dur); n.start(t, Math.random() * 1.5); n.stop(t + dur + 0.05);
-    }
-    // instrumentos
-    function flauta(m, t, dur) { const o = osc("sine", hz(m), t, dur, 0.05, 0.09); const l = ac.createOscillator(), lg = ac.createGain(); l.frequency.value = 5.2; lg.gain.value = hz(m) * 0.006; l.connect(lg); lg.connect(o.frequency); l.start(t); l.stop(t + dur); comEco(o, 0.5); osc("sine", hz(m + 12), t, dur * 0.8, 0.006, 0.12); }
-    function kalimba(m, t) { const o = osc("sine", hz(m), t, 0.9, 0.05, 0.004); osc("sine", hz(m) * 5.4, t, 0.12, 0.006, 0.002); comEco(o, 0.4); }
-    function caixinha(m, t) { const o = osc("sine", hz(m), t, 1.6, 0.045, 0.003); osc("sine", hz(m) * 3, t, 0.5, 0.008, 0.003); comEco(o, 0.7); }
-    function piano(m, t, v) { const o = osc("triangle", hz(m), t, 1.5, 0.05 * (v || 1), 0.004); osc("sine", hz(m) * 2, t, 0.6, 0.01 * (v || 1), 0.004); comEco(o, 0.45); }
-    function sino(m, t) { const o = osc("sine", hz(m), t, 2.4, 0.03, 0.002); osc("sine", hz(m) * 2.76, t, 0.9, 0.012, 0.002); comEco(o, 0.8); }
-    function pluck(m, t, v) { const o = osc("triangle", hz(m), t, 0.2, 0.04 * v, 0.003); comEco(o, 0.25); }
-    function pad(acorde, t, dur, pico, ataque) { acorde.forEach((m, i) => osc(i % 2 ? "triangle" : "sine", hz(m), t, dur, pico, ataque, null, (i % 2 ? 6 : -6))); }
-    function passarinho(t) { const n = 2 + Math.floor(Math.random() * 3), f0 = 2600 + Math.random() * 1600; for (let i = 0; i < n; i++) { const ti = t + i * (0.09 + Math.random() * 0.05); const o = osc("sine", f0, ti, 0.08, 0.02, 0.005); o.frequency.setValueAtTime(f0 * (i % 2 ? 1.25 : 1), ti); o.frequency.exponentialRampToValueAtTime(f0 * (i % 2 ? 0.95 : 1.32), ti + 0.07); } }
-    function grilo(t) { for (let i = 0; i < 3; i++) osc("sine", 4700, t + i * 0.034, 0.02, 0.011, 0.003); }
-    function agendar(p, t) {
-      const st = p % 16;
-      if (st === 0) { // troca de estilo só no começo do compasso
-        const n = estiloAtual(); if (n !== nomeE) { nomeE = n; E = EST[n]; compasso = 0; eco.delayTime.setTargetAtTime(Math.min(1.9, (60 / E.bpm / 4) * 3), t, 0.3); }
-        compasso++;
+    // piano abafado ("felt"): parciais levemente desafinados, cada um com seu decaimento, filtro que fecha com o tempo e batida do martelo
+    function piano(m, t, dur, vel, dest, curto) {
+      const a = ac, out = a.createGain(), lp = a.createBiquadFilter(), f = hz(m) * Math.pow(2, (Math.random() - 0.5) * 0.008);
+      lp.type = "lowpass"; lp.Q.value = 0.2; lp.frequency.setValueAtTime(700 + vel * 2600 + m * 8, t); lp.frequency.exponentialRampToValueAtTime(420 + m * 5, t + 1.6);
+      out.connect(lp); lp.connect(dest); const send = a.createGain(); send.gain.value = 0.9; lp.connect(send); send.connect(revIn);
+      const fim = curto ? t + dur + 0.25 : t + dur + 1.2, base = 2.4 + Math.max(0, 76 - m) * 0.06;
+      for (let n = 1; n <= 5; n++) {
+        const o = a.createOscillator(), g = a.createGain(); o.frequency.value = f * n * Math.sqrt(1 + 0.00035 * n * n);
+        const amp = (vel * 0.13) / Math.pow(n, 1.45) * (n === 2 ? 1.25 : 1), dec = base / Math.pow(n, 0.7);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(amp, t + 0.006); g.gain.setTargetAtTime(0.0001, t + 0.006, dec / 4.5);
+        g.gain.setTargetAtTime(0.0001, curto ? t + dur : t + dur + 0.2, curto ? 0.05 : 0.35);
+        o.connect(g); g.connect(out); o.start(t); o.stop(fim + 0.3);
       }
-      const c = (compasso - 1) % 4, acd = E.ac[c], r = Math.random;
-      if (nomeE === "dia") {
-        if (st === 0) { pad(acd, t, S16 * 16 * 1.1, 0.018, 0.9); osc("sine", hz(E.baixo[c]), t, S16 * 14, 0.06, 0.4); if (r() < 0.65) passarinho(t + r() * S16 * 12); }
-        if (st % 2 === 0 && r() < 0.32) flauta(E.esc[Math.floor(r() * E.esc.length)], t, S16 * (r() < 0.5 ? 4 : 6));
-        if ((st === 6 || st === 14) && r() < 0.5) kalimba(acd[Math.floor(r() * 4)] + 12, t);
-      } else if (nomeE === "noite") {
-        if (st === 0) { pad(acd.map((m) => m - 12), t, S16 * 16 * 1.15, 0.016, 1.6); osc("sine", hz(E.baixo[c]), t, S16 * 15, 0.055, 0.8); }
-        if (st % 4 === 0 && r() < 0.42) caixinha(E.esc[Math.floor(r() * E.esc.length)], t);
-        if (st % 4 === 0 && r() < 0.75) grilo(t + r() * 0.1);
-        if (st === 8 && r() < 0.08) { const o = osc("sine", 390, t, 0.7, 0.02, 0.12); o.frequency.setValueAtTime(410, t); o.frequency.linearRampToValueAtTime(360, t + 0.6); }
-      } else if (nomeE === "chuva") {
-        if (st === 0) { pad(acd, t, S16 * 16 * 1.1, 0.014, 1.0); osc("sine", hz(E.baixo[c]), t, S16 * 8, 0.06, 0.05); }
-        if (st === 8) osc("sine", hz(E.baixo[c]), t, S16 * 7, 0.045, 0.05);
-        if (st % 2 === 0) { const seq = [0, 1, 2, 3, 2, 1, 2, 3]; const k = seq[(st / 2) % 8]; if (r() < 0.8) piano(acd[k] + 12, t, st % 4 ? 0.6 : 1); }
-      } else if (nomeE === "neve") {
-        if (st === 0) { pad(acd, t, S16 * 16 * 1.2, 0.012, 1.4); osc("sine", hz(E.baixo[c]), t, S16 * 15, 0.04, 1.0); }
-        if (r() < 0.17) sino(E.esc[Math.floor(r() * E.esc.length)], t);
-      } else { // vento: agudo, rápido, sem grave
-        const arp = [0, 1, 2, 3, 2, 1, 3, 2, 0, 2, 1, 3, 2, 3, 1, 2], m = acd[arp[st]] + (st >= 8 ? 12 : 0);
-        pluck(m, t, st % 4 === 0 ? 1 : 0.6);
-        if (st % 2 === 1) ruido(t, 0.04, st % 4 === 3 ? 0.02 : 0.012, "highpass", 8000);
-        if ((st === 4 || st === 12) && r() < 0.7) pluck(acd[3] + 24, t + S16 * 0.5, 0.7);
-        if (st === 0 && r() < 0.5) osc("sine", hz(acd[0] + 24), t, S16 * 12, 0.012, 0.6);
-      }
-      S16 = 60 / E.bpm / 4;
+      const nz = a.createBufferSource(); nz.buffer = ruidoBuf; const nf = a.createBiquadFilter(); nf.type = "lowpass"; nf.frequency.value = 900; const ng = a.createGain();
+      nz.connect(nf); nf.connect(ng); ng.connect(out); env(ng, t, vel * 0.05, 0.002, 0.04); nz.start(t, Math.random()); nz.stop(t + 0.06);
     }
-    function tique() { while (prox < ac.currentTime + 0.2) { agendar(passo, prox); prox += S16; passo++; } }
+    function sino(m, t, vel, dest) {
+      [[1, 1, 3.4], [2.76, 0.38, 1.5], [5.4, 0.18, 0.7], [8.9, 0.07, 0.35]].forEach(([k, amp, dec]) => {
+        const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = hz(m) * k;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vel * 0.085 * amp, t + 0.003); g.gain.setTargetAtTime(0.0001, t + 0.003, dec / 4);
+        o.connect(g); g.connect(dest); const s = ac.createGain(); s.gain.value = 1.1; g.connect(s); s.connect(revIn); o.start(t); o.stop(t + dec * 1.4 + 0.1);
+      });
+    }
+    function cordas(notas, t, dur, dest) { // cama de cordas bem suave
+      notas.forEach((m) => [-7, 7].forEach((det) => {
+        const o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter(); o.type = "sawtooth"; o.frequency.value = hz(m); o.detune.value = det;
+        f.type = "lowpass"; f.frequency.value = 650; o.connect(f); f.connect(g); g.connect(dest); const s = ac.createGain(); s.gain.value = 0.8; g.connect(s); s.connect(revIn);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.0065, t + Math.min(2.2, dur * 0.4)); g.gain.setTargetAtTime(0.0001, t + dur, 0.9);
+        o.start(t); o.stop(t + dur + 4);
+      }));
+    }
+    function passarinho(t) { const n = 2 + Math.floor(Math.random() * 3), f0 = 2600 + Math.random() * 1600; for (let i = 0; i < n; i++) { const ti = t + i * (0.09 + Math.random() * 0.05); const o = osc("sine", f0, ti, 0.08, 0.014, 0.005, revIn); o.frequency.setValueAtTime(f0 * (i % 2 ? 1.25 : 1), ti); o.frequency.exponentialRampToValueAtTime(f0 * (i % 2 ? 0.95 : 1.32), ti + 0.07); } }
+    function grilo(t) { for (let i = 0; i < 3; i++) osc("sine", 4700, t + i * 0.034, 0.02, 0.008, 0.003); }
+
+    // monta a "partitura" (lista de notas) de uma execução da peça, com pequenas variações a cada vez
+    function partitura(P) {
+      const ev = []; let bar = 0; const r = Math.random;
+      for (const tok of P.forma) {
+        if (tok.startsWith("F:")) { // acorde final, arpejado devagar, com a nota do topo
+          const [, cn, top] = tok.split(":"), ch = P.ac[cn];
+          ch.forEach((m, i) => ev.push({ t: bar * 8 + i * 0.35, m, d: 14, v: P.lh.vel * 1.1, k: "p" }));
+          ev.push({ t: bar * 8 + 1.6, m: +top, d: 14, v: 0.5, k: P.mel || "p" });
+          if (P.pad) ev.push({ t: bar * 8, cordas: ch.map((x) => x + 12), d: 16 });
+          bar += 2; continue;
+        }
+        const oit = tok.endsWith("+") ? 12 : 0, s = P.sec[tok.replace("+", "")];
+        s.c.forEach((cn, i) => {
+          const ch = P.ac[cn], lh = P.lh, n = Math.round(8 / lh.passo);
+          for (let k = 0; k < n; k++) ev.push({ t: bar * 8 + k * lh.passo, m: ch[lh.pat[k % lh.pat.length]], d: lh.curto ? lh.passo * 0.6 : lh.passo * 2.2, v: lh.vel * (k === 0 ? 1.18 : 0.9 + r() * 0.2), k: "p", c: lh.curto });
+          if (P.pad === "*" || P.pad === tok.replace("+", "")) ev.push({ t: bar * 8, cordas: ch.slice(1).map((x) => x + 12), d: 8 * (30 / P.bpm) * 1.05 });
+          (s.m[i] || "").split(",").filter(Boolean).forEach((nt) => {
+            const [p, m, d] = nt.trim().split(/\s+/).map(Number);
+            if (oit && r() < 0.18) return; // na repetição uma oitava acima, algumas notas ficam de fora
+            ev.push({ t: bar * 8 + p, m: m + oit, d, v: (oit ? 0.42 : 0.55) * (0.9 + r() * 0.2), k: P.mel || "p" });
+          });
+          bar++;
+        });
+      }
+      ev.sort((a, b) => a.t - b.t);
+      return { ev, barras: bar };
+    }
+    let peca = null; // { P, nome, ev, i, t0, s8, fimT, ganho, barras }
+    let proxPeca = 0, ambT = 0;
+    function iniciarPeca(agora) {
+      const nome = estiloAtual(), P = PECAS[nome], { ev, barras } = partitura(P), s8 = 30 / P.bpm;
+      const ganho = ac.createGain(); ganho.gain.value = 0.0001; ganho.gain.setTargetAtTime(1, agora, 0.4); ganho.connect(mus);
+      eco.delayTime.setTargetAtTime(Math.min(1.9, s8 * 3), agora, 0.3);
+      peca = { P, nome, ev, i: 0, t0: agora + 0.2, s8, barras, ganho, fimT: agora + 0.2 + barras * 8 * s8 * 1.08 + 3 };
+    }
+    // ritardando nos dois últimos compassos
+    const tempoDe = (pc, x) => { const ini = (pc.barras - 2) * 8; return pc.t0 + (x < ini ? x : ini + (x - ini) * 1.22) * pc.s8; };
+    function tique() {
+      const agora = ac.currentTime;
+      if (peca && peca.nome !== estiloAtual()) { // mudou o ambiente: a peça atual some devagar e a nova entra logo
+        peca.ganho.gain.setTargetAtTime(0.0001, agora, 0.6); const g = peca.ganho; setTimeout(() => { try { g.disconnect(); } catch (e) { /* já foi */ } }, 5000);
+        peca = null; proxPeca = agora + 2.2;
+      }
+      if (!peca && agora >= proxPeca) iniciarPeca(agora);
+      if (peca) {
+        while (peca.i < peca.ev.length && tempoDe(peca, peca.ev[peca.i].t) < agora + 0.35) {
+          const e = peca.ev[peca.i++], t = tempoDe(peca, e.t) + (Math.random() - 0.5) * 0.018;
+          if (e.cordas) cordas(e.cordas, Math.max(t, agora), e.d * peca.s8, peca.ganho);
+          else if (e.k === "sino") sino(e.m, Math.max(t, agora), e.v, peca.ganho);
+          else piano(e.m, Math.max(t, agora), e.d * peca.s8, e.v, peca.ganho, e.c);
+        }
+        if (agora > peca.fimT) { // terminou: silêncio de respiro antes de tocar de novo, como nos jogos de mundo aberto
+          const g = peca.ganho; setTimeout(() => { try { g.disconnect(); } catch (e) { /* já foi */ } }, 6000);
+          proxPeca = agora + (peca.nome === "vento" ? 3 : 10 + Math.random() * 12); peca = null;
+        }
+      }
+      // sons de natureza junto com a música
+      if (agora > ambT) {
+        ambT = agora + 0.5; const est = estiloAtual();
+        if (est === "dia" && Math.random() < 0.09) passarinho(agora + Math.random() * 0.4);
+        if (est === "noite" && Math.random() < 0.55) grilo(agora + Math.random() * 0.3);
+      }
+    }
     function rampa(param, v, tc) { param.setTargetAtTime(v, ac.currentTime, tc || 0.6); }
     function aplicar() {
       if (!ativo || !ac) return;
       if (ac.state === "suspended") ac.resume();
       const noite = AMB.per === "noite";
       rampa(mestre.gain, 1, 0.3);
-      rampa(mus.gain, musicaLigada ? 0.9 : 0, 0.4);
+      rampa(mus.gain, musicaLigada ? 1.45 : 0, 0.4);
       rampa(filtro.frequency, EST[estiloAtual()].filtro * (noite && AMB.clima !== "limpo" ? 0.6 : 1), 1);
       rampa(chuvaG.gain, somLigado && AMB.clima === "chuva" ? 0.55 : 0, 1);
       rampa(ventoG.gain, somLigado && AMB.clima === "vento" ? 0.5 : somLigado && AMB.clima === "neve" ? 0.12 : 0, 1);
       if (musicaLigada && !timer) { prox = ac.currentTime + 0.1; timer = setInterval(tique, 40); }
-      if (!musicaLigada && timer) { clearInterval(timer); timer = 0; }
+      if (!musicaLigada && timer) { clearInterval(timer); timer = 0; if (peca) { peca.ganho.gain.setTargetAtTime(0.0001, ac.currentTime, 0.3); peca = null; } proxPeca = 0; }
     }
     let lfo = 0;
     return {
       ligar() { try { ctx(); montar(); ativo = true; aplicar(); } catch (e) { /* sem áudio */ } },
-      desligar() { ativo = false; if (!pronto) return; rampa(mestre.gain, 0, 0.15); if (timer) { clearInterval(timer); timer = 0; } },
+      desligar() { ativo = false; if (!pronto) return; rampa(mestre.gain, 0, 0.15); if (timer) { clearInterval(timer); timer = 0; } if (peca) { peca.ganho.gain.setTargetAtTime(0.0001, ac.currentTime, 0.2); peca = null; } proxPeca = 0; },
       aplicar() { try { aplicar(); } catch (e) { /* sem áudio */ } },
       vento(dt) { if (!pronto || AMB.clima !== "vento") return; lfo += dt; ventoF.frequency.setTargetAtTime(380 + Math.sin(lfo * 0.7) * 160 + Math.sin(lfo * 2.3) * 60, ac.currentTime, 0.2); },
       trovao() { if (!pronto || !somLigado || !ativo) return; const t = ac.currentTime + 0.5 + Math.random() * 0.8; const n = ac.createBufferSource(); n.buffer = ruidoBuf; const fl = ac.createBiquadFilter(); fl.type = "lowpass"; fl.frequency.value = 160; const g = ac.createGain(); n.connect(fl); fl.connect(g); g.connect(mestre); env(g, t, 1.4, 0.08, 2.6); n.start(t); n.stop(t + 2.8); },
