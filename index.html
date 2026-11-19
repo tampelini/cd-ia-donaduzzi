@@ -1458,6 +1458,24 @@ html.bp-trava, html.bp-trava body { overflow: hidden !important; }
 .bp-poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(61, 18, 32, .45)); pointer-events: none; }
 .bp-play, .bp-selo { z-index: 1; }
 
+/* ambiente: dia, noite, clima e música */
+.bp-b.bp-off, .bp-mus.bp-off { opacity: .6; }
+.bp-b.bp-off span { text-decoration: line-through; text-decoration-thickness: 2px; }
+.bp-b[aria-expanded="true"] { background: #9E2238; border-color: #FAA822; }
+.bp-dir { position: relative; }
+.bp-amb { pointer-events: auto; width: 262px; background: rgba(22, 28, 36, .94); color: #F6F4E7; border: 1px solid rgba(246, 244, 231, .18); border-radius: 16px; padding: 12px 14px 12px; box-shadow: 0 18px 40px rgba(0, 0, 0, .45); backdrop-filter: blur(8px); }
+.bp-amb[hidden] { display: none; }
+.bp-amb-t { margin: 2px 0 6px; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #FAA822; }
+.bp-amb-t + .bp-seg, .bp-amb-t + .bp-mus { margin-bottom: 10px; }
+.bp-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.bp-seg button, .bp-mus { min-height: 38px; border-radius: 10px; border: 1px solid rgba(246, 244, 231, .2); background: rgba(246, 244, 231, .06); color: #F6F4E7; font: 700 .86rem/1 Inter, system-ui, sans-serif; cursor: pointer; padding: 0 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.bp-seg button:hover, .bp-mus:hover { background: rgba(246, 244, 231, .14); }
+.bp-seg button[aria-pressed="true"], .bp-mus[aria-pressed="true"] { background: #FAA822; border-color: #FAA822; color: #2A0F17; }
+.bp-mus { width: 100%; }
+.bp-amb-d { margin: 2px 0 0; font-size: .74rem; line-height: 1.45; color: #CFC8B8; }
+.bp-amb kbd { min-width: 20px !important; height: 20px !important; font-size: .7rem; padding: 0 4px !important; color: #101821; }
+@media (max-width: 640px) { .bp-amb { width: min(262px, calc(100vw - 28px)); } }
+
 
 /* ================= Abertura dividida: Ciência de Dados | Inteligência Artificial ================= */
 .sp { --sp: .5; position: relative; overflow: hidden; isolation: isolate; display: grid; grid-template-rows: minmax(0, 1fr) auto;
@@ -4071,6 +4089,103 @@ ${htmlProximo("cd")}
     } catch (e) { /* sem áudio */ }
   }
 
+  // ------------------------------------------------------------------ ambiente: período, clima e música
+  // A música é composta e tocada aqui mesmo, nota por nota, com a Web Audio API: não há arquivo de áudio
+  // nem licença de terceiros. Chuva e vento são ruído filtrado.
+  const CLIMAS = ["limpo", "chuva", "vento", "neve"];
+  const AMB = { per: lerLS("bp-per") === "noite" ? "noite" : "dia", clima: CLIMAS.includes(lerLS("bp-clima")) ? lerLS("bp-clima") : "limpo" };
+  let musicaLigada = lerLS("bp-musica") !== "0";
+  const Som = (() => {
+    let ativo = false, pronto = false, mestre, filtro, mus, chuvaG, ventoG, ventoF, eco, timer = 0, prox = 0, passo = 0, frase = [];
+    const BPM = 84, S16 = 60 / BPM / 4;
+    const ACORDES = [[53, 57, 60, 64], [55, 59, 62, 64], [52, 55, 59, 62], [57, 60, 64, 67]]; // Fmaj7, G6, Em7, Am7
+    const BAIXO = [41, 43, 40, 45];
+    const RITMO = [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0];
+    const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    let ruidoBuf = null;
+    function ctx() { if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)(); return ac; }
+    function montar() {
+      if (pronto) return; pronto = true; const a = ctx();
+      const comp = a.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3; comp.connect(a.destination);
+      mestre = a.createGain(); mestre.gain.value = 0; mestre.connect(comp);
+      filtro = a.createBiquadFilter(); filtro.type = "lowpass"; filtro.frequency.value = 6000; filtro.Q.value = 0.4; filtro.connect(mestre);
+      mus = a.createGain(); mus.gain.value = 0; mus.connect(filtro);
+      eco = a.createDelay(1); eco.delayTime.value = S16 * 3; const fb = a.createGain(); fb.gain.value = 0.3; const ret = a.createGain(); ret.gain.value = 0.32;
+      eco.connect(fb); fb.connect(eco); eco.connect(ret); ret.connect(mus);
+      ruidoBuf = a.createBuffer(1, a.sampleRate * 2, a.sampleRate); const d = ruidoBuf.getChannelData(0);
+      let b0 = 0, b1 = 0, b2 = 0; for (let i = 0; i < d.length; i++) { const w = Math.random() * 2 - 1; b0 = 0.99765 * b0 + w * 0.099; b1 = 0.963 * b1 + w * 0.2965; b2 = 0.57 * b2 + w * 1.0526; d[i] = (b0 + b1 + b2 + w * 0.1848) * 0.18; }
+      const fonte = (tipo, f, q) => { const n = a.createBufferSource(); n.buffer = ruidoBuf; n.loop = true; const fl = a.createBiquadFilter(); fl.type = tipo; fl.frequency.value = f; fl.Q.value = q; const g = a.createGain(); g.gain.value = 0; n.connect(fl); fl.connect(g); g.connect(mestre); n.start(); return [g, fl]; };
+      [chuvaG] = fonte("highpass", 700, 0.3);
+      [ventoG, ventoF] = fonte("bandpass", 420, 0.9);
+    }
+    const env = (g, t, pico, ataque, dur) => { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(pico, t + ataque); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); };
+    function osc(tipo, f, t, dur, pico, ataque, dest, det) {
+      const a = ac, o = a.createOscillator(), g = a.createGain(); o.type = tipo; o.frequency.value = f; if (det) o.detune.value = det;
+      o.connect(g); g.connect(dest || mus); env(g, t, pico, ataque, dur); o.start(t); o.stop(t + dur + 0.05); return o;
+    }
+    function ruido(t, dur, pico, tipo, f) {
+      const a = ac, n = a.createBufferSource(); n.buffer = ruidoBuf; const fl = a.createBiquadFilter(); fl.type = tipo; fl.frequency.value = f; const g = a.createGain();
+      n.connect(fl); fl.connect(g); g.connect(mus); env(g, t, pico, 0.004, dur); n.start(t, Math.random() * 1.5); n.stop(t + dur + 0.05);
+    }
+    function novaFrase() { // motivo de 2 compassos com notas dos acordes, repetido com variação
+      frase = []; for (let i = 0; i < 32; i++) frase.push(RITMO[i % 16] && Math.random() < 0.8 ? Math.floor(Math.random() * 4) + (Math.random() < 0.3 ? 4 : 0) : -1);
+    }
+    function agendar(p, t) {
+      const comp = Math.floor(p / 16) % 8, st = p % 16, ac4 = ACORDES[comp % 4];
+      if (p % 128 === 0) novaFrase();
+      if (st === 0) ac4.forEach((m, i) => { osc("triangle", hz(m), t, S16 * 16 * 1.05, 0.026, 0.5, null, (i % 2 ? 7 : -7)); osc("sine", hz(m + 12), t, S16 * 16, 0.008, 0.8); });
+      if (st === 0 || st === 6 || (st === 10 && comp % 2)) osc("sine", hz(BAIXO[comp % 4] - 12 + (st === 6 ? 12 : 0)), t, 0.42, 0.16, 0.01);
+      if (st === 0 || st === 10) { const o = osc("sine", 110, t, 0.22, 0.28, 0.003); o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.18); }
+      if (st === 4 || st === 12) ruido(t, 0.16, 0.07, "bandpass", 1800);
+      if (st % 2 === 0) ruido(t + (st % 4 === 2 ? S16 * 0.3 : 0), 0.05, st % 4 ? 0.018 : 0.03, "highpass", 7000);
+      const k = frase[(p % 32)];
+      if (k >= 0 && comp < 7) { const m = ac4[k % 4] + 12 + (k >= 4 ? 12 : 0); const o = osc("triangle", hz(m), t, 0.5, 0.05, 0.006); const g2 = ac.createGain(); g2.gain.value = 0.5; o.connect(g2); g2.connect(eco); }
+    }
+    function tique() { while (prox < ac.currentTime + 0.15) { agendar(passo, prox); prox += S16; passo++; } }
+    function rampa(param, v, tc) { param.setTargetAtTime(v, ac.currentTime, tc || 0.6); }
+    function aplicar() {
+      if (!ativo || !ac) return;
+      if (ac.state === "suspended") ac.resume();
+      const noite = AMB.per === "noite";
+      rampa(mestre.gain, 1, 0.3);
+      rampa(mus.gain, musicaLigada ? 0.9 : 0, 0.4);
+      rampa(filtro.frequency, noite ? 1700 : AMB.clima === "chuva" ? 2600 : AMB.clima === "neve" ? 3200 : 6500, 1);
+      rampa(chuvaG.gain, somLigado && AMB.clima === "chuva" ? 0.55 : 0, 1);
+      rampa(ventoG.gain, somLigado && AMB.clima === "vento" ? 0.5 : somLigado && AMB.clima === "neve" ? 0.12 : 0, 1);
+      if (musicaLigada && !timer) { prox = ac.currentTime + 0.1; timer = setInterval(tique, 40); }
+      if (!musicaLigada && timer) { clearInterval(timer); timer = 0; }
+    }
+    let lfo = 0;
+    return {
+      ligar() { try { ctx(); montar(); ativo = true; aplicar(); } catch (e) { /* sem áudio */ } },
+      desligar() { ativo = false; if (!pronto) return; rampa(mestre.gain, 0, 0.15); if (timer) { clearInterval(timer); timer = 0; } },
+      aplicar() { try { aplicar(); } catch (e) { /* sem áudio */ } },
+      vento(dt) { if (!pronto || AMB.clima !== "vento") return; lfo += dt; ventoF.frequency.setTargetAtTime(380 + Math.sin(lfo * 0.7) * 160 + Math.sin(lfo * 2.3) * 60, ac.currentTime, 0.2); },
+      trovao() { if (!pronto || !somLigado || !ativo) return; const t = ac.currentTime + 0.5 + Math.random() * 0.8; const n = ac.createBufferSource(); n.buffer = ruidoBuf; const fl = ac.createBiquadFilter(); fl.type = "lowpass"; fl.frequency.value = 160; const g = ac.createGain(); n.connect(fl); fl.connect(g); g.connect(mestre); env(g, t, 1.4, 0.08, 2.6); n.start(t); n.stop(t + 2.8); },
+    };
+  })();
+  const ICONE_PER = { dia: "☀", noite: "☾" };
+  const NOME_CLIMA = { limpo: "Céu limpo", chuva: "Chuva", vento: "Vento", neve: "Neve" };
+  function definirAmbiente(per, clima, avisar) {
+    if (per) AMB.per = per; if (clima) AMB.clima = clima;
+    gravarLS("bp-per", AMB.per); gravarLS("bp-clima", AMB.clima);
+    if (jogo) jogo.ambiente(AMB.per, AMB.clima);
+    Som.aplicar();
+    if (ui) {
+      ui.el.querySelectorAll("[data-bp='per']").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === AMB.per)));
+      ui.el.querySelectorAll("[data-bp='clima']").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === AMB.clima)));
+      ui.h.ambic.textContent = ICONE_PER[AMB.per];
+    }
+    if (avisar && jogo) {
+      const dica = { chuva: " Pista molhada: freie antes das curvas.", neve: " Pista escorregadia: o carro desliza nas curvas.", vento: " O vento empurra o carro, principalmente nos saltos.", limpo: "" }[AMB.clima];
+      toast(`${AMB.per === "noite" ? "Noite" : "Dia"} · ${NOME_CLIMA[AMB.clima]}.${dica}`);
+    }
+  }
+  function definirMusica(v) {
+    musicaLigada = v; gravarLS("bp-musica", v ? "1" : "0"); Som.aplicar();
+    if (ui) ui.el.querySelectorAll("[data-bp='musica']").forEach((b) => { b.setAttribute("aria-pressed", String(v)); b.classList.toggle("bp-off", !v); const t = b.querySelector(".bp-mus-t"); if (t) t.textContent = v ? "Ligada" : "Desligada"; });
+  }
+
   // ------------------------------------------------------------------ interface (overlay)
   let ui = null, jogo = null, aberto = false, focoAntes = null;
 
@@ -4096,9 +4211,20 @@ ${htmlProximo("cd")}
   <div class="bp-dir">
     <canvas class="bp-mini" width="300" height="300" aria-hidden="true"></canvas>
     <div class="bp-botoes">
+      <button type="button" class="bp-b ${musicaLigada ? "" : "bp-off"}" data-bp="musica" aria-pressed="${musicaLigada}" aria-label="Música (B)" title="Música (B)"><span aria-hidden="true">♫</span></button>
+      <button type="button" class="bp-b" data-bp="amb" aria-expanded="false" aria-controls="bp-amb" aria-label="Dia, noite e clima" title="Dia, noite e clima (N, C)"><span aria-hidden="true" data-h="ambic">${ICONE_PER[AMB.per]}</span></button>
       <button type="button" class="bp-b" data-bp="menu" aria-label="Menu e lista de lugares"><span aria-hidden="true">☰</span></button>
-      <button type="button" class="bp-b" data-bp="som" aria-pressed="${somLigado}" aria-label="Som"><span aria-hidden="true" data-h="somic">${somLigado ? "♪" : "×"}</span></button>
+      <button type="button" class="bp-b" data-bp="som" aria-pressed="${somLigado}" aria-label="Efeitos sonoros" title="Efeitos sonoros"><span aria-hidden="true" data-h="somic">${somLigado ? "♪" : "×"}</span></button>
       <button type="button" class="bp-b" data-bp="fechar" aria-label="Fechar o jogo"><span aria-hidden="true">✕</span></button>
+    </div>
+    <div class="bp-amb" id="bp-amb" hidden role="group" aria-label="Ambiente do jogo">
+      <p class="bp-amb-t">Período</p>
+      <div class="bp-seg">${["dia", "noite"].map((v) => `<button type="button" data-bp="per" data-v="${v}" aria-pressed="${AMB.per === v}"><span aria-hidden="true">${ICONE_PER[v]}</span> ${v === "dia" ? "Dia" : "Noite"}</button>`).join("")}</div>
+      <p class="bp-amb-t">Clima</p>
+      <div class="bp-seg bp-seg4">${CLIMAS.map((v) => `<button type="button" data-bp="clima" data-v="${v}" aria-pressed="${AMB.clima === v}"><span aria-hidden="true">${{ limpo: "○", chuva: "☂", vento: "≋", neve: "❄" }[v]}</span> ${v === "limpo" ? "Limpo" : NOME_CLIMA[v]}</button>`).join("")}</div>
+      <p class="bp-amb-t">Música</p>
+      <button type="button" class="bp-mus ${musicaLigada ? "" : "bp-off"}" data-bp="musica" aria-pressed="${musicaLigada}"><span aria-hidden="true">♫</span> <span class="bp-mus-t">${musicaLigada ? "Ligada" : "Desligada"}</span></button>
+      <p class="bp-amb-d">Trilha original, criada pelo próprio jogo, livre de direitos. Atalhos: <kbd>N</kbd> dia/noite · <kbd>C</kbd> clima · <kbd>B</kbd> música</p>
     </div>
   </div>
 </div>
@@ -4116,6 +4242,8 @@ ${htmlProximo("cd")}
     <ul class="bp-ctrl">
       <li class="bp-so-tecla"><span class="bp-teclas"><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd></span> ou <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> para dirigir</li>
       <li class="bp-so-tecla"><kbd>Espaço</kbd> freio de mão · <kbd>R</kbd> volta ao início · <kbd>M</kbd> menu</li>
+      <li class="bp-so-tecla"><kbd>N</kbd> dia ou noite · <kbd>C</kbd> chuva, vento ou neve · <kbd>B</kbd> música</li>
+      <li class="bp-so-toque">No botão <b>☀</b>: dia, noite, chuva, vento, neve e música</li>
       <li class="bp-so-toque">No celular: arraste o joystick para onde quer ir</li>
       <li>Acelere nas <b>rampas vermelhas</b> para saltar e derrube o que achar pelo caminho: árvores, pinos de boliche, barris, fardos</li>
     </ul>
@@ -4161,8 +4289,12 @@ ${htmlProximo("cd")}
       else if (acao === "continuar") continuar();
       else if (acao === "relatorio") mostrarRelatorio();
       else if (acao === "denovo") { jogo && jogo.reiniciar(); continuar(); }
-      else if (acao === "som") { somLigado = !somLigado; gravarLS("bp-som", somLigado ? "1" : "0"); b.setAttribute("aria-pressed", String(somLigado)); ui.h.somic.textContent = somLigado ? "♪" : "×"; if (somLigado) bip([880], 0.08); }
+      else if (acao === "som") { somLigado = !somLigado; gravarLS("bp-som", somLigado ? "1" : "0"); b.setAttribute("aria-pressed", String(somLigado)); ui.h.somic.textContent = somLigado ? "♪" : "×"; if (somLigado) bip([880], 0.08); Som.aplicar(); }
       else if (acao === "ir") { const p = PONTOS[+b.dataset.i]; if (jogo) { jogo.teleportar(p); continuar(); } else comecar(p); }
+      else if (acao === "musica") definirMusica(!musicaLigada);
+      else if (acao === "amb") { const p = ui.el.querySelector(".bp-amb"), abrir = p.hidden; p.hidden = !abrir; b.setAttribute("aria-expanded", String(abrir)); }
+      else if (acao === "per") definirAmbiente(b.dataset.v, null, true);
+      else if (acao === "clima") definirAmbiente(null, b.dataset.v, true);
       else if (acao === "fcard") { ui.card.hidden = true; if (jogo) jogo.cardFechado = jogo.cardAtual; }
     });
     // armadilha de foco simples
@@ -4206,6 +4338,7 @@ ${htmlProximo("cd")}
     if (!aberto) return;
     aberto = false;
     if (jogo) { jogo.pausado = true; jogo.parar(); }
+    Som.desligar();
     ui.el.hidden = true;
     document.documentElement.classList.remove("bp-trava");
     if (!navegando && focoAntes && focoAntes.focus) focoAntes.focus();
@@ -4213,7 +4346,7 @@ ${htmlProximo("cd")}
   function continuar() {
     mostrarTela(null);
     if (!jogo) return;
-    jogo.pausado = false; jogo.rodar(); ui.palco.focus();
+    jogo.pausado = false; jogo.rodar(); ui.palco.focus(); Som.ligar();
   }
 
   let carregando = null;
@@ -4238,6 +4371,7 @@ ${htmlProximo("cd")}
       if (!window.__BP_CAMPUS__) { try { const r = await fetch("campus.json"); if (r.ok) window.__BP_CAMPUS__ = await r.json(); } catch (e) { /* o jogo abre mesmo sem o campus detalhado */ } }
       try { jogo = criarJogo(); } catch (e) { console.error(e); st.textContent = "Seu navegador não conseguiu abrir o modo 3D (WebGL). Você ainda pode ver a lista de lugares."; return; }
       st.textContent = "";
+      jogo.ambiente(AMB.per, AMB.clima, true);
       bip([523, 659, 784], 0.1, "triangle", 0.08);
     }
     if (destino) jogo.teleportar(destino);
@@ -4279,6 +4413,9 @@ ${htmlProximo("cd")}
       entrada[TECLAS[e.code]] = 1; e.preventDefault(); e.stopPropagation();
     } else if (e.code === "KeyR") { jogo.voltarInicio(); }
     else if (e.code === "KeyM") { jogo.pausado = true; mostrarTela("menu"); }
+    else if (e.code === "KeyN") definirAmbiente(AMB.per === "dia" ? "noite" : "dia", null, true);
+    else if (e.code === "KeyC") definirAmbiente(null, CLIMAS[(CLIMAS.indexOf(AMB.clima) + 1) % CLIMAS.length], true);
+    else if (e.code === "KeyB") definirMusica(!musicaLigada);
   }, true);
   addEventListener("keyup", (e) => { if (TECLAS[e.code]) entrada[TECLAS[e.code]] = 0; }, true);
   addEventListener("blur", () => { Object.keys(TECLAS).forEach((k) => (entrada[TECLAS[k]] = 0)); });
@@ -4369,9 +4506,9 @@ ${recorde}
 
     // ---------- chão em gradiente preso à tela (fundo infinito)
     const chao = new T.Mesh(new T.PlaneGeometry(2, 2), new T.ShaderMaterial({
-      uniforms: { uTL: { value: new T.Color(PALETA.chao[0]) }, uTR: { value: new T.Color(PALETA.chao[1]) }, uBR: { value: new T.Color(PALETA.chao[2]) }, uBL: { value: new T.Color(PALETA.chao[3]) } },
-      vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.9999, 1.0); }",
-      fragmentShader: "uniform vec3 uTL, uTR, uBR, uBL; varying vec2 vUv; void main(){ vec3 cima = mix(uTL, uTR, vUv.x); vec3 baixo = mix(uBL, uBR, vUv.x); gl_FragColor = vec4(mix(baixo, cima, vUv.y), 1.0); }",
+      uniforms: { uTL: { value: new T.Color(PALETA.chao[0]) }, uTR: { value: new T.Color(PALETA.chao[1]) }, uBR: { value: new T.Color(PALETA.chao[2]) }, uBL: { value: new T.Color(PALETA.chao[3]) }, uInvVP: { value: new T.Matrix4() }, uCam: { value: new T.Vector3() } },
+      vertexShader: "varying vec2 vUv; varying vec2 vNdc; void main(){ vUv = uv; vNdc = position.xy; gl_Position = vec4(position.xy, 0.9999, 1.0); }",
+      fragmentShader: "uniform vec3 uTL, uTR, uBR, uBL; uniform mat4 uInvVP; uniform vec3 uCam; varying vec2 vUv; varying vec2 vNdc;" + "AMB_GLSL_AQUI" + "void main(){ vec3 cima = mix(uTL, uTR, vUv.x); vec3 baixo = mix(uBL, uBR, vUv.x); vec3 c = mix(baixo, cima, vUv.y); vec4 p = uInvVP * vec4(vNdc, 1.0, 1.0); p /= p.w; vec3 dir = normalize(p.xyz - uCam); vec3 wp = uCam + dir * (-uCam.y / min(dir.y, -0.001)); gl_FragColor = vec4(ambiente(c, wp, vec3(0.0, 1.0, 0.0), 0.88), 1.0); }",
       depthWrite: false, depthTest: false,
     }));
     chao.frustumCulled = false; chao.renderOrder = -10; cena.add(chao);
@@ -4402,10 +4539,36 @@ ${recorde}
     // uniformes compartilhados por todos os materiais matcap
     // (o r128 não envia viewMatrix para MeshMatcapMaterial, então a matriz da câmera vai num uniforme próprio)
     const U = { uReveal: { value: 0 }, uCentro: { value: new T.Vector2(66, 22) }, uInd: { value: new T.Color(PALETA.indireta) }, uVista: { value: cam.matrixWorldInverse } };
+    // ambiente: noite (com faróis e luz nos lugares), neve no topo das coisas, chão molhado, relâmpago e vento nas árvores
+    const AU = {
+      uNoite: { value: 0 }, uNeve: { value: 0 }, uMolhado: { value: 0 }, uRelampago: { value: 0 }, uTempo: { value: 0 }, uVento: { value: 0 },
+      uFarol: { value: new T.Vector4(0, 0, 0, 1) }, uPostes: { value: PONTOS.slice(0, 11).map((p) => new T.Vector2(p.g[0], p.g[1])).concat([new T.Vector2(66, 22)]) },
+    };
+    const AMB_GLSL = `
+uniform float uNoite, uNeve, uMolhado, uRelampago; uniform vec4 uFarol; uniform vec2 uPostes[12];
+vec3 ambiente(vec3 c, vec3 wp, vec3 n, float kNeve) {
+  float up = clamp((n.y - 0.35) * 2.5, 0.0, 1.0);
+  float baixo = 1.0 - step(0.75, wp.y);
+  c = mix(c, vec3(0.95, 0.97, 1.0), uNeve * up * mix(0.9, kNeve, baixo));
+  c = mix(c, vec3(dot(c, vec3(0.3, 0.59, 0.11))), uMolhado * 0.28) * (1.0 - uMolhado * 0.16);
+  vec3 l = c * mix(vec3(1.0), vec3(0.24, 0.28, 0.5), uNoite);
+  if (uNoite > 0.01) {
+    vec2 d = wp.xz - uFarol.xy; float al = dot(d, uFarol.zw); float lat = length(d - uFarol.zw * al);
+    float cone = smoothstep(34.0, 6.0, al) * smoothstep(-1.0, 2.0, al) * (1.0 - smoothstep(1.1 + al * 0.3, 2.6 + al * 0.52, lat));
+    float hz = clamp(1.0 - wp.y / 7.0, 0.0, 1.0);
+    float pool = 0.0; for (int i = 0; i < 12; i++) { vec2 q = wp.xz - uPostes[i]; pool += exp(-dot(q, q) / 110.0); }
+    l += c * (vec3(1.0, 0.93, 0.76) * cone * 1.25 * hz + vec3(1.0, 0.7, 0.4) * min(pool, 1.2) * 0.6) * uNoite;
+  }
+  return l + uRelampago * vec3(0.5, 0.56, 0.72) * c;
+}
+`;
+    Object.assign(chao.material.uniforms, AU);
+    chao.material.fragmentShader = chao.material.fragmentShader.replace("AMB_GLSL_AQUI", AMB_GLSL);
     function injetar(sh) {
       sh.uniforms.uReveal = U.uReveal; sh.uniforms.uCentro = U.uCentro; sh.uniforms.uInd = U.uInd; sh.uniforms.uVista = U.uVista;
+      Object.assign(sh.uniforms, AU);
       sh.vertexShader = sh.vertexShader
-        .replace("#include <common>", "#include <common>\nuniform float uReveal; uniform vec2 uCentro; uniform mat4 uVista; varying vec3 vWPos; varying vec3 vWNorm;")
+        .replace("#include <common>", "#include <common>\nuniform float uReveal; uniform vec2 uCentro; uniform mat4 uVista; uniform float uTempo, uVento; varying vec3 vWPos; varying vec3 vWNorm;")
         .replace("#include <project_vertex>", [
           "vec4 wp = vec4( transformed, 1.0 );",
           "#ifdef USE_INSTANCING", "wp = instanceMatrix * wp;", "#endif",
@@ -4413,6 +4576,10 @@ ${recorde}
           "float rd = length( wp.xz - uCentro );",
           "float rp = clamp( ( uReveal * 430.0 - rd ) / 34.0, 0.0, 1.0 );",
           "wp.y -= ( 1.0 - rp ) * ( 1.0 - rp ) * 16.0;",
+          "#ifdef VENTO",
+          "float bal = uVento * pow( max( wp.y - 0.3, 0.0 ), 1.3 ) * ( 0.07 + 0.05 * sin( uTempo * 2.6 + wp.x * 0.13 + wp.z * 0.11 ) );",
+          "wp.x += bal * 0.8; wp.z -= bal * 0.6;",
+          "#endif",
           "vWPos = wp.xyz;",
           "vec3 wn = objectNormal;",
           "#ifdef USE_INSTANCING", "wn = mat3( instanceMatrix ) * wn;", "#endif",
@@ -4421,26 +4588,44 @@ ${recorde}
           "gl_Position = projectionMatrix * mvPosition;",
         ].join("\n"));
       sh.fragmentShader = sh.fragmentShader
-        .replace("#include <common>", "#include <common>\nuniform vec3 uInd; varying vec3 vWPos; varying vec3 vWNorm;")
+        .replace("#include <common>", "#include <common>\nuniform vec3 uInd; varying vec3 vWPos; varying vec3 vWNorm;" + AMB_GLSL)
         .replace("gl_FragColor = vec4( outgoingLight, diffuseColor.a );", [
           "if ( vWPos.y < -0.02 ) discard;",
           "float iDist = pow( clamp( 1.0 - vWPos.y / 5.5, 0.0, 1.0 ) * 0.5, 2.0 );",
           "float iAng = pow( clamp( ( dot( normalize( vWNorm ), vec3( 0.0, -1.0, 0.0 ) ) + 0.6 ) * 1.5, 0.0, 1.0 ), 1.0 );",
           "outgoingLight = mix( outgoingLight, uInd, clamp( iDist * iAng * 2.2, 0.0, 0.6 ) );",
+          "vec3 nW = normalize( vWNorm );",
+          "outgoingLight = ambiente( outgoingLight, vWPos, nW, 0.45 );",
+          "#ifdef JANELA",
+          "if ( uNoite > 0.01 && abs( nW.y ) < 0.2 && vWPos.y > 2.4 ) {",
+          "  float u = ( vWPos.x + vWPos.z ) / 2.4, v = vWPos.y / 1.7; vec2 cel = floor( vec2( u, v ) ); vec2 f = fract( vec2( u, v ) );",
+          "  float h = fract( sin( dot( cel, vec2( 12.9898, 78.233 ) ) ) * 43758.5453 );",
+          "  float w = step( 0.22, f.x ) * step( f.x, 0.78 ) * step( 0.28, f.y ) * step( f.y, 0.78 ) * step( 0.42, h );",
+          "  outgoingLight = mix( outgoingLight, vec3( 1.0, 0.82, 0.48 ) * ( 0.85 + 0.15 * h ), w * uNoite * 0.92 );",
+          "}",
+          "#endif",
           "gl_FragColor = vec4( outgoingLight, diffuseColor.a );",
         ].join("\n"));
     }
     const mats = {};
     function mat(hex, o = {}) {
-      const k = [hex, o.op ?? 1, o.map ? o.map.uuid : "", o.lados ? 1 : 0].join("|");
+      const k = [hex, o.op ?? 1, o.map ? o.map.uuid : "", o.lados ? 1 : 0, o.vento ? 1 : 0, o.janela ? 1 : 0].join("|");
       if (mats[k]) return mats[k];
       const m = new T.MeshMatcapMaterial({ matcap: texMatcap(hex), map: o.map || null, transparent: (o.op ?? 1) < 1, opacity: o.op ?? 1, side: o.lados ? T.DoubleSide : T.FrontSide });
       m.onBeforeCompile = injetar;
+      if (o.vento || o.janela) { m.defines = {}; if (o.vento) m.defines.VENTO = ""; if (o.janela) m.defines.JANELA = ""; }
       return (mats[k] = m);
     }
     // materiais que aparecem junto com a revelação do mundo
     const surgem = [];
-    function basica(cor, op = 1, extra = {}) { const m = new T.MeshBasicMaterial(Object.assign({ color: cor, transparent: true, opacity: 0, depthWrite: false }, extra)); surgem.push([m, op]); return m; }
+    function injetarBasica(sh) {
+      Object.assign(sh.uniforms, AU);
+      sh.vertexShader = sh.vertexShader.replace("#include <common>", "#include <common>\nvarying vec3 vWPos;")
+        .replace("#include <project_vertex>", "#include <project_vertex>\nvec4 bwp = vec4( transformed, 1.0 );\n#ifdef USE_INSTANCING\nbwp = instanceMatrix * bwp;\n#endif\nvWPos = ( modelMatrix * bwp ).xyz;");
+      sh.fragmentShader = sh.fragmentShader.replace("#include <common>", "#include <common>\nvarying vec3 vWPos;" + AMB_GLSL)
+        .replace("gl_FragColor = vec4( outgoingLight, diffuseColor.a );", "gl_FragColor = vec4( ambiente( outgoingLight, vWPos, vec3( 0.0, 1.0, 0.0 ), 0.5 ), diffuseColor.a );");
+    }
+    function basica(cor, op = 1, extra = {}) { const m = new T.MeshBasicMaterial(Object.assign({ color: cor, transparent: true, opacity: 0, depthWrite: false }, extra)); m.onBeforeCompile = injetarBasica; surgem.push([m, op]); return m; }
 
     // ---------- sombras falsas (borda suave, cor quente)
     const sombraTex = (() => {
@@ -4466,7 +4651,7 @@ ${recorde}
     const carrosParados = [];
     const rampas = [], ressaltos = [], lombadas = [];
     function caixa(w, h, d, hex, x, y, z, o = {}) {
-      const m = new T.Mesh(new T.BoxGeometry(w, h, d), o.material || mat(hex));
+      const m = new T.Mesh(new T.BoxGeometry(w, h, d), o.material || mat(hex, { janela: h + y >= 4 && o.janela !== false }));
       m.position.set(x, y + h / 2, z);
       cena.add(m);
       if (o.colide !== false) { estaticos.push({ t: "b", x0: x - w / 2, z0: z - d / 2, x1: x + w / 2, z1: z + d / 2, h: y + h }); reservas.push([x - w / 2 - 3, z - d / 2 - 3, x + w / 2 + 3, z + d / 2 + 3]); }
@@ -4607,8 +4792,8 @@ ${recorde}
       if (CUBOS.some(([cx, cz]) => Math.hypot(cx - x, cz - z) < 4) || PONTOS.some((p) => Math.abs(p.g[0] - x) < 8 && Math.abs(p.g[1] - z) < 8)) return;
       arvores.push([x, z, clamp(s, 0.6, 1.1), Ra()]);
     });
-    const imTronco = new T.InstancedMesh(new T.CylinderGeometry(0.35, 0.5, 2.4, 6), mat(0x8a5a3a), arvores.length);
-    const imCopa = new T.InstancedMesh(new T.IcosahedronGeometry(2.4, 0), mat(0xffffff), arvores.length);
+    const imTronco = new T.InstancedMesh(new T.CylinderGeometry(0.35, 0.5, 2.4, 6), mat(0x8a5a3a, { vento: 1 }), arvores.length);
+    const imCopa = new T.InstancedMesh(new T.IcosahedronGeometry(2.4, 0), mat(0xffffff, { vento: 1 }), arvores.length);
     // árvores com física: dá para atropelar (elas tombam na direção do carro)
     const arvs = [], arvMexendo = new Set();
     arvores.forEach(([x, z, s, r], i) => {
@@ -4825,6 +5010,38 @@ ${recorde}
     cena.add(drone);
     const droneSombra = sombraDin(2.6, 2.6);
 
+    // ---------- chuva, neve e folhas: um só sistema de pontos animado na placa de vídeo
+    const NP = 2600, CX = 170, CY = 46;
+    const clima = (() => {
+      const pos = new Float32Array(NP * 3), rnd = new Float32Array(NP);
+      for (let i = 0; i < NP; i++) { pos[i * 3] = Math.random(); pos[i * 3 + 1] = Math.random(); pos[i * 3 + 2] = Math.random(); rnd[i] = Math.random(); }
+      const g = new T.BufferGeometry(); g.setAttribute("position", new T.BufferAttribute(pos, 3)); g.setAttribute("aRnd", new T.BufferAttribute(rnd, 1));
+      const m = new T.ShaderMaterial({
+        uniforms: { uT: { value: 0 }, uCentro: { value: new T.Vector3() }, uCaixa: { value: new T.Vector3(CX, CY, CX) }, uVel: { value: new T.Vector3(0, -40, 0) }, uTipo: { value: 0 }, uOp: { value: 0 }, uTam: { value: 1 }, uEsc: { value: 600 }, uNoiteP: { value: 0 } },
+        vertexShader: `attribute float aRnd; uniform float uT, uTipo, uTam, uEsc; uniform vec3 uCentro, uCaixa, uVel; varying float vR;
+void main(){ vec3 p = position * uCaixa + uVel * uT * (0.75 + 0.5 * aRnd);
+  if (uTipo > 0.5 && uTipo < 1.5) { p.x += sin(uT * 1.3 + aRnd * 40.0) * 1.6; p.z += cos(uT * 1.1 + aRnd * 30.0) * 1.6; }
+  if (uTipo > 1.5) { p.y += sin(uT * 3.0 + aRnd * 20.0) * 1.2; }
+  p = mod(p - uCentro + uCaixa * 0.5, uCaixa) + uCentro - uCaixa * 0.5; p.y = mod(p.y, uCaixa.y);
+  vec4 mv = modelViewMatrix * vec4(p, 1.0); gl_Position = projectionMatrix * mv;
+  gl_PointSize = uTam * (0.6 + aRnd * 0.8) * uEsc / -mv.z; vR = aRnd; }`,
+        fragmentShader: `uniform float uTipo, uOp, uNoiteP, uT; varying float vR;
+void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
+  if (uTipo < 0.5) { a = (1.0 - smoothstep(0.025, 0.06, abs(pc.x + pc.y * 0.12))) * (1.0 - smoothstep(0.3, 0.5, abs(pc.y))); cor = vec3(0.86, 0.92, 1.0); }
+  else if (uTipo < 1.5) { a = 1.0 - smoothstep(0.2, 0.5, length(pc)); cor = vec3(1.0); }
+  else { float ang = uT * (2.0 + vR * 4.0) + vR * 10.0; vec2 q = mat2(cos(ang), -sin(ang), sin(ang), cos(ang)) * pc; a = 1.0 - smoothstep(0.1, 0.16, length(q * vec2(1.0, 2.4))); cor = mix(vec3(0.95, 0.55, 0.15), vec3(0.45, 0.62, 0.2), vR); }
+  if (a < 0.02) discard;
+  gl_FragColor = vec4(cor * mix(1.0, 0.55, uNoiteP), a * uOp); }`,
+        transparent: true, depthWrite: false,
+      });
+      const p = new T.Points(g, m); p.frustumCulled = false; p.renderOrder = 6; p.visible = false; cena.add(p);
+      return { p, m };
+    })();
+    // estado do ambiente: cada valor desliza até o alvo
+    const AMBV = { noite: 0, neve: 0, molhado: 0, chuva: 0, flocos: 0, folhas: 0, vento: 0 }, AMBA = Object.assign({}, AMBV);
+    let climaAtual = "limpo", proxRaio = 6, raio = 0;
+    const VENTO_DIR = { x: 0.8, z: -0.6 };
+
     // ---------- poeira e marcas de pneu (textura dinâmica)
     const poeira = [];
     const poeiraG = new T.IcosahedronGeometry(0.7, 0);
@@ -4850,7 +5067,7 @@ ${recorde}
 
     // ---------- estado
     const INICIO = { x: 66, z: 22, h: -Math.PI / 2 };
-    const S = { x: INICIO.x, z: INICIO.z, h: INICIO.h, v: 0, y: 34, vy: 0, noAr: true, tAr: 0, x0Ar: INICIO.x, z0Ar: INICIO.z, vAnt: 0, hAnt: INICIO.h, pit: 0, pitV: 0, rol: 0, rolV: 0, alt: 0, altV: 0, ax: 0, axV: 0, az: 0, azV: 0, acel: 0, giro: 0 };
+    const S = { x: INICIO.x, z: INICIO.z, h: INICIO.h, hm: INICIO.h, v: 0, y: 34, vy: 0, noAr: true, tAr: 0, x0Ar: INICIO.x, z0Ar: INICIO.z, vAnt: 0, hAnt: INICIO.h, pit: 0, pitV: 0, rol: 0, rolV: 0, alt: 0, altV: 0, ax: 0, axV: 0, az: 0, azV: 0, acel: 0, giro: 0 };
     const camAlvo = new T.Vector3(S.x, 0, S.z);
     let zoom = 0.45, zoomAlvo = 0.45, tempoJogo = 0, revelar = 0;
     const st = { tempo: 0, dist: 0, velMax: 0, saltoMax: 0, derrubados: 0, cubos: 0, visitados: new Set(), serie: new Array(120).fill(0), iniciouRelogio: false, terminou: false };
@@ -4929,18 +5146,22 @@ ${recorde}
       } else { acel = entrada.cima - entrada.baixo; giro = entrada.esq - entrada.dir; }
       S.acel = acel; S.giro = giro;
       const VMAX = 30, VRE = -11, noChao = !S.noAr;
+      // aderência: na chuva e na neve o carro aponta para um lado e ainda escorrega para o outro
+      const tracao = 1 - AMBA.neve * 0.4 - AMBA.molhado * 0.12, aderencia = 30 - AMBA.neve * 27.6 - AMBA.molhado * 22;
       if (!noChao) { /* no ar a roda não tem atrito: mantém a velocidade */ }
-      else if (acel > 0) S.v += (S.v < 0 ? 60 : 26) * acel * dt;
-      else if (acel < 0) S.v += (S.v > 0 ? 55 : 18) * acel * dt;
-      else if (noChao) S.v -= Math.sign(S.v) * Math.min(Math.abs(S.v), 9 * dt);
-      if (freio && noChao) S.v -= Math.sign(S.v) * Math.min(Math.abs(S.v), 40 * dt);
+      else if (acel > 0) S.v += (S.v < 0 ? 60 : 26) * acel * dt * tracao;
+      else if (acel < 0) S.v += (S.v > 0 ? 55 : 18) * acel * dt * tracao;
+      else if (noChao) S.v -= Math.sign(S.v) * Math.min(Math.abs(S.v), 9 * dt * tracao);
+      if (freio && noChao) S.v -= Math.sign(S.v) * Math.min(Math.abs(S.v), 40 * dt * tracao);
       S.v -= S.v * 0.25 * dt;
       S.v = clamp(S.v, VRE, VMAX);
       const fatorVel = clamp(S.v / 8, -1, 1);
       const taxa = 2.3 * (1 - 0.3 * Math.abs(S.v) / VMAX) * (freio ? 1.5 : 1) * (noChao ? 1 : 0.3);
       S.h += giro * taxa * fatorVel * dt;
       const ox = S.x, oz = S.z;
-      S.x += Math.sin(S.h) * S.v * dt; S.z += Math.cos(S.h) * S.v * dt;
+      if (noChao) S.hm += angDif(S.hm, S.h) * Math.min(1, aderencia * dt);
+      S.x += Math.sin(S.hm) * S.v * dt; S.z += Math.cos(S.hm) * S.v * dt;
+      if (AMBA.vento > 0.01) { const f = AMBA.vento * (noChao ? 1.1 : 7); S.x += VENTO_DIR.x * f * dt; S.z += VENTO_DIR.z * f * dt; }
       const forca = colidirEstaticos();
       for (const r of rampas) {
         const dx = S.x - r.x, dz = S.z - r.z; if (Math.abs(dx) > r.R + RC || Math.abs(dz) > r.R + RC) continue;
@@ -5000,7 +5221,7 @@ ${recorde}
       [S.ax, S.axV] = mola(S.ax, S.axV, clamp(acLat * 0.03, -0.7, 0.7), 60, 3.2, dt);
 
       // poeira e marcas de pneu
-      const derrapa = (freio && Math.abs(S.v) > 6) || (Math.abs(giro) > 0.6 && Math.abs(S.v) > 18) || (acel > 0.5 && S.v > 0.5 && S.v < 9);
+      const derrapa = (Math.abs(angDif(S.hm, S.h)) > 0.22 && Math.abs(S.v) > 7) || (freio && Math.abs(S.v) > 6) || (Math.abs(giro) > 0.6 && Math.abs(S.v) > 18) || (acel > 0.5 && S.v > 0.5 && S.v < 9);
       const cs = Math.cos(S.h), sn = Math.sin(S.h);
       rodas.forEach((r, i) => { if (r.frente) return; const wx = S.x + r.x * cs + r.z * sn, wz = S.z - r.x * sn + r.z * cs; marcar(i - 2, wx, wz, derrapa && !S.noAr && S.y < 0.5); });
       poeiraAc += dt * (derrapa && !S.noAr ? 34 : Math.abs(S.v) > 22 ? 6 : 0);
@@ -5177,6 +5398,7 @@ ${recorde}
       if (fadeAc > 0.3 && tempoJogo - ultimaMarca < 25) { fadeAc = 0; mctx.globalCompositeOperation = "destination-out"; mctx.fillStyle = "rgba(0,0,0,0.05)"; mctx.fillRect(0, 0, marcasC.width, marcasC.height); mctx.globalCompositeOperation = "source-over"; marcasSujas = true; }
       if (marcasSujas && texAc > 0.08) { texAc = 0; marcasSujas = false; marcasTex.needsUpdate = true; }
 
+      atualizarAmbiente(dt);
       renderer.render(cena, cam);
 
       hudT += dt;
@@ -5187,6 +5409,35 @@ ${recorde}
         ui.h.vel.textContent = kmh; ui.h.cubos.textContent = st.cubos; ui.h.pontos.textContent = st.visitados.size; ui.h.tempo.textContent = fmtTempo(st.tempo);
         desenharSpark(); desenharMini();
       }
+    }
+    function atualizarAmbiente(dt) {
+      const k = 1 - Math.pow(0.35, dt);
+      for (const c in AMBV) AMBA[c] += (AMBV[c] - AMBA[c]) * k;
+      AU.uNoite.value = AMBA.noite; AU.uNeve.value = AMBA.neve; AU.uMolhado.value = AMBA.molhado; AU.uVento.value = AMBA.vento + 0.12; AU.uTempo.value = t;
+      AU.uFarol.value.set(S.x + Math.sin(S.h) * 2.2, S.z + Math.cos(S.h) * 2.2, Math.sin(S.h), Math.cos(S.h));
+      cam.updateMatrixWorld(); cam.matrixWorldInverse.copy(cam.matrixWorld).invert();
+      chao.material.uniforms.uInvVP.value.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse).invert(); chao.material.uniforms.uCam.value.copy(cam.position);
+      // relâmpagos na chuva
+      if (climaAtual === "chuva" && !reduzMov()) { proxRaio -= dt; if (proxRaio <= 0) { proxRaio = 7 + Math.random() * 12; raio = 1; Som.trovao(); } }
+      raio = Math.max(0, raio - dt * 3.2); AU.uRelampago.value = raio > 0 ? (raio > 0.75 || (raio > 0.35 && raio < 0.5) ? 0.9 : 0.15) * (0.4 + AMBA.noite * 0.6) : 0;
+      // partículas
+      const pm = clima.m.uniforms, op = Math.max(AMBA.chuva, AMBA.flocos, AMBA.folhas);
+      clima.p.visible = op > 0.01;
+      if (clima.p.visible) {
+        pm.uT.value = t; pm.uOp.value = op * (climaAtual === "chuva" ? 0.42 : climaAtual === "neve" ? 0.9 : 0.95); pm.uNoiteP.value = AMBA.noite;
+        pm.uCentro.value.set(camAlvo.x, 0, camAlvo.z); pm.uEsc.value = renderer.domElement.height / 2 / Math.tan((cam.fov * Math.PI) / 360) / (renderer.getPixelRatio() ? 1 : 1);
+      }
+      Som.vento(dt);
+    }
+    function definirClima(per, c, instantaneo) {
+      climaAtual = c;
+      Object.assign(AMBV, { noite: per === "noite" ? 1 : 0, neve: c === "neve" ? 1 : 0, molhado: c === "chuva" ? 1 : 0, chuva: c === "chuva" ? 1 : 0, flocos: c === "neve" ? 1 : 0, folhas: c === "vento" ? 1 : 0, vento: c === "vento" ? 1 : 0 });
+      if (instantaneo) Object.assign(AMBA, AMBV);
+      const pm = clima.m.uniforms;
+      if (c === "chuva") { pm.uTipo.value = 0; pm.uVel.value.set(-3, -44, 2); pm.uTam.value = 1.7; clima.p.geometry.setDrawRange(0, NP); }
+      else if (c === "neve") { pm.uTipo.value = 1; pm.uVel.value.set(1.2, -4.2, -0.8); pm.uTam.value = 0.7; clima.p.geometry.setDrawRange(0, Math.round(NP * 0.7)); }
+      else if (c === "vento") { pm.uTipo.value = 2; pm.uVel.value.set(VENTO_DIR.x * 16, -0.6, VENTO_DIR.z * 16); pm.uTam.value = 1.6; clima.p.geometry.setDrawRange(0, 700); }
+      proxRaio = 4;
     }
     function desenharSpark() {
       const c = sparkCtx, w = 240, h = 56;
@@ -5244,7 +5495,8 @@ ${recorde}
         const pos = new Float32Array(idx.length * 3);
         for (let k = 0; k < idx.length; k++) { const v = idx[k] * 3; pos[k * 3] = q[v] / 100; pos[k * 3 + 1] = q[v + 1] / 100; pos[k * 3 + 2] = q[v + 2] / 100; }
         const g = new T.BufferGeometry(); g.setAttribute("position", new T.BufferAttribute(pos, 3)); g.computeVertexNormals();
-        cena.add(new T.Mesh(g, mat(parseInt(pt.c.slice(1), 16), { lados: true })));
+        const cor = parseInt(pt.c.slice(1), 16), verde = ((cor >> 8) & 255) > ((cor >> 16) & 255) + 12;
+        cena.add(new T.Mesh(g, mat(cor, { lados: true, janela: !verde, vento: verde })));
       });
       C.caixas.forEach(([n, x0, z0, x1, z1, h]) => {
         estaticos.push({ t: "b", x0, z0, x1, z1, h }); reservas.push([x0 - 3, z0 - 3, x1 + 3, z1 + 3]);
@@ -5379,9 +5631,9 @@ ${recorde}
       pausado: true, cardAtual: null, cardFechado: null,
       rodar() { if (!raf) { ultimo = 0; ajustar(); raf = requestAnimationFrame(quadro); } },
       parar() { cancelAnimationFrame(raf); raf = 0; Object.keys(entrada).forEach((k) => (entrada[k] = typeof entrada[k] === "boolean" ? false : 0)); },
-      voltarInicio() { Object.assign(S, { x: INICIO.x, z: INICIO.z, h: INICIO.h, hAnt: INICIO.h, v: 0, vAnt: 0, y: 18, vy: 0, noAr: true, tAr: 0, x0Ar: INICIO.x, z0Ar: INICIO.z }); rastro[0] = rastro[1] = null; camAlvo.set(S.x, 0, S.z); },
+      voltarInicio() { Object.assign(S, { x: INICIO.x, z: INICIO.z, h: INICIO.h, hm: INICIO.h, hAnt: INICIO.h, v: 0, vAnt: 0, y: 18, vy: 0, noAr: true, tAr: 0, x0Ar: INICIO.x, z0Ar: INICIO.z }); rastro[0] = rastro[1] = null; camAlvo.set(S.x, 0, S.z); },
       teleportar(p) {
-        Object.assign(S, { x: p.g[0], z: p.g[1] + 2, h: Math.PI, hAnt: Math.PI, v: 0, vAnt: 0, y: 10, vy: 0, noAr: true, tAr: 0, x0Ar: p.g[0], z0Ar: p.g[1] + 2 });
+        Object.assign(S, { x: p.g[0], z: p.g[1] + 2, h: Math.PI, hm: Math.PI, hAnt: Math.PI, v: 0, vAnt: 0, y: 10, vy: 0, noAr: true, tAr: 0, x0Ar: p.g[0], z0Ar: p.g[1] + 2 });
         rastro[0] = rastro[1] = null;
         colidirEstaticos(); camAlvo.set(S.x, 0, S.z); ui.card.hidden = true; cardAtual = null; jogoObj.cardFechado = null;
       },
@@ -5400,7 +5652,8 @@ ${recorde}
         const velMedia = st.tempo > 0 ? (st.dist / st.tempo) * 3.2 : 0;
         return { porZona, cubos: st.cubos, pontos: st.visitados.size, tempo: st.tempo, dist: st.dist * (3.2 / 3.6), velMedia, velMax: st.velMax, saltoMax: st.saltoMax, derrubados: st.derrubados };
       },
-      _debug: { S, cubos, estaticos, props, entrada, st, colidirEstaticos, U, arvs, rampas, alturaChao },
+      ambiente(per, c, instantaneo) { definirClima(per, c, instantaneo); },
+      _debug: { AU, AMBA, clima, S, cubos, estaticos, props, entrada, st, colidirEstaticos, U, arvs, rampas, alturaChao },
     };
     return jogoObj;
   }
