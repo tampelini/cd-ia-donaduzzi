@@ -4094,7 +4094,7 @@ ${htmlProximo("cd")}
   // nem licença de terceiros. Chuva e vento são ruído filtrado.
   const CLIMAS = ["limpo", "chuva", "vento", "neve"];
   const AMB = { per: lerLS("bp-per") === "noite" ? "noite" : "dia", clima: CLIMAS.includes(lerLS("bp-clima")) ? lerLS("bp-clima") : "limpo" };
-  let musicaLigada = lerLS("bp-musica") !== "0";
+  let musicaLigada = lerLS("bp-musica") === "1"; // começa desligada; liga no botão ♫ ou na tecla B
   const Som = (() => {
     let ativo = false, pronto = false, mestre, filtro, mus, chuvaG, ventoG, ventoF, eco, timer = 0, prox = 0, passo = 0, frase = [];
     const BPM = 84, S16 = 60 / BPM / 4;
