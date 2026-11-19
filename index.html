@@ -1564,6 +1564,24 @@ html.bp-trava, html.bp-trava body { overflow: hidden !important; }
 .com-grafo { position: relative; isolation: isolate; overflow: hidden; }
 .com-grafo > .in-net { opacity: .9; }
 
+
+/* Treine sua IA com a câmera */
+.lab-fonte [hidden] { display: none !important; }
+.lab-cam { position: relative; width: min(100%, 280px); aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: #1c0b11; border: 3px solid var(--brand-gold); box-shadow: 0 0 0 6px rgba(250, 168, 34, .18), 0 12px 28px rgba(0, 0, 0, .35); transition: border-color .15s, box-shadow .15s; }
+.lab-video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); display: block; }
+.lab-cam-off { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; padding: 20px; text-align: center; background: radial-gradient(circle at 50% 40%, rgba(100, 32, 50, .55), rgba(20, 8, 12, .92)); }
+.lab-cam-off p { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.45; max-width: 26ch; }
+.lab-cam.on .lab-cam-off { display: none; }
+.lab-cam.gravando { border-color: #FF5A5A; box-shadow: 0 0 0 6px rgba(255, 90, 90, .25), 0 12px 28px rgba(0, 0, 0, .35); }
+.lab-rec { position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 6px; background: rgba(0, 0, 0, .6); color: #FFF; font-size: 12px; font-weight: 800; letter-spacing: .04em; padding: 3px 10px 3px 8px; border-radius: 99px; }
+.lab-rec::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #FF5A5A; animation: lab-pisca 1s steps(2) infinite; }
+@keyframes lab-pisca { 50% { opacity: .2; } }
+.lab-cl [data-add] { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: none; }
+.lab-cl [data-add].gravando { background: var(--brand-gold); color: #2A0F17; border-color: var(--brand-gold); }
+.lab-thumbs img { object-fit: cover; }
+.lab-passos2[hidden] { display: none; }
+.lab-passos2 + .src-note { margin-top: 18px; }
+
 </style>
 </head>
 <body>
@@ -2918,7 +2936,7 @@ ${htmlProximo(isCD ? "ia" : "vagas")}
   <div class="wrap">
     <p class="in-k">Laboratório</p>
     <h2 id="lab-t" class="in-h2">Veja uma IA pensando</h2>
-    <p class="in-sub">Desenhe um número de 0 a 9. Uma rede neural de verdade, treinada com 10 mil dígitos escritos à mão, tenta adivinhar, e você vê cada camada trabalhar. Depois, ensine a sua própria IA.</p>
+    <p class="in-sub">Desenhe um número de 0 a 9. Uma rede neural de verdade, treinada com 10 mil dígitos escritos à mão, tenta adivinhar, e você vê cada camada trabalhar. Depois, ensine a sua própria IA usando a câmera.</p>
     <div class="lab" data-lab-app></div>
   </div>
 </section>
@@ -3673,17 +3691,22 @@ ${htmlProximo("cd")}
 </div>
 
 <div class="lab-p" data-painel="treinar" hidden>
-  <p class="lab-intro">Como no Teachable Machine do Google: dê exemplos, treine e teste. Desenhe uma forma e clique na classe certa. Com <strong>3 exemplos ou mais</strong> em cada uma, o botão Treinar libera.</p>
+  <p class="lab-intro">Como no Teachable Machine do Google: dê exemplos, treine e teste. <span class="lab-dica2">Ligue a câmera e <strong>segure o botão</strong> de cada classe para gravar exemplos (10 ou mais em cada). Treine e mostre para a câmera: o palpite aparece ao vivo.</span></p>
   <div class="lab-g2">
-    <div class="lab-draw">
-      <canvas class="lab-cv lab-cv2" width="280" height="280" role="img" aria-label="Área de desenho para ensinar a IA" aria-describedby="lab-st2"></canvas>
-      <div class="lab-acts"><button type="button" class="btn small" data-lab="limpar2">Limpar</button></div>
+    <div class="lab-draw lab-fonte">
+      <div class="lab-cam">
+        <video class="lab-video" playsinline muted aria-label="Imagem da sua câmera"></video>
+        <div class="lab-cam-off"><p class="lab-cam-msg">Sua imagem fica só no seu aparelho. Nada é enviado para a internet.</p><button type="button" class="btn primary small" data-lab="camera">Ligar a câmera</button></div>
+        <span class="lab-rec" hidden>gravando</span>
+      </div>
+      <canvas class="lab-cv lab-cv2" width="280" height="280" role="img" aria-label="Área de desenho para ensinar a IA" aria-describedby="lab-st2" hidden></canvas>
+      <div class="lab-acts"><button type="button" class="btn small" data-lab="limpar2" hidden>Limpar</button><button type="button" class="btn small" data-lab="fonte">Prefiro desenhar</button></div>
     </div>
-    <div class="lab-classes">${["Círculo", "Triângulo", "Raio"].map((n, k) => `
+    <div class="lab-classes">${["Mão aberta", "Joinha", "Só o fundo"].map((n, k) => `
       <div class="lab-cl" data-cl="${k}">
         <label class="sr-only" for="lab-nome${k}">Nome da classe ${k + 1}</label>
         <input id="lab-nome${k}" class="lab-nome" value="${n}" maxlength="18" autocomplete="off">
-        <button type="button" class="btn small" data-add="${k}">+ Adicionar exemplo <span class="lab-n">(0)</span></button>
+        <button type="button" class="btn small" data-add="${k}"><span class="lab-acao">Segure para gravar</span> <span class="lab-n">(0)</span></button>
         <div class="lab-thumbs" aria-hidden="true"></div>
         <div class="lab-prob" aria-hidden="true"><i style="width:0"></i><span>0%</span></div>
       </div>`).join("")}
@@ -3691,11 +3714,16 @@ ${htmlProximo("cd")}
     <div class="lab-train">
       <button type="button" class="btn primary" data-lab="treinar" disabled>Treinar a IA</button>
       <canvas class="lab-loss" width="280" height="120" aria-hidden="true"></canvas>
-      <p class="lab-st" id="lab-st2" aria-live="polite">Faltam exemplos.</p>
+      <p class="lab-st" id="lab-st2" aria-live="polite">Ligue a câmera para começar.</p>
       <button type="button" class="btn small" data-lab="reset2">Começar de novo</button>
     </div>
   </div>
-  <p class="src-note">Quer usar a câmera? Experimente o <a href="https://teachablemachine.withgoogle.com/train/image" target="_blank" rel="noopener noreferrer">Teachable Machine<span class="sr-only"> (abre em nova aba)</span></a>, do Google. Nada do que você desenha aqui sai do seu navegador.</p>
+  <ol class="lab-passos lab-passos2">
+    <li><b>1. A câmera vira números</b><span>Uma rede pronta, a MobileNet, que já aprendeu a enxergar com mais de 1 milhão de fotos, resume cada quadro em 256 números.</span></li>
+    <li><b>2. Sua rede aprende</b><span>Uma rede pequena, de 32 neurônios, aprende só a separar as suas classes. Reaproveitar o que outra IA já sabe se chama transferência de aprendizado.</span></li>
+    <li><b>3. Tudo no seu aparelho</b><span>A imagem e o treino ficam no seu navegador. Nenhuma foto é enviada para a internet.</span></li>
+  </ol>
+  <p class="src-note">Dica: grave cada classe de jeitos um pouco diferentes (mais perto, mais longe, de lado). Quanto mais variados os exemplos, melhor a IA acerta.</p>
 </div>`;
 
     // ---------- modo 1
@@ -3722,52 +3750,155 @@ ${htmlProximo("cd")}
       if (a === "reset2") resetar2();
     });
 
-    // ---------- modo 2
+    // ---------- modo 2: treine sua IA (câmera, com desenho como alternativa)
     const st = $(".lab-st", box), btT = $('[data-lab="treinar"]', box), loss = $(".lab-loss", box), lg = loss.getContext("2d");
-    let dados = [[], [], []], modelo = null, treinando = false;
+    const camBox = $(".lab-cam", box), video = $(".lab-video", box), cv2 = $(".lab-cv2", box), btFonte = $('[data-lab="fonte"]', box), btLimpar2 = $('[data-lab="limpar2"]', box), rec = $(".lab-rec", box), btCam = $('[data-lab="camera"]', box), camMsg = $(".lab-cam-msg", box);
+    const passos = $(".lab-passos2", box);
+    let dados = [[], [], []], modelo = null, treinando = false, fonte = "cam", stream = null, extrator = null, ligando = false;
+    const MIN = () => (fonte === "cam" ? 10 : 3), MAX = 80;
     const nomes = () => $$(".lab-nome", box).map((i) => i.value.trim() || "classe");
-    const pad2 = prancheta($(".lab-cv2", box), () => { if (modelo && !treinando) testar(); }, () => { if (modelo && !treinando) { const r = testar(); st.textContent = `A IA acha que é ${nomes()[r.k]} (${pct(r.p)}).`; } });
-    function contar() { $$(".lab-cl", box).forEach((c, k) => { c.querySelector(".lab-n").textContent = `(${dados[k].length})`; }); const ok = dados.every((d) => d.length >= 3); btT.disabled = !ok || treinando; if (!modelo) st.textContent = ok ? "Pronto para treinar." : `Faltam exemplos: ${dados.map((d, k) => `${nomes()[k]} ${Math.max(0, 3 - d.length)}`).filter((x) => !/ 0$/.test(x)).join(", ")}.`; }
-    box.addEventListener("click", (e) => {
-      const b = e.target.closest("[data-add]"); if (!b) return;
-      if (pad2.vazio()) { st.textContent = "Desenhe algo antes de adicionar."; return; }
-      const k = +b.dataset.add, v = pad2.vetor(); dados[k].push(reduzir14(v));
-      const im = document.createElement("img"); im.src = miniatura(v); im.alt = ""; b.parentElement.querySelector(".lab-thumbs").append(im);
-      pad2.limpar(); contar();
+
+    // rede pronta (MobileNet) carregada só quando a pessoa liga a câmera
+    const TF_URL = "https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.22.0/tf.min.js";
+    const MN_URL = "https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.json";
+    let tfP = null, base = null;
+    function carregarRede() {
+      if (!tfP) tfP = new Promise((ok, er) => { if (window.tf) return ok(); const s = document.createElement("script"); s.src = TF_URL; s.async = true; s.onload = ok; s.onerror = er; document.head.append(s); })
+        .then(() => tf.loadLayersModel(MN_URL))
+        .then((m) => { base = tf.model({ inputs: m.inputs, outputs: m.getLayer("conv_pw_13_relu").output }); tf.tidy(() => base.predict(tf.zeros([1, 224, 224, 3]))); return "mobilenet"; })
+        .catch(() => "pixels");
+      return tfP;
+    }
+    const c224 = document.createElement("canvas"); c224.width = c224.height = 224; const x224 = c224.getContext("2d", { willReadFrequently: true });
+    const c16 = document.createElement("canvas"); c16.width = c16.height = 16; const x16 = c16.getContext("2d", { willReadFrequently: true });
+    function quadro() { const vw = video.videoWidth, vh = video.videoHeight, s = Math.min(vw, vh); x224.drawImage(video, (vw - s) / 2, (vh - s) / 2, s, s, 0, 0, 224, 224); }
+    function featCam() {
+      quadro();
+      if (extrator === "mobilenet") {
+        const v = tf.tidy(() => base.predict(tf.browser.fromPixels(c224).toFloat().div(127.5).sub(1).expandDims()).mean([1, 2]).dataSync());
+        let n = 0; for (let i = 0; i < v.length; i++) n += v[i] * v[i]; n = Math.sqrt(n) || 1;
+        return Float32Array.from(v, (x) => (x / n) * 8);
+      }
+      x16.drawImage(c224, 0, 0, 16, 16); const d = x16.getImageData(0, 0, 16, 16).data, o = new Float32Array(768);
+      for (let i = 0; i < 256; i++) for (let c = 0; c < 3; c++) o[i * 3 + c] = d[i * 4 + c] / 255 - 0.5;
+      return o;
+    }
+    const tamEntrada = () => (fonte === "draw" ? 196 : extrator === "mobilenet" ? 256 : 768);
+    function miniCam() { const c = document.createElement("canvas"); c.width = c.height = 40; const g = c.getContext("2d"); g.translate(40, 0); g.scale(-1, 1); g.drawImage(c224, 0, 0, 40, 40); return c.toDataURL("image/jpeg", 0.7); }
+
+    async function ligarCamera() {
+      if (stream || ligando) return; ligando = true;
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { camErro("Este navegador não liberou a câmera nesta página. Abra o site direto no navegador do celular ou do computador, ou use o desenho."); ligando = false; return; }
+      btCam.disabled = true; camMsg.textContent = "Pedindo permissão para usar a câmera…";
+      try {
+        const [s, ex] = await Promise.all([navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 320 }, height: { ideal: 320 } }, audio: false }), carregarRede().then((r) => { camMsg.textContent = "Carregando a rede pronta…"; return r; })]);
+        stream = s; extrator = ex; video.srcObject = s; await video.play().catch(() => {});
+        camBox.classList.add("on"); passos.dataset.extrator = ex;
+        if (ex !== "mobilenet") passos.querySelector("li span").textContent = "A rede pronta não carregou, então usamos o modo simples: cada quadro vira 768 números, as cores de uma miniatura de 16 × 16 pixels.";
+        st.textContent = ex === "mobilenet" ? "Câmera ligada. Segure o botão de cada classe para gravar exemplos." : "Câmera ligada (modo simples, sem a rede pronta). Segure o botão de cada classe para gravar.";
+        contar(); requestAnimationFrame(vivo);
+      } catch (e) {
+        const n = e && e.name;
+        camErro(n === "NotAllowedError" ? "Você não liberou a câmera. Dá para liberar no cadeado ao lado do endereço do site, ou use o desenho." : n === "NotFoundError" || n === "OverconstrainedError" ? "Não encontrei uma câmera neste aparelho. Use o desenho." : "Não consegui abrir a câmera. Ela pode estar em uso por outro programa.");
+      }
+      ligando = false; btCam.disabled = false;
+    }
+    function camErro(t) { camMsg.textContent = t; st.textContent = t; btCam.textContent = "Tentar de novo"; }
+    function desligarCamera() { if (stream) stream.getTracks().forEach((t) => t.stop()); stream = null; video.srcObject = null; camBox.classList.remove("on"); camMsg.textContent = "Sua imagem fica só no seu aparelho. Nada é enviado para a internet."; btCam.textContent = "Ligar a câmera"; pararGravar(); }
+
+    function contar() {
+      const m = MIN();
+      $$(".lab-cl", box).forEach((c, k) => { c.querySelector(".lab-n").textContent = `(${dados[k].length})`; });
+      const ok = dados.every((d) => d.length >= m); btT.disabled = !ok || treinando;
+      if (modelo || treinando) return;
+      if (fonte === "cam" && !stream) { st.textContent = "Ligue a câmera para começar."; return; }
+      st.textContent = ok ? "Pronto para treinar." : `Faltam exemplos: ${dados.map((d, k) => `${nomes()[k]} ${Math.max(0, m - d.length)}`).filter((x) => !/ 0$/.test(x)).join(", ")}.`;
+    }
+    function addThumb(k, src) { const t = $$(".lab-thumbs", box)[k], im = document.createElement("img"); im.src = src; im.alt = ""; t.append(im); while (t.children.length > 12) t.firstChild.remove(); }
+    function adicionarCam(k) {
+      if (!stream || !video.videoWidth || dados[k].length >= MAX) return false;
+      if (modelo) { modelo = null; btT.textContent = "Treinar de novo"; }
+      dados[k].push(featCam()); addThumb(k, miniCam()); contar(); return true;
+    }
+
+    // gravar: segurar o botão (mouse/dedo); pelo teclado, cada clique grava 5 quadros
+    let gravando = null;
+    function gravar(k, b) {
+      if (fonte !== "cam") return; if (!stream) { st.textContent = "Ligue a câmera primeiro."; return; }
+      pararGravar(); let ult = 0;
+      gravando = { b, raf: 0 }; b.classList.add("gravando"); camBox.classList.add("gravando"); rec.hidden = false;
+      const passo = (t) => { if (!gravando) return; if (t - ult > 90) { ult = t; adicionarCam(k); st.textContent = `Gravando ${nomes()[k]}… ${dados[k].length} exemplos${dados[k].length >= MAX ? " (máximo)" : ""}`; } gravando.raf = requestAnimationFrame(passo); };
+      gravando.raf = requestAnimationFrame(passo);
+    }
+    function pararGravar() { if (!gravando) return; cancelAnimationFrame(gravando.raf); gravando.b.classList.remove("gravando"); gravando = null; camBox.classList.remove("gravando"); rec.hidden = true; contar(); }
+    $$("[data-add]", box).forEach((b) => {
+      b.addEventListener("pointerdown", (e) => { if (fonte !== "cam" || e.button > 0) return; e.preventDefault(); try { b.setPointerCapture(e.pointerId); } catch (_) {} gravar(+b.dataset.add, b); });
+      ["pointerup", "pointercancel", "lostpointercapture"].forEach((ev) => b.addEventListener(ev, pararGravar));
+      b.addEventListener("contextmenu", (e) => { if (fonte === "cam") e.preventDefault(); });
+      b.addEventListener("click", (e) => {
+        const k = +b.dataset.add;
+        if (fonte === "cam") { if (e.detail === 0) { if (!stream) { st.textContent = "Ligue a câmera primeiro."; return; } for (let i = 0; i < 5; i++) adicionarCam(k); st.textContent = `${nomes()[k]}: ${dados[k].length} exemplos.`; } return; }
+        if (pad2.vazio()) { st.textContent = "Desenhe algo antes de adicionar."; return; }
+        const v = pad2.vetor(); dados[k].push(reduzir14(v)); addThumb(k, miniatura(v)); pad2.limpar(); contar();
+      });
     });
-    function testar() { const v = reduzir14(pad2.vetor()), p = modelo.fwd(v).p, k = p.indexOf(Math.max(...p)); $$(".lab-cl", box).forEach((c, i) => { c.querySelector(".lab-prob i").style.width = pct(p[i]); c.querySelector(".lab-prob span").textContent = pct(p[i]); c.classList.toggle("is-top", i === k); }); return { k, p: p[k] }; }
+
+    const pad2 = prancheta(cv2, () => { if (modelo && !treinando) testar(); }, () => { if (modelo && !treinando) { const r = testar(); st.textContent = `A IA acha que é ${nomes()[r.k]} (${pct(r.p)}).`; } });
+    function barras(p) { const k = p.indexOf(Math.max(...p)); $$(".lab-cl", box).forEach((c, i) => { c.querySelector(".lab-prob i").style.width = pct(p[i]); c.querySelector(".lab-prob span").textContent = pct(p[i]); c.classList.toggle("is-top", i === k); }); return { k, p: p[k] }; }
+    function testar() { return barras(modelo.fwd(reduzir14(pad2.vetor())).p); }
+    let ultT = 0, ultK = -1;
+    function vivo(t) {
+      if (!stream) return; requestAnimationFrame(vivo);
+      if (!modelo || treinando || gravando || fonte !== "cam" || t - ultT < 110 || !video.videoWidth) return; ultT = t;
+      const r = barras(modelo.fwd(featCam()).p);
+      if (r.k !== ultK) { ultK = r.k; st.textContent = `Ao vivo: a IA acha que é ${nomes()[r.k]}.`; }
+    }
+
     function curva(hist) {
       const W = loss.width, H = loss.height; lg.clearRect(0, 0, W, H); lg.strokeStyle = "rgba(247,244,231,.15)"; lg.beginPath(); lg.moveTo(0, H - 0.5); lg.lineTo(W, H - 0.5); lg.stroke();
       if (!hist.length) return; const mx = Math.max(...hist.map((h) => h.perda), 0.01);
       lg.strokeStyle = "#FAA822"; lg.lineWidth = 2; lg.beginPath(); hist.forEach((h, i) => { const x = (i / 119) * W, y = H - 6 - (h.perda / mx) * (H - 14); i ? lg.lineTo(x, y) : lg.moveTo(x, y); }); lg.stroke();
       lg.fillStyle = "rgba(247,244,231,.8)"; lg.font = "600 11px Inter, system-ui"; lg.fillText("erro durante o treino", 6, 14);
     }
+    const ruido = (v, a) => Float32Array.from(v, (x) => x + (Math.random() - 0.5) * a);
     function treinar() {
-      treinando = true; btT.disabled = true; modelo = rede2(196, 24, 3);
+      pararGravar(); treinando = true; btT.disabled = true; ultK = -1; modelo = rede2(tamEntrada(), 32, 3);
       const xs = [], ys = []; dados.forEach((d, k) => d.forEach((v) => { xs.push(v); ys.push(k); }));
+      const aum = fonte === "draw" ? (v) => deslocar(v, Math.round(Math.random() * 2 - 1), Math.round(Math.random() * 2 - 1)) : (v) => ruido(v, extrator === "mobilenet" ? 0.25 : 0.06);
       const hist = []; let ep = 0;
       const rodada = () => {
-        for (let r = 0; r < (reduz() ? 120 : 2); r++) {
-          const ax = xs.map((v) => deslocar(v, Math.round(Math.random() * 2 - 1), Math.round(Math.random() * 2 - 1)));
-          hist.push(modelo.treinarLote(ax, ys, 0.01)); ep++;
-          if (ep >= 120) break;
-        }
+        for (let r = 0; r < (reduz() ? 120 : 2); r++) { hist.push(modelo.treinarLote(xs.map(aum), ys, 0.01)); ep++; if (ep >= 120) break; }
         curva(hist); const h = hist[hist.length - 1];
         st.textContent = `Treinando… época ${ep} de 120 · acerto nos exemplos ${pct(h.acc)}`;
         if (ep < 120) requestAnimationFrame(rodada);
-        else { treinando = false; contar(); st.textContent = `Pronto! Acerto nos exemplos: ${pct(h.acc)}. Agora desenhe uma forma e veja o palpite da IA.`; btT.textContent = "Treinar de novo"; btT.disabled = false; pad2.limpar(); }
+        else { treinando = false; contar(); btT.textContent = "Treinar de novo"; btT.disabled = false; st.textContent = fonte === "cam" ? `Pronto! Acerto nos exemplos: ${pct(h.acc)}. Agora mostre para a câmera e veja o palpite ao vivo.` : `Pronto! Acerto nos exemplos: ${pct(h.acc)}. Agora desenhe uma forma e veja o palpite da IA.`; if (fonte === "draw") pad2.limpar(); }
       };
       requestAnimationFrame(rodada);
     }
-    function resetar2() { dados = [[], [], []]; modelo = null; $$(".lab-thumbs", box).forEach((t) => (t.innerHTML = "")); $$(".lab-prob i", box).forEach((i) => (i.style.width = "0")); $$(".lab-prob span", box).forEach((s) => (s.textContent = "0%")); $$(".lab-cl", box).forEach((c) => c.classList.remove("is-top")); btT.textContent = "Treinar a IA"; pad2.limpar(); curva([]); contar(); }
+    function resetar2() { pararGravar(); dados = [[], [], []]; modelo = null; ultK = -1; $$(".lab-thumbs", box).forEach((t) => (t.innerHTML = "")); barras([0, 0, 0]); $$(".lab-cl", box).forEach((c) => c.classList.remove("is-top")); btT.textContent = "Treinar a IA"; pad2.limpar(); curva([]); contar(); }
+    function trocarFonte(f) {
+      fonte = f; const cam = f === "cam";
+      camBox.hidden = !cam; cv2.hidden = cam; btLimpar2.hidden = cam;
+      btFonte.textContent = cam ? "Prefiro desenhar" : "Usar a câmera";
+      $$("[data-add]", box).forEach((b) => (b.querySelector(".lab-acao").textContent = cam ? "Segure para gravar" : "+ Adicionar exemplo"));
+      const pad = cam ? ["Mão aberta", "Joinha", "Só o fundo"] : ["Círculo", "Triângulo", "Raio"];
+      $$(".lab-nome", box).forEach((i, k) => (i.value = pad[k]));
+      passos.hidden = !cam; $(".lab-dica2", box).innerHTML = cam ? "Ligue a câmera e <strong>segure o botão</strong> de cada classe para gravar exemplos (10 ou mais em cada). Treine e mostre para a câmera: o palpite aparece ao vivo." : "Desenhe uma forma e clique na classe certa. Com <strong>3 exemplos ou mais</strong> em cada uma, o botão Treinar libera.";
+      if (!cam) desligarCamera();
+      resetar2();
+    }
+    box.addEventListener("click", (e) => { const b = e.target.closest("[data-lab]"); if (!b) return; if (b.dataset.lab === "camera") ligarCamera(); if (b.dataset.lab === "fonte") trocarFonte(fonte === "cam" ? "draw" : "cam"); });
     $$(".lab-nome", box).forEach((i) => i.addEventListener("input", () => { if (!modelo) contar(); }));
+    document.addEventListener("visibilitychange", () => { if (document.hidden) desligarCamera(); });
+    addEventListener("aba:mudou", desligarCamera);
+    box._lab = { get dados() { return dados; }, get extrator() { return extrator; }, get modelo() { return modelo; }, ligarCamera, desligarCamera, adicionarCam, treinar, video, carregarRede };
     contar(); curva([]);
 
     // ---------- alternância de modos
     $$(".lab-modo", box).forEach((b) => b.addEventListener("click", () => {
       $$(".lab-modo", box).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       $$(".lab-p", box).forEach((p) => (p.hidden = p.dataset.painel !== b.dataset.modo));
-      if (b.dataset.modo === "ver") requestAnimationFrame(() => viz.ajustar());
+      if (b.dataset.modo === "ver") { desligarCamera(); requestAnimationFrame(() => viz.ajustar()); }
     }));
     const ro = "ResizeObserver" in window ? new ResizeObserver(() => viz.ajustar()) : null;
     if (ro) ro.observe($(".lab-net", box)); else addEventListener("resize", () => viz.ajustar());
