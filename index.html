@@ -4071,7 +4071,7 @@ ${htmlProximo("cd")}
       d: "Galpões para empresas que se instalam no Biopark.",
       ia: "Manutenção preditiva: sensores nas máquinas e modelos de machine learning avisam que uma peça vai falhar antes que ela pare a produção.",
       tags: ["Manutenção preditiva", "IoT", "Machine learning"] },
-    { n: 6, t: "Flor da Terra Queijos Finos", g: [-322, 302], curso: "CD",
+    { n: 6, t: "Flor da Terra Queijos Finos", g: [-327, 304], curso: "CD",
       d: "Queijaria que produz queijos finos no Biopark.",
       ia: "Maturar queijo exige controle fino de temperatura e umidade. Dados de sensores e modelos de classificação ajudam a manter cada lote no padrão.",
       tags: ["Controle de qualidade", "Classificação", "Sensores"] },
@@ -4856,6 +4856,8 @@ vec3 ambiente(vec3 c, vec3 wp, vec3 n, float kNeve) {
 
     const estaticos = []; // colisores: {t:'b', x0,z0,x1,z1} ou {t:'c', x,z,r}
     const reservas = [];
+    const FT = [-352, 273, -262, 312]; // quadra da Flor da Terra (bosque e parquinho)
+    const animados = [], extrasArv = []; // coisas que se mexem sozinhas; árvores extras
     const carrosParados = [];
     const rampas = [], ressaltos = [], lombadas = [];
     function caixa(w, h, d, hex, x, y, z, o = {}) {
@@ -4948,7 +4950,7 @@ vec3 ambiente(vec3 c, vec3 wp, vec3 n, float kNeve) {
     const imLote = new T.InstancedMesh(new T.BoxGeometry(1, 0.1, 1), mat(0xffffff), MAPA.lotes.length);
     const casas = [];
     MAPA.lotes.forEach(([x, z, w, d, a, zn], i) => {
-      dum.position.set(x, 0.255, z); dum.rotation.set(0, -a, 0); dum.scale.set(Math.max(0.5, w - 0.5), 1, Math.max(0.5, d - 0.5)); dum.updateMatrix(); imLote.setMatrixAt(i, dum.matrix);
+      const noFT = x > FT[0] && x < FT[2] && z > FT[1] && z < FT[3]; dum.position.set(x, 0.255, z); dum.rotation.set(0, -a, 0); dum.scale.set(noFT ? 0.001 : Math.max(0.5, w - 0.5), 1, noFT ? 0.001 : Math.max(0.5, d - 0.5)); dum.updateMatrix(); imLote.setMatrixAt(i, dum.matrix);
       corTmp.setHex(COR_LOTE[zn] || 0x9db9e6).offsetHSL(0, 0, (R() - 0.5) * 0.06); imLote.setColorAt(i, corTmp);
       if (zn === "canteiro" || reservado(x, z, 2) || pertoDePonto(x, z, 12) || CUBOS.some(([cx, cz]) => Math.hypot(cx - x, cz - z) < 7)) return;
       if (MVV.some((m) => Math.abs(m.x - x) < 14 && z > -125 && z < -60)) return;
@@ -5027,6 +5029,7 @@ vec3 ambiente(vec3 c, vec3 wp, vec3 n, float kNeve) {
       if (CUBOS.some(([cx, cz]) => Math.hypot(cx - x, cz - z) < 4) || PONTOS.some((p) => Math.abs(p.g[0] - x) < 8 && Math.abs(p.g[1] - z) < 8)) return;
       arvores.push([x, z, clamp(s, 0.6, 1.1), Ra()]);
     });
+    extrasArv.forEach(([x, z, s]) => { if (estaticos.some((e) => (e.t === "b" ? dentro(x, z, [e.x0, e.z0, e.x1, e.z1], 1.5) : Math.hypot(e.x - x, e.z - z) < e.r + 1.5)) || CUBOS.some(([cx, cz]) => Math.hypot(cx - x, cz - z) < 4)) return; arvores.push([x, z, s, Ra()]); });
     const imTronco = new T.InstancedMesh(new T.CylinderGeometry(0.35, 0.5, 2.4, 6), mat(0x8a5a3a, { vento: 1 }), arvores.length);
     const imCopa = new T.InstancedMesh(new T.IcosahedronGeometry(2.4, 0), mat(0xffffff, { vento: 1 }), arvores.length);
     // árvores com física: dá para atropelar (elas tombam na direção do carro)
@@ -5635,6 +5638,7 @@ void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
     }
     function desenhar(dt) {
       t += dt; tempoJogo += dt;
+      for (const f of animados) f(t, dt);
       // revelação radial do mundo
       if (revelar < 1) {
         revelar = Math.min(1, revelar + dt / 2.6);
@@ -5924,10 +5928,112 @@ void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
         caixa(w, 5, 17.5, 0xefeae0, x, 0.3, z);
         caixa(w + 0.6, 0.7, 18.1, 0x7d8792, x, 5.3, z, { colide: false, sombra: false });
       });
-      // 6 Flor da Terra Queijos Finos
-      caixa(12, 5, 10, 0xf8f0df, -330, 0.3, 282);
-      const tel6 = new T.Mesh(new T.CylinderGeometry(4, 4, 10.4, 3), mat(0xa0603a)); tel6.rotation.set(-Math.PI / 2, 0, 0); tel6.position.set(-330, 6.3, 282); tel6.scale.set(1.79, 1, 0.5); cena.add(tel6);
-      cilindro(3, 2.4, 0xf8c94a, -318, 0.3, 276, { seg: 32 });
+      // 6 Flor da Terra Queijos Finos: queijaria com bosque, parquinho e passarinhos
+      reservas.push(FT);
+      { const gram = new T.Mesh(new T.PlaneGeometry(FT[2] - FT[0] - 4, FT[3] - FT[1] - 4), mat(0x9fd27f)); gram.rotation.x = -Math.PI / 2; gram.position.set((FT[0] + FT[2]) / 2, 0.3, (FT[1] + FT[3]) / 2); cena.add(gram); }
+      const chao = (w, d, hex, x, z, y = 0.31) => { const p = new T.Mesh(new T.PlaneGeometry(w, d), mat(hex)); p.rotation.x = -Math.PI / 2; p.position.set(x, y, z); cena.add(p); return p; };
+      chao(3.2, 15, 0xe9dcc2, -318, 302.5); chao(34, 3, 0xe9dcc2, -318, 294.5); // caminhos de pedra
+      const telhado = (d, h, L, hex, x, y, z) => { // duas águas, cumeeira ao longo de x
+        const sh = new T.Shape(); sh.moveTo(-d / 2, 0); sh.lineTo(d / 2, 0); sh.lineTo(0, h); sh.lineTo(-d / 2, 0);
+        const g = new T.ExtrudeGeometry(sh, { depth: L, bevelEnabled: false }); g.translate(0, 0, -L / 2);
+        const m = new T.Mesh(g, mat(hex)); m.rotation.y = Math.PI / 2; m.position.set(x, y, z); cena.add(m); return m;
+      };
+      const AMAR = 0xf8c94a, AMAR2 = 0xf2b33d, FURO = 0xd99a22, BRIE = 0xf6efdc, MADEIRA = 0x9a6a42;
+      const roda = (r, e, hex, x, y, z, deitada = true) => { // roda de queijo
+        const m = new T.Mesh(new T.CylinderGeometry(r, r, e, 28), mat(hex)); m.position.set(x, y, z); if (!deitada) m.rotation.x = Math.PI / 2; cena.add(m); return m;
+      };
+      // prédio principal: creme, telhado terracota, varanda com colunas
+      caixa(26, 6, 14, 0xfbf3e0, -318, 0.3, 284);
+      telhado(16, 3.6, 28, 0xc0623e, -318, 6.3, 284);
+      caixa(26.2, 0.5, 14.2, 0xe7d6b6, -318, 0.3, 284, { colide: false, sombra: false }); // rodapé
+      caixa(15, 0.35, 4.2, MADEIRA, -318, 4.2, 293.1, { colide: false, sombra: false }); // telhado da varanda
+      [-324.8, -320.3, -315.7, -311.2].forEach((x) => cilindro(0.28, 3.9, 0xfbf3e0, x, 0.3, 294.8, { seg: 10, colide: false, sombra: false }));
+      caixa(3, 3.3, 0.2, 0x6e4528, -318, 0.3, 291.1, { colide: false, sombra: false }); // porta
+      [-326, -310].forEach((x) => { caixa(3.4, 2.2, 0.15, 0x9fd0e8, x, 1.6, 291.1, { colide: false, sombra: false }); caixa(3.4, 0.5, 0.6, 0x7fbf6a, x, 1.1, 291.4, { colide: false, sombra: false }); }); // janelas com floreira
+      caixa(13, 1.7, 0.3, AMAR, -318, 4.7, 291.2, { colide: false, sombra: false }); // letreiro
+      for (let k = 0; k < 9; k++) roda(0.42, 0.32, k % 3 === 0 ? BRIE : k % 3 === 1 ? AMAR2 : 0xe8a33a, -323.2 + k * 1.3, 5.55, 291.45, false);
+      // roda de queijo gigante em cima do telhado
+      { const g = roda(3, 1.7, AMAR, -318, 12.3, 284, false);
+        [[0.9, 1.1, 0.55], [-1.3, 0.3, 0.45], [0.3, -1.4, 0.5], [-0.6, 1.9, 0.3], [1.9, -0.4, 0.35]].forEach(([a, b, r]) => [1, -1].forEach((s) => { const f = new T.Mesh(new T.CylinderGeometry(r, r, 0.1, 14), mat(FURO)); f.rotation.x = Math.PI / 2; f.position.set(-318 + a, 12.3 + b, 284 + s * 0.86); cena.add(f); })); }
+      // anexo: torre redonda em forma de queijo com uma fatia em cima
+      { const x = -341, z = 284;
+        cilindro(5, 5, AMAR, x, 0.3, z, { seg: 36 });
+        cilindro(5.15, 0.4, AMAR2, x, 5.3, z, { seg: 36, colide: false, sombra: false });
+        for (let k = 0; k < 14; k++) { const a = k * 2.399, y = 1.2 + (k * 0.37 % 1) * 3.4, f = new T.Mesh(new T.SphereGeometry(0.35 + (k % 3) * 0.12, 10, 8), mat(FURO)); f.position.set(x + Math.cos(a) * 4.95, y, z + Math.sin(a) * 4.95); cena.add(f); }
+        const sh = new T.Shape(); sh.moveTo(0, 0); sh.lineTo(4.6, -1.6); sh.lineTo(4.6, 1.6); sh.lineTo(0, 0);
+        const g = new T.ExtrudeGeometry(sh, { depth: 2.4, bevelEnabled: false }); g.rotateX(-Math.PI / 2);
+        const fat = new T.Mesh(g, mat(AMAR)); fat.position.set(x - 2.3, 5.7, z); cena.add(fat);
+        [[2.5, 0.3], [3.6, -0.7], [3.2, 0.9]].forEach(([a, b]) => { const f = new T.Mesh(new T.SphereGeometry(0.32, 10, 8), mat(FURO)); f.position.set(x - 2.3 + a, 8.1, z + b); cena.add(f); });
+        caixa(4, 0.3, 2, MADEIRA, x + 5.5, 0.3, z + 5.5, { colide: false, sombra: false }); }
+      // prateleiras de queijos na varanda e banca na frente
+      [[-334, 297], [-302, 297]].forEach(([x, z]) => {
+        caixa(8, 0.5, 2.4, MADEIRA, x, 0.3, z);
+        [-2.7, -0.9, 0.9, 2.7].forEach((dx, i) => { const cores = [AMAR, AMAR2, BRIE, 0xe8a33a]; let y = 0.8; [1.0, 0.82, 0.62].forEach((r, j) => { roda(r, 0.6, cores[(i + j) % 4], x + dx, y + 0.3, z); y += 0.6; }); });
+      });
+      { const x = -304, z = 304; // fatia gigante no gramado
+        const sh = new T.Shape(); sh.moveTo(0, 0); sh.lineTo(6, -2.4); sh.lineTo(6, 2.4); sh.lineTo(0, 0);
+        const g = new T.ExtrudeGeometry(sh, { depth: 3, bevelEnabled: false }); g.rotateX(-Math.PI / 2);
+        const m = new T.Mesh(g, mat(AMAR)); m.position.set(x - 3, 0.3, z); cena.add(m);
+        [[1.8, 0.2, 3], [3.6, -0.8, 3], [4.6, 1.1, 3], [2.8, 0.9, 3]].forEach(([a, b, y]) => { const f = new T.Mesh(new T.SphereGeometry(0.38, 10, 8), mat(FURO)); f.position.set(x - 3 + a, y + 0.3, z + b); cena.add(f); });
+        estaticos.push({ t: "b", x0: x - 3, z0: z - 2.4, x1: x + 3, z1: z + 2.4, h: 3.3 }); sombrasEst.push([x, z, 6, 4.8, 3]); }
+      // canteiros de flores ao longo do caminho
+      { const cores = [0xff7fa8, 0xffffff, 0xffd23f, 0xb48cff, 0xff5a5a], n = 60, im = new T.InstancedMesh(new T.IcosahedronGeometry(0.32, 0), mat(0xffffff), n);
+        for (let k = 0; k < n; k++) { const lado = k % 2 ? 1 : -1, x = -318 + lado * (2.4 + (k % 3) * 0.5), z = 296.5 + (k >> 1) * 0.5; dum.position.set(x, 0.55, z); dum.rotation.set(k, k * 2, 0); dum.scale.set(1, 1, 1); dum.updateMatrix(); im.setMatrixAt(k, dum.matrix); im.setColorAt(k, corTmp.setHex(cores[k % cores.length])); }
+        cena.add(im); chao(1.6, 15, 0x6b8f3a, -320.8, 302.5, 0.315); chao(1.6, 15, 0x6b8f3a, -315.2, 302.5, 0.315); }
+      // parquinho: areia, balanços, gangorra e escorregador
+      chao(24, 22, 0xf1dfb0, -276, 293);
+      { const bx = -279, bz = 287, L = 10, H = 4.6;
+        [-L / 2, L / 2].forEach((dx) => [-1, 1].forEach((s) => { const p = new T.Mesh(new T.CylinderGeometry(0.16, 0.16, H / Math.cos(0.32), 8), mat(0xd8424c)); p.position.set(bx + dx, 0.3 + H / 2, bz + s * Math.tan(0.32) * H / 2); p.rotation.x = -s * 0.32; cena.add(p); }));
+        const barra = new T.Mesh(new T.CylinderGeometry(0.18, 0.18, L + 0.6, 10), mat(0x3a7bd5)); barra.rotation.z = Math.PI / 2; barra.position.set(bx, 0.3 + H, bz); cena.add(barra);
+        [-L / 2, L / 2].forEach((dx) => estaticos.push({ t: "c", x: bx + dx, z: bz, r: 0.9, h: H }));
+        [[-3, 0xffd23f, 0], [0, 0xd8424c, 1.7], [3, 0x3fae5c, 3.3]].forEach(([dx, cor, fase]) => {
+          const piv = new T.Group(); piv.position.set(bx + dx, 0.3 + H, bz); cena.add(piv);
+          [-0.45, 0.45].forEach((ox) => { const c = new T.Mesh(new T.BoxGeometry(0.06, 3.5, 0.06), mat(0x6e4528)); c.position.set(ox, -1.75, 0); piv.add(c); });
+          const ass = new T.Mesh(new T.BoxGeometry(1.1, 0.14, 0.6), mat(cor)); ass.position.y = -3.5; piv.add(ass);
+          animados.push((t) => { piv.rotation.x = Math.sin(t * 1.9 + fase) * (0.35 + 0.15 * Math.sin(t * 0.3 + fase)); });
+        });
+        sombrasEst.push([bx, bz, L, 3, 4]); }
+      { const x = -268, z = 299; // escorregador
+        caixa(2.2, 3, 2.2, 0x3a7bd5, x, 0.3, z - 3, { sombra: true });
+        const rampa = new T.Mesh(new T.BoxGeometry(1.4, 0.18, 6), mat(0xffd23f)); rampa.position.set(x, 1.9, z + 0.6); rampa.rotation.x = 0.46; cena.add(rampa);
+        [-0.7, 0.7].forEach((ox) => { const b = new T.Mesh(new T.BoxGeometry(0.12, 0.4, 6), mat(0xd8424c)); b.position.set(x + ox, 2.1, z + 0.6); b.rotation.x = 0.46; cena.add(b); }); }
+      { const x = -284, z = 300; // gangorra
+        cilindro(0.35, 0.9, 0x6e4528, x, 0.3, z, { seg: 10 });
+        const pr = new T.Group(); pr.position.set(x, 1.3, z); cena.add(pr);
+        const tab = new T.Mesh(new T.BoxGeometry(0.7, 0.16, 7), mat(0xd8424c)); pr.add(tab);
+        [-3.1, 3.1].forEach((oz) => { const a = new T.Mesh(new T.BoxGeometry(0.9, 0.5, 0.6), mat(0x3a7bd5)); a.position.set(0, 0.3, oz); pr.add(a); });
+        animados.push((t) => { pr.rotation.x = Math.sin(t * 1.3) * 0.2; }); }
+      [[-292, 304, 0], [-344, 300, 0], [-296, 278, Math.PI / 2]].forEach(([x, z, r]) => { // bancos
+        const b = new T.Group(); b.position.set(x, 0.3, z); b.rotation.y = r; cena.add(b);
+        const s = new T.Mesh(new T.BoxGeometry(3, 0.18, 0.8), mat(MADEIRA)); s.position.y = 0.75; b.add(s);
+        const c = new T.Mesh(new T.BoxGeometry(3, 0.7, 0.14), mat(MADEIRA)); c.position.set(0, 1.25, -0.4); b.add(c);
+        [-1.3, 1.3].forEach((ox) => { const p = new T.Mesh(new T.BoxGeometry(0.15, 0.75, 0.7), mat(0x4a4f57)); p.position.set(ox, 0.37, 0); b.add(p); });
+      });
+      // bosque em volta: muitas árvores
+      { const Rf = rng(66);
+        for (let x = FT[0] + 3.5; x < FT[2] - 3; x += 5) for (let z = FT[1] + 3.5; z < FT[3] - 3; z += 5) {
+          const px = x + (Rf() - 0.5) * 3, pz = z + (Rf() - 0.5) * 3;
+          if (px > -348 && px < -303 && pz > 275 && pz < 299.5) continue; // prédio, anexo e varanda
+          if (px > -322 && px < -298 && pz > 299) continue; // caminho, flores e fatia gigante
+          if (px > -290 && pz > 280 && pz < 307) continue; // parquinho
+          if (Math.hypot(px + 327, pz - 304) < 7) continue; // ponto de visita
+          extrasArv.push([px, pz, 0.75 + Rf() * 0.4]);
+        } }
+      // passarinhos voando em volta e ciscando no gramado
+      { const cores = [0x3a7bd5, 0xd8424c, 0xffd23f, 0x8a5a3a, 0xff8a3d, 0x2fb7a0];
+        const ave = (cor) => { const g = new T.Group(); const corpo = new T.Mesh(new T.SphereGeometry(0.32, 10, 8), mat(cor)); corpo.scale.set(1, 0.85, 1.5); g.add(corpo);
+          const cab = new T.Mesh(new T.SphereGeometry(0.2, 8, 6), mat(cor)); cab.position.set(0, 0.2, 0.42); g.add(cab);
+          const bico = new T.Mesh(new T.ConeGeometry(0.07, 0.22, 6), mat(0xffa52e)); bico.rotation.x = Math.PI / 2; bico.position.set(0, 0.18, 0.66); g.add(bico);
+          const asas = [-1, 1].map((s) => { const p = new T.Group(); p.position.set(s * 0.22, 0.08, 0); const a = new T.Mesh(new T.BoxGeometry(0.75, 0.05, 0.4), mat(cor)); a.position.x = s * 0.37; p.add(a); g.add(p); return p; });
+          g.rotation.order = "YXZ"; g.scale.setScalar(1.25); cena.add(g); return { g, asas }; };
+        for (let k = 0; k < 12; k++) { const b = ave(cores[k % cores.length]), cx = -312 + Math.sin(k * 1.7) * 14, cz = 292 + Math.cos(k * 2.3) * 6, R = 7 + (k % 4) * 3.5, v = (k % 2 ? 1 : -1) * (0.35 + (k % 5) * 0.07), h = 9 + (k % 4) * 1.8, f = k * 0.9;
+          animados.push((t) => { const a = t * v + f; b.g.position.set(cx + Math.cos(a) * R, h + Math.sin(t * 1.3 + f) * 0.8, cz + Math.sin(a) * R); b.g.rotation.y = Math.atan2(-Math.sin(a) * v, Math.cos(a) * v);
+            const bate = Math.sin(t * 16 + f) * 0.7; b.asas[0].rotation.z = bate; b.asas[1].rotation.z = -bate; }); }
+        [[-312, 300], [-300, 296.5], [-327, 302], [-292, 296], [-337, 307], [-309, 308]].forEach(([x, z], k) => { const b = ave(cores[(k + 2) % cores.length]); b.asas.forEach((a, s) => (a.rotation.z = s ? 0.15 : -0.15));
+          animados.push((t) => { const c = Math.max(0, Math.sin(t * 3 + k * 2)) ** 6; const ida = Math.sin(t * 0.4 + k) * 1.2; b.g.position.set(x + ida, 0.55, z); b.g.rotation.set(c * 0.6, Math.cos(t * 0.4 + k) > 0 ? Math.PI / 2 : -Math.PI / 2, 0); }); });
+        [[-328, 10.2, 284], [-310, 10.2, 284], [-306.5, 10.2, 284]].forEach(([x, y, z], k) => { const b = ave(cores[(k + 4) % cores.length]); b.g.position.set(x, y - 0.5 + 0.2, z); b.asas.forEach((a, s) => (a.rotation.z = s ? 0.15 : -0.15));
+          animados.push((t) => { b.g.rotation.y = Math.sin(t * 0.7 + k * 3) > 0.6 ? 1.2 : -0.4; }); });
+      }
       // 10 SANEPAR: reservatórios ao norte
       [[166, -312], [184, -312]].forEach(([x, z]) => { cilindro(6, 9, 0xd9dee2, x, 0.3, z, { seg: 32 }); cilindro(6.3, 0.6, 0x4a8fd6, x, 9.3, z, { seg: 32, colide: false, sombra: false }); });
       // letreiro BIOPARK e muro de tijolos no gramado ao sul do campus
