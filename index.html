@@ -4071,7 +4071,7 @@ ${htmlProximo("cd")}
       d: "Galpões para empresas que se instalam no Biopark.",
       ia: "Manutenção preditiva: sensores nas máquinas e modelos de machine learning avisam que uma peça vai falhar antes que ela pare a produção.",
       tags: ["Manutenção preditiva", "IoT", "Machine learning"] },
-    { n: 6, t: "Flor da Terra Queijos Finos", g: [-335, 300], curso: "CD",
+    { n: 6, t: "Flor da Terra Queijos Finos", g: [-322, 302], curso: "CD",
       d: "Queijaria que produz queijos finos no Biopark.",
       ia: "Maturar queijo exige controle fino de temperatura e umidade. Dados de sensores e modelos de classificação ajudam a manter cada lote no padrão.",
       tags: ["Controle de qualidade", "Classificação", "Sensores"] },
@@ -4931,7 +4931,8 @@ vec3 ambiente(vec3 c, vec3 wp, vec3 n, float kNeve) {
     }
     const COR_AREA = { mata: 0x5f9e4a, praca: 0xe8dcc0, viveiro: 0xa9cf7e, prati: 0xd9d3c4, condominio: 0xd9d3c4, vendas: 0xd9d3c4, campus: 0xbfe0a4, ifpr: 0xb4d99a, hospital: 0xc7e3ad, reservatorio: 0xc7e3ad, ufpr: 0xc7e3ad, tisserand: 0xd9d3c4, queijaria: 0xd9d3c4 };
     const porCor = new Map();
-    MAPA.areas.forEach(([t, f]) => { const c = COR_AREA[t] || 0xbfe0a4; (porCor.get(c) || porCor.set(c, []).get(c)).push([f]); });
+    MAPA.areas.forEach(([t, f]) => { if (t === "base") return; const c = COR_AREA[t] || 0xbfe0a4; (porCor.get(c) || porCor.set(c, []).get(c)).push([f]); });
+    malhaPlana(MAPA.areas.filter(([t]) => t === "base").map(([, f]) => [f]), 0xc9e2b0, 0.25); // gramado dentro da rua perimetral
     porCor.forEach((lista, c) => malhaPlana(lista, c, 0.27));
     malhaPlana(MAPA.ruas, 0x60646c, 0.285);
     malhaPlana(MAPA.calc, 0xf3ead8, 0.29);
@@ -5924,9 +5925,9 @@ void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
         caixa(w + 0.6, 0.7, 18.1, 0x7d8792, x, 5.3, z, { colide: false, sombra: false });
       });
       // 6 Flor da Terra Queijos Finos
-      caixa(12, 5, 10, 0xf8f0df, -352, 0.3, 288);
-      const tel6 = new T.Mesh(new T.CylinderGeometry(4, 4, 10.4, 3), mat(0xa0603a)); tel6.rotation.set(-Math.PI / 2, 0, 0); tel6.position.set(-352, 6.3, 288); tel6.scale.set(1.79, 1, 0.5); cena.add(tel6);
-      cilindro(3, 2.4, 0xf8c94a, -340, 0.3, 282, { seg: 32 });
+      caixa(12, 5, 10, 0xf8f0df, -330, 0.3, 282);
+      const tel6 = new T.Mesh(new T.CylinderGeometry(4, 4, 10.4, 3), mat(0xa0603a)); tel6.rotation.set(-Math.PI / 2, 0, 0); tel6.position.set(-330, 6.3, 282); tel6.scale.set(1.79, 1, 0.5); cena.add(tel6);
+      cilindro(3, 2.4, 0xf8c94a, -318, 0.3, 276, { seg: 32 });
       // 10 SANEPAR: reservatórios ao norte
       [[166, -312], [184, -312]].forEach(([x, z]) => { cilindro(6, 9, 0xd9dee2, x, 0.3, z, { seg: 32 }); cilindro(6.3, 0.6, 0x4a8fd6, x, 9.3, z, { seg: 32, colide: false, sombra: false }); });
       // letreiro BIOPARK e muro de tijolos no gramado ao sul do campus
