@@ -48,14 +48,21 @@ Um mundo 3D do Território do Biopark, inspirado no portfólio de Bruno Simon. A
   - no computador: setas ou W, A, S, D; `Espaço` para o freio de mão, `R` para voltar ao início e `M` para o menu;
   - no celular: joystick na tela.
 
-O campus detalhado vem do modelo `MAPA_ORIENTA.blend`, exportado para `campus.json`.
+O mapa do jogo foi redesenhado a partir do **MASTERPLAN_2025** (arquivo DWG da engenharia do Biopark):
+
+- ruas, calçadas, quadras, lotes, rotatórias e nomes de ruas vêm do desenho oficial;
+- a escala é 1 unidade do jogo = 2 m, com o mapa girado 5,3° para a Av. Max Planck ficar na horizontal;
+- os lotes têm a cor do zoneamento do masterplan: universitário (azul), residencial (amarelo), comércio e serviços (vermelho) e indústria (roxo);
+- os prédios em detalhe do campus (Charles Darwin, Blocos Educacionais, Colégio e UFPR) vêm do modelo `MAPA_ORIENTA.blend`.
+
+Tudo isso fica em `campus.json`.
 
 ## Arquivos
 
 | Arquivo | Para que serve |
 |---|---|
 | `index.html` | O site inteiro: textos, estilos, scripts e fotos (embutidas em base64) |
-| `campus.json` | Geometria 3D dos prédios do campus para o jogo, carregada só quando o jogo abre |
+| `campus.json` | Mapa do jogo (ruas, quadras, lotes e nomes do masterplan) e geometria 3D dos prédios do campus, carregados só quando o jogo abre |
 | `previa.webm`, `previa.mp4` | Vídeo curto em repetição da chamada do jogo. O WebM é para a maioria dos navegadores e o MP4 é para o Safari |
 
 Bibliotecas carregadas de CDN só quando são usadas:
