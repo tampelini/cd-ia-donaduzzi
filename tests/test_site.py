@@ -50,7 +50,7 @@ def main():
                 checa(pg.locator(f"#{aba}").count() > 0, f"[{nome}] aba #{aba} aparece")
             pg.evaluate("location.hash = '#inicio'")
             pg.wait_for_timeout(800)
-            for sec in ["inicio-caminho", "inicio-carreiras", "inicio-depoimentos", "inicio-beneficios", "inicio-biopark"]:
+            for sec in ["inicio-caminho", "inicio-carreiras", "inicio-depoimentos", "inicio-beneficios", "inicio-biopark", "inicio-coordenador"]:
                 checa(pg.locator(f"#{sec}").count() == 1, f"[{nome}] seção #{sec}")
             checa(pg.evaluate("(window.__VAGAS__ && window.__VAGAS__.vagas.length) || 0") > 0, f"[{nome}] dados de vagas carregados")
             checa(pg.evaluate("(window.__CURSOS__ && window.__CURSOS__.comum.periodos.length) || 0") == 8, f"[{nome}] 8 períodos na matriz")
