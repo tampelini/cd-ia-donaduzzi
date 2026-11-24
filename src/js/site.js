@@ -1104,9 +1104,9 @@ ${htmlProximo(isCD ? "ia" : "vagas")}
 
 <section class="block in-carr" id="inicio-carreiras" aria-labelledby="in-cr-t">
   <div class="wrap">
-    <p class="in-k">Onde você vai trabalhar</p>
-    <h2 id="in-cr-t" class="in-h2">O que você vai fazer, e onde</h2>
-    <p class="in-sub">Escolha uma profissão e veja o que ela faz no dia a dia e em grandes empresas do Brasil e do mundo.</p>
+    <p class="in-k">Carreiras</p>
+    <h2 id="in-cr-t" class="in-h2">Em que áreas você pode trabalhar e atuar?</h2>
+    <p class="in-sub">Toque em uma profissão e veja, em poucos segundos, o que ela faz e onde trabalha.</p>
     <div class="cr-tabs" role="group" aria-label="Escolha a profissão">
       <button type="button" class="cr-tab" data-p="cd" aria-pressed="true" aria-controls="cr-corpo"><span class="cr-tic" aria-hidden="true">📊</span><span><b>Cientista de dados</b><small>Curso de Ciência de Dados</small></span></button>
       <button type="button" class="cr-tab" data-p="ia" aria-pressed="false" aria-controls="cr-corpo"><span class="cr-tic" aria-hidden="true">🤖</span><span><b>Bacharel em Inteligência Artificial</b><small>Curso de Inteligência Artificial</small></span></button>

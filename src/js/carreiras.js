@@ -19,10 +19,13 @@
     return t ? '<p class="cr-vivo"><b>Agora no nosso painel:</b> ' + t + ' vagas abertas para esta profissão (coleta de ' + d + '), em empresas como ' + L.map(esc).join(", ") + '. <a href="#panorama">Ver vagas e salários</a></p>' : "";
   }
   function render(anima) {
-    var c = document.getElementById("cr-corpo"); if (!c) return;
+    var c = document.getElementById("cr-corpo"); if (!c) return; c.dataset.p = perfil;
     var p = P[perfil], st = S.filter(function (x) { return x[0] === setor; })[0] || S[0], ix = perfil === "cd" ? 2 : 3;
     document.querySelectorAll(".cr-tab").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.p === perfil)); });
-    var h = '<div class="cr-top"><div><h3>' + p.ic + ' ' + p.nome + '</h3><p>' + p.frase + '</p></div><p class="cr-curso"><b>' + p.curso + '</b>' + p.curso2 + '</p></div>' +
+    var h = '<div class="cr-top"><div><h3>' + p.ic + ' ' + p.nome + '</h3></div><p class="cr-curso"><b>' + p.curso + '</b>' + p.curso2 + '</p></div>' +
+      '<p class="cr-chamada">' + esc(p.chamada) + '</p>' +
+      '<ul class="cr-acoes">' + p.acoes.map(function (a, i) { return '<li style="--i:' + i + '"><span aria-hidden="true">' + a[0] + '</span>' + esc(a[1]) + '</li>'; }).join("") + '</ul>' +
+      '<p class="cr-onde"><b>Onde trabalha:</b> ' + esc(p.onde) + '</p>' +
       '<p class="cr-h4">O que faz</p><ol class="cr-faz">' + p.faz.map(function (f, i) { return '<li style="--i:' + i + '"' + (perfil === "ia" && i === 0 ? ' class="is-base"' : '') + '><span class="fi" aria-hidden="true">' + f[0] + '</span><b>' + f[1] + '</b><span>' + f[2] + '</span><em>Ex.: ' + f[3] + '</em></li>'; }).join("") + '</ol>' +
       '<ul class="cr-como"><li class="k">Pode trabalhar como:</li>' + p.como.map(function (x) { return '<li>' + x + '</li>'; }).join("") + '</ul>' +
       '<ul class="cr-como"><li class="k">Nas vagas aparece como:</li>' + p.vagas.map(function (x) { return '<li lang="en">' + x + '</li>'; }).join("") + '</ul>' +
