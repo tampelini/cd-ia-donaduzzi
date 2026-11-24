@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#642032">
+<title>Ciência de Dados e IA · Faculdade Donaduzzi: um caminho, dois diplomas</title>
+<meta name="description" content="Cursos de Ciência de Dados e Inteligência Artificial da Faculdade Donaduzzi, no Biopark, e um painel de vagas, estágios, bolsas e concursos verificados na área, com salários e metodologia aberta.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Um caminho. Dois diplomas. Ciência de Dados e IA na Faculdade Donaduzzi">
+<meta property="og:description" content="Tecnólogo em Ciência de Dados em 2 anos e meio e Bacharel em Inteligência Artificial em 4. Aulas à noite no Biopark, em Toledo (PR), e painel de vagas verificadas na área.">
+<meta property="og:image" content="assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>{{include:src/css/site.css}}</style>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topbar">
+  <div class="progresso" aria-hidden="true"></div>
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img class="brand-logo" src="{{asset:assets/img/logo-donaduzzi-topo.svg}}" width="487" height="137" alt="Faculdade Donaduzzi"><span class="brand-sep" aria-hidden="true"></span><span class="brand-txt">Ciência de Dados<br>e Inteligência Artificial</span></a>
+    <div class="tabs" role="tablist" aria-label="Áreas do site">
+      <button type="button" role="tab" id="tab-inicio" aria-controls="aba-inicio" aria-selected="true"><span class="t-long">Início</span><span class="t-short">Início</span></button>
+      <button type="button" role="tab" id="tab-cd" aria-controls="aba-cd" aria-selected="false" tabindex="-1"><span class="t-long">Ciência de Dados</span><span class="t-short">Dados</span></button>
+      <button type="button" role="tab" id="tab-ia" aria-controls="aba-ia" aria-selected="false" tabindex="-1"><span class="t-long">Inteligência Artificial</span><span class="t-short">IA</span></button>
+      <button type="button" role="tab" id="tab-vagas" aria-controls="aba-vagas" aria-selected="false" tabindex="-1"><span class="t-long">Vagas e salários</span><span class="t-short">Vagas</span></button>
+    </div>
+  </div>
+</header>
+
+<div id="demo-banner" class="demo-banner" role="status" hidden>
+  <div class="wrap">
+    <strong>Dados demonstrativos</strong>
+    <span>Tudo o que aparece agora é fictício e serve só para mostrar como o painel funciona. Nenhuma vaga ou salário desta visualização existe.</span>
+    <button class="btn small" type="button" data-action="real">Voltar aos dados reais</button>
+  </div>
+</div>
+
+<main id="conteudo">
+
+<div class="aba" id="aba-inicio" role="tabpanel" aria-labelledby="tab-inicio" tabindex="-1"><noscript><p class="wrap" style="padding-block:40px">Ative o JavaScript para ver o conteúdo da página.</p></noscript></div>
+
+<div class="aba" id="aba-cd" role="tabpanel" aria-labelledby="tab-cd" tabindex="-1" hidden></div>
+
+<div class="aba" id="aba-ia" role="tabpanel" aria-labelledby="tab-ia" tabindex="-1" hidden></div>
+
+<div class="aba" id="aba-vagas" role="tabpanel" aria-labelledby="tab-vagas" tabindex="-1" hidden>
+<section class="hero" id="panorama" aria-labelledby="titulo-principal">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Vagas e salários · Paraná e Brasil</p>
+      <h1 id="titulo-principal"><span class="big" data-bind="total">…</span> vagas abertas em dados e IA</h1>
+      <p class="lede">Estágios, empregos, bolsas e concursos verificados em anúncios oficiais, com salário quando divulgado e link direto para se candidatar.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#vagas">Ver vagas</a>
+        <a class="btn" href="#salarios">Explorar salários</a>
+        <a class="btn ghost" href="#cd">Conhecer os cursos</a>
+      </div>
+    </div>
+    <aside class="boletim" aria-labelledby="boletim-t">
+      <h2 id="boletim-t">Boletim da coleta</h2>
+      <dl>
+        <dt>Última atualização</dt><dd data-bind="atualizacao">…</dd>
+        <dt>Oportunidades na base</dt><dd data-bind="total">…</dd>
+        <dt>No Paraná</dt><dd data-bind="pr">…</dd>
+        <dt>Com salário ou bolsa divulgado</dt><dd data-bind="comSalario">…</dd>
+        <dt>Organizações contratantes</dt><dd data-bind="orgs">…</dd>
+        <dt class="rule-top">Tipo de dado</dt><dd class="rule-top" data-bind="tipoDado">…</dd>
+      </dl>
+      <p class="stamp" data-bind="stamp">Carregando base…</p>
+    </aside>
+  </div>
+  <div class="wrap" id="stale-wrap" hidden style="margin-top:16px">
+    <p class="notice warn" id="stale-msg"></p>
+  </div>
+</section>
+
+<section class="block" id="indicadores" aria-labelledby="ind-t">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Indicadores principais</p>
+      <h2 id="ind-t">Em números</h2>
+      <p>Só vagas ativas. Salários contam apenas quando aparecem no anúncio.</p>
+    </div>
+    <div id="kpis" aria-live="polite"><div class="skeleton"></div></div>
+  </div>
+</section>
+
+<section class="block" id="vagas" aria-labelledby="vagas-t">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Painel de vagas</p>
+      <h2 id="vagas-t">Encontre sua vaga</h2>
+      <p>Filtre pelo seu perfil e confirme tudo no anúncio oficial antes de se candidatar.</p>
+    </div>
+    <div class="board">
+      <details class="filters" id="filters" open>
+        <summary><span>Filtros</span><span class="count-pill" id="filter-count" aria-live="polite">0 ativos</span></summary>
+        <form class="filters-body" id="filter-form" role="search" aria-label="Filtrar vagas">
+          <div class="field">
+            <label for="f-q">Palavra-chave</label>
+            <input type="search" id="f-q" name="q" placeholder="Ex.: Python, estágio, Toledo…" autocomplete="off" spellcheck="false" enterkeyhint="search">
+          </div>
+          <fieldset>
+            <legend>Onde</legend>
+            <div class="checks" id="f-regiao"></div>
+          </fieldset>
+          <div class="field">
+            <label for="f-uf">Estado</label>
+            <select id="f-uf" name="uf"></select>
+          </div>
+          <div class="field">
+            <label for="f-cidade">Cidade</label>
+            <select id="f-cidade" name="cidade"></select>
+          </div>
+          <fieldset><legend>Modalidade</legend><div class="checks" id="f-modalidade"></div></fieldset>
+          <fieldset><legend>Nível</legend><div class="checks" id="f-nivel"></div></fieldset>
+          <fieldset><legend>Área</legend><div class="checks" id="f-area"></div></fieldset>
+          <div class="field">
+            <label for="f-faixa">Faixa salarial (mensal)</label>
+            <select id="f-faixa" name="faixa"></select>
+          </div>
+          <div class="field">
+            <label for="f-contratacao">Tipo de contratação</label>
+            <select id="f-contratacao" name="contratacao"></select>
+          </div>
+          <div class="field">
+            <label for="f-formacao">Formação exigida</label>
+            <select id="f-formacao" name="formacao"></select>
+          </div>
+          <fieldset>
+            <legend>Situação</legend>
+            <label class="check"><input type="checkbox" id="f-abertas" name="abertas"> Somente inscrições abertas hoje</label>
+            <label class="check"><input type="checkbox" id="f-encerradas" name="encerradas"> Mostrar vagas encerradas</label>
+          </fieldset>
+          <div class="filters-actions">
+            <button type="reset" class="btn small" id="f-clear">Limpar filtros</button>
+          </div>
+        </form>
+      </details>
+
+      <div>
+        <div class="quick" role="group" aria-label="Atalhos de filtro">
+          <span class="quick-l" aria-hidden="true">Atalhos</span>
+          <button type="button" class="qk" data-quick="pr" aria-pressed="false">No Paraná</button>
+          <button type="button" class="qk" data-quick="inicio" aria-pressed="false">Estágio e júnior</button>
+          <button type="button" class="qk" data-quick="remota" aria-pressed="false">Remotas</button>
+          <button type="button" class="qk" data-quick="sal" aria-pressed="false">Com salário</button>
+        </div>
+        <div class="results-bar">
+          <p class="rcount" id="rcount" aria-live="polite">Carregando…</p>
+          <div class="results-tools">
+            <label for="f-sort" class="sr-only">Ordenar por</label>
+            <select id="f-sort">
+              <option value="recentes">Mais recentes</option>
+              <option value="maior">Maior salário</option>
+              <option value="menor">Menor salário</option>
+              <option value="prazo">Prazo mais próximo</option>
+              <option value="estudante">Mais compatível com estudantes</option>
+              <option value="local">Localização (Paraná primeiro)</option>
+            </select>
+            <button class="btn small" type="button" data-action="csv">
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8m0 0 3-3m-3 3L5 7M3 12v2h10v-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Exportar CSV
+            </button>
+          </div>
+        </div>
+        <div class="chips-active" id="chips-active"></div>
+        <div id="trilha-filter" hidden style="margin-bottom:12px"></div>
+        <div class="jobs" id="jobs" aria-busy="true">
+          <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+        <div class="more"><button class="btn" type="button" id="more" hidden>Mostrar mais vagas</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="salarios" aria-labelledby="sal-t">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Dashboard salarial e de mercado</p>
+      <h2 id="sal-t">Quanto paga e o que pedem</h2>
+      <p>Poucos anúncios informam salário. Cada gráfico mostra a amostra (n); barras hachuradas têm menos de 5 vagas.</p>
+    </div>
+    <div class="dash-controls">
+      <div class="seg" role="group" aria-label="Base usada nos gráficos">
+        <button type="button" data-scope="todas" aria-pressed="true">Todas as vagas ativas</button>
+        <button type="button" data-scope="filtradas" aria-pressed="false">Só as vagas filtradas</button>
+      </div>
+      <p class="src-note" id="dash-scope-note"></p>
+    </div>
+    <div class="salary-hero" id="salary-cards"><div class="skeleton"></div></div>
+    
+    <div class="charts" id="charts"></div>
+    <details class="more-charts" id="mais-graficos"><summary>Ver mais análises (área, estado, modalidade, cargos, competências, formação e evolução)</summary><div class="charts" id="charts-mais"></div></details>
+  </div>
+</section>
+
+
+
+
+<section class="block" id="metodologia" aria-labelledby="met-t">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Fontes e metodologia</p>
+      <h2 id="met-t">Como coletamos</h2>
+      <p>Vagas e salários mudam o tempo todo. Confirme sempre as informações no anúncio oficial antes de se candidatar.</p>
+    </div>
+    <details class="more-method"><summary>Ver a metodologia completa</summary><div class="method-grid" id="method"></div></details>
+  </div>
+</section>
+</div>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-actions">
+      <button class="btn" type="button" data-action="share">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 9.5 9.5 6.5M7 4.5l1.2-1.2a2.6 2.6 0 0 1 3.7 3.7L10.7 8.2M9 11.5l-1.2 1.2a2.6 2.6 0 0 1-3.7-3.7l1.2-1.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Compartilhar página
+      </button>
+      <button class="btn only-vagas" type="button" data-action="report">Imprimir ou gerar relatório em PDF</button>
+      <button class="btn only-vagas" type="button" data-action="csv">Exportar vagas filtradas (CSV)</button>
+      <button class="btn only-vagas" type="button" data-action="demo" id="demo-toggle">Ver versão com dados demonstrativos</button>
+    </div>
+    <div id="share-fallback" class="share-fallback" hidden>
+      <label for="share-url" class="sr-only">Link da página</label>
+      <input id="share-url" readonly>
+      <span>Copie o link acima.</span>
+    </div>
+    <p class="only-curso">Faculdade Donaduzzi · Ciência de Dados e Inteligência Artificial · Biopark, Toledo (PR).</p>
+    <p class="only-vagas">Página educativa sem fins de recrutamento. Não temos vínculo com as organizações anunciantes e não intermediamos candidaturas. Base de dados e código disponíveis nos arquivos do projeto (<span class="mono">data/vagas.json</span>, <span class="mono">data/vagas.csv</span>).</p>
+  </div>
+</footer>
+
+<div class="tooltip" id="tooltip" role="presentation" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* Gerado por scripts/consolidar.py — não edite à mão */
+window.__VAGAS__ = {{json:data/vagas.json}};
+
+</script>
+<script>
+/* DADOS FICTÍCIOS — gerados por scripts/gerar_demo.py apenas para demonstração */
+window.__DEMO__ = {{json:data/vagas-demo.json}};
+
+</script>
+<script>
+/* Conteúdo das abas de curso. Edite data/cursos.json e rode scripts/gerar_cursos_js.py */
+window.__CURSOS__ = {{json:data/cursos.json}};</script>
+<script>
+/* Rede neural treinada no MNIST (dígitos 0-9, licença MIT do pacote "mnist") para o laboratório da página.
+   784 entradas -> 64 -> 32 -> 10 saídas, pesos em int8. Gerado por scripts/treinar_rede_digitos.py. */
+window.__LAB__ = {{json:data/lab-rede-neural.json|compacto}};
+
+</script>
+<script>{{include:src/js/imagens.js}}</script>
+<script>{{include:src/js/site.js}}</script>
+<script>{{include:src/js/movimento.js}}</script>
+<script>{{include:src/js/laboratorio.js}}</script>
+<script>{{include:src/js/jogo.js}}</script>
+<script>{{include:src/js/abertura.js}}</script>
+<script>{{include:src/js/depoimentos.js}}</script>
+<script>{{include:src/js/carreiras.js}}</script>
+
+</body>
+</html>
