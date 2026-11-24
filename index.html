@@ -1009,6 +1009,47 @@ h1, h2, h3, h4, .big-h, .hx-h, .hero h1, .faz h3, .exit h3, .hx-facts .pv, #aba-
 .bn-cards p { margin: 0; color: var(--ink-2); }
 .bn-ic { font-size: 1.6rem; }
 @media (max-width: 860px) { .bn-faixas { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bn-f.bn-top { grid-column: 1 / -1; min-height: 0; } }
+
+/* carreiras: escada do código à IA */
+.cr { margin-top: clamp(22px, 3vw, 34px); }
+.cr-escada { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; align-items: end; }
+.cr-d { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; position: relative; display: grid; gap: 4px; align-content: start; padding: 14px 14px 12px; min-height: calc(118px + var(--i) * 26px); border-radius: 16px 16px 4px 4px; background: color-mix(in srgb, var(--brand-gold) calc(34% - var(--i) * 6%), #fff); border: 1px solid color-mix(in srgb, var(--brand-wine) calc(10% + var(--i) * 8%), transparent); transition: transform .25s cubic-bezier(.2, .7, .2, 1), background .25s, color .25s, box-shadow .25s; }
+li:nth-child(5) > .cr-d { background: #f3e3e7; }
+.cr-d:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.cr-d:focus-visible { outline: 3px solid var(--brand-gold); outline-offset: 2px; }
+.cr-d[aria-pressed="true"] { background: var(--brand-wine); color: #fff; border-color: var(--brand-wine); box-shadow: 0 14px 30px rgba(100, 32, 50, .28); transform: translateY(-6px); }
+.cr-d[aria-pressed="true"]::after { content: ""; position: absolute; left: 50%; bottom: -9px; margin-left: -9px; border: 9px solid transparent; border-bottom: 0; border-top-color: var(--brand-wine); }
+.cr-n { position: absolute; top: 10px; right: 12px; font-family: var(--f-display); font-weight: 900; font-size: 1.6rem; line-height: 1; opacity: .2; }
+.cr-ic { font-size: 1.7rem; line-height: 1; }
+.cr-c { font-family: var(--f-display); font-weight: 800; font-size: 1.02rem; line-height: 1.15; margin-top: 4px; }
+.cr-q { font-size: .85rem; line-height: 1.25; opacity: .8; }
+.cr-cursos { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px 8px; margin-top: 8px; }
+.cr-b { padding: 5px 10px; border-radius: 8px; font-size: .82rem; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cr-b b { font-weight: 800; }
+.cr-b-cd { grid-column: 1 / 5; background: var(--brand-gold); color: #3D1220; }
+.cr-b-ia { grid-column: 1 / 6; background: var(--brand-wine); color: #fff; }
+.cr-p { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(16px, 3vw, 36px); padding: clamp(18px, 3vw, 28px); border-radius: 20px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); transition: opacity .2s; }
+.cr-p.is-troca { opacity: 0; }
+.cr-pk { margin: 0; font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-carmine); }
+.cr-p h3 { margin: 6px 0 0; font-family: var(--f-display); font-weight: 900; font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem); line-height: 1.1; color: var(--brand-wine); }
+.cr-p .cr-pf { margin: 10px 0 0; color: var(--ink-2); }
+.cr-tag { display: inline-block; margin-top: 12px; padding: 3px 10px; border-radius: 99px; font-size: .78rem; font-weight: 700; }
+.cr-tag-cd { background: #fff1d6; color: #7a4d00; } .cr-tag-ia { background: #f3e3e7; color: var(--brand-wine); }
+.cr-exk { margin: 0 0 8px; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 800; color: var(--muted); }
+.cr-ex { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cr-ex li { padding: 10px 12px; border-radius: 12px; background: #fbf7ec; border-left: 4px solid var(--brand-gold); }
+.cr-ex b { display: block; font-size: .75rem; color: #8a5a00; margin-bottom: 2px; }
+.cr-fim { margin: clamp(18px, 2.5vw, 26px) 0 0; font-family: var(--f-display); font-weight: 800; font-size: clamp(1.1rem, .95rem + .6vw, 1.4rem); line-height: 1.3; max-width: 52ch; }
+.cr-fim em { font-style: normal; color: var(--brand-carmine); }
+.cr-fim a { font-family: var(--f-body); font-size: .9rem; font-weight: 700; white-space: nowrap; }
+@media (max-width: 760px) {
+  .cr-escada { gap: 4px; }
+  .cr-d { padding: 8px 4px; min-height: calc(64px + var(--i) * 16px); justify-items: center; text-align: center; border-radius: 12px 12px 3px 3px; }
+  .cr-c, .cr-q, .cr-n { display: none; }
+  .cr-ic { font-size: 1.5rem; }
+  .cr-b { font-size: .75rem; padding: 4px 8px; }
+  .cr-p { grid-template-columns: minmax(0, 1fr); }
+}
 /* linha do tempo 8 semestres */
 .tl-st { font-size: 11px; line-height: 1.25; opacity: .78; }
 .tl-pi { justify-self: start; font-size: 9.5px; letter-spacing: .04em; text-transform: uppercase; font-weight: 700; padding: 2px 6px; border-radius: 99px; background: rgba(61, 18, 32, .12); }
@@ -3042,6 +3083,23 @@ ${htmlProximo(isCD ? "ia" : "vagas")}
   </div>
 </section>
 
+<section class="block in-carr" id="inicio-carreiras" aria-labelledby="in-cr-t">
+  <div class="wrap">
+    <p class="in-k">Onde você vai trabalhar</p>
+    <h2 id="in-cr-t" class="in-h2">Do código à IA</h2>
+    <p class="in-sub">Cada degrau é uma profissão e responde a uma pergunta diferente. Toque em um degrau para ver o que esse profissional faz.</p>
+    <div class="cr">
+      <ol class="cr-escada"><li style="--i:0"><button type="button" class="cr-d" data-d="0" aria-pressed="true" aria-controls="cr-p"><span class="cr-n">1</span><span class="cr-ic" aria-hidden="true">💻</span><span class="cr-c">Desenvolvedor de software</span><span class="cr-q">Como eu construo isso?</span></button></li><li style="--i:1"><button type="button" class="cr-d" data-d="1" aria-pressed="false" aria-controls="cr-p"><span class="cr-n">2</span><span class="cr-ic" aria-hidden="true">🛠️</span><span class="cr-c">Engenheiro de dados</span><span class="cr-q">Os dados estão prontos?</span></button></li><li style="--i:2"><button type="button" class="cr-d" data-d="2" aria-pressed="false" aria-controls="cr-p"><span class="cr-n">3</span><span class="cr-ic" aria-hidden="true">📊</span><span class="cr-c">Analista de dados</span><span class="cr-q">O que aconteceu?</span></button></li><li style="--i:3"><button type="button" class="cr-d" data-d="3" aria-pressed="false" aria-controls="cr-p"><span class="cr-n">4</span><span class="cr-ic" aria-hidden="true">🔮</span><span class="cr-c">Cientista de dados</span><span class="cr-q">O que vai acontecer?</span></button></li><li style="--i:4"><button type="button" class="cr-d" data-d="4" aria-pressed="false" aria-controls="cr-p"><span class="cr-n">5</span><span class="cr-ic" aria-hidden="true">🤖</span><span class="cr-c">Especialista em IA</span><span class="cr-q">O que o sistema faz sozinho?</span></button></li></ol>
+      <div class="cr-cursos">
+        <a class="cr-b cr-b-cd" href="#cd"><b>Ciência de Dados</b> · degraus 1 a 4</a>
+        <a class="cr-b cr-b-ia" href="#ia"><b>Inteligência Artificial</b> · todos os degraus</a>
+      </div>
+      <div class="cr-p" id="cr-p" aria-live="polite"></div>
+    </div>
+    <p class="cr-fim">O cientista de dados descobre <em>o que vai acontecer</em>. O profissional de IA constrói <em>o sistema que age sozinho</em>. <a href="#panorama">Ver vagas e salários de cada cargo</a></p>
+  </div>
+</section>
+
 <section class="block in-pratica" id="inicio-pratica" aria-labelledby="in-pr-t">
   <div class="wrap">
     <p class="in-k">Na prática</p>
@@ -3113,15 +3171,15 @@ ${htmlProximo(isCD ? "ia" : "vagas")}
   <div class="wrap">
     <p class="in-k">Bolsas e benefícios · Vestibular de Verão 2027.1</p>
     <h2 id="in-bn-t" class="in-h2">Até 90% de desconto na mensalidade</h2>
-    <p class="in-sub">Para quem ingressa no 1º semestre de 2027, o desconto depende da renda mensal do estudante. Quem ainda não trabalha começa com 90%.</p>
-    <div class="bn-faixas" role="table" aria-label="Desconto na mensalidade por renda mensal bruta do estudante">
-      <div role="row" class="bn-f bn-top"><span role="cell">Sem atividade remunerada</span><b role="cell">90%</b></div>
-      <div role="row" class="bn-f"><span role="cell">Estágio ou renda até R$ 1.741</span><b role="cell">65%</b></div>
+    <p class="in-sub">Quem ingressa no 1º semestre de 2027 sem atividade remunerada começa com 90% de desconto. Se passar a trabalhar durante o curso, o desconto é reajustado no semestre seguinte, conforme a renda.</p>
+    <div class="bn-faixas" role="table" aria-label="Desconto na matrícula e reajuste por renda mensal bruta durante o curso">
+      <div role="row" class="bn-f bn-top"><span role="cell">Na matrícula, sem atividade remunerada</span><b role="cell">90%</b></div>
+      <div role="row" class="bn-f"><span role="cell">Se começar estágio ou renda até R$ 1.741</span><b role="cell">65%</b></div>
       <div role="row" class="bn-f"><span role="cell">R$ 1.742 a R$ 2.500</span><b role="cell">55%</b></div>
       <div role="row" class="bn-f"><span role="cell">R$ 2.501 a R$ 3.500</span><b role="cell">40%</b></div>
       <div role="row" class="bn-f"><span role="cell">R$ 3.501 a R$ 4.999</span><b role="cell">10%</b></div>
     </div>
-    <p class="bn-nota">O desconto é renovado a cada semestre para quem mantém média 7, frequência e documentos em dia.</p>
+    <p class="bn-nota">As faixas de 65% a 10% valem no reajuste semestral de quem começa a trabalhar durante o curso. O desconto é revalidado a cada semestre para quem mantém média 7, frequência e documentos em dia.</p>
     <ul class="bn-cards">
       <li><span class="bn-ic" aria-hidden="true">🎓</span><h3>Bolsas de estudo</h3><p>Editais de bolsas CEBAS, integrais ou parciais, e concursos de bolsas ao longo do ano.</p></li>
       <li><span class="bn-ic" aria-hidden="true">💼</span><h3>Entrevistas de emprego</h3><p>Programa de Empregabilidade: até 3 entrevistas durante o curso, de preferência em empresas do Biopark.</p></li>
@@ -6377,6 +6435,35 @@ void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
     e.preventDefault(); tocar(+b.dataset.t || 0);
     if (b.classList.contains("dp-cap") && window.matchMedia("(max-width: 860px)").matches) document.getElementById("dp-v").scrollIntoView({ behavior: "smooth", block: "center" });
   });
+})();
+</script>
+<script>
+(function () {
+  var R = [{"ic": "💻", "c": "Desenvolvedor de software", "q": "Como eu construo isso?", "faz": "Programa sistemas, sites e apps. É a base de todos os outros degraus: todo profissional de dados programa.", "onde": "Desde o 1º semestre", "ex": ["Programa o app: o botão de play, a busca e as playlists.", "Programa o jogo: os mapas, as armas e o servidor das partidas.", "Programa os sistemas da fábrica e o app do produtor rural."]}, {"ic": "🛠️", "c": "Engenheiro de dados", "q": "Os dados estão prontos?", "faz": "Monta a infraestrutura: coleta, guarda e organiza os dados para que a análise e a IA sejam possíveis.", "onde": "2º e 3º semestres", "ex": ["Registra cada música tocada por milhões de pessoas.", "Coleta em tempo real os dados de cada partida.", "Liga os sensores das máquinas e das granjas a um banco de dados."]}, {"ic": "📊", "c": "Analista de dados", "q": "O que aconteceu?", "faz": "Olha para os dados do passado, cria dashboards e ajuda a empresa a tomar decisões.", "onde": "1º e 2º semestres", "ex": ["Monta o painel das músicas mais ouvidas por cidade.", "Descobre qual arma está forte demais no jogo.", "Cria o painel de produção, perdas e qualidade."]}, {"ic": "🔮", "c": "Cientista de dados", "q": "O que vai acontecer?", "faz": "Faz previsões com algoritmos de aprendizado de máquina.", "onde": "4º e 5º semestres", "ex": ["Prevê do que você vai gostar e monta sua playlist.", "Prevê quem vai parar de jogar e detecta trapaça.", "Prevê a safra e quando uma máquina vai quebrar."]}, {"ic": "🤖", "c": "Especialista em IA", "q": "O que o sistema faz sozinho?", "faz": "Cria e customiza modelos, constrói sistemas inteligentes e pode liderar a decisão de onde a empresa investe em IA.", "onde": "6º ao 8º semestre", "ex": ["Cria o DJ com voz que conversa com você.", "Cria bots e personagens que aprendem com os jogadores.", "Câmeras que pesam animais sozinhas, como no projeto Peso na Granja dos nossos alunos."]}], K = ["🎵 Num app de música", "🎮 Num jogo", "🌾 No agro e na indústria da região"], auto = null, tocou = false;
+  function abrir(i) {
+    var p = document.getElementById("cr-p"); if (!p) return;
+    var r = R[i];
+    document.querySelectorAll(".cr-d").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.d === i)); });
+    p.classList.add("is-troca");
+    setTimeout(function () {
+      p.innerHTML = '<div><p class="cr-pk">Degrau ' + (i + 1) + ' · ' + r.onde + '</p><h3>' + r.c + '</h3><p class="cr-pf"><strong>“' + r.q + '”</strong> ' + r.faz + '</p>' +
+        (i < 4 ? '<span class="cr-tag cr-tag-cd">Ciência de Dados e IA</span>' : '<span class="cr-tag cr-tag-ia">Só no bacharelado em IA</span>') + '</div>' +
+        '<div><p class="cr-exk">Por trás do que você usa</p><ul class="cr-ex">' + r.ex.map(function (t, k) { return '<li><b>' + K[k] + '</b>' + t + '</li>'; }).join("") + '</ul></div>';
+      p.classList.remove("is-troca");
+    }, 160);
+  }
+  document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest(".cr-d"); if (!b) return; tocou = true; clearInterval(auto); abrir(+b.dataset.d); });
+  function iniciar() {
+    var esc = document.querySelector(".cr-escada"); if (!esc) return setTimeout(iniciar, 300);
+    abrir(0);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    var i = 0;
+    new IntersectionObserver(function (es) { es.forEach(function (en) {
+      clearInterval(auto);
+      if (en.isIntersecting && !tocou) auto = setInterval(function () { i = (i + 1) % 5; abrir(i); }, 4500);
+    }); }, { threshold: .5 }).observe(esc);
+  }
+  iniciar();
 })();
 </script>
 </body>
