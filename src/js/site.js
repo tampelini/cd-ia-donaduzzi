@@ -1217,6 +1217,30 @@ ${htmlProximo(isCD ? "ia" : "vagas")}
   </div>
 </section>
 
+<section class="block in-coord" id="inicio-coordenador" aria-labelledby="in-co-t">
+  <div class="wrap">
+    <div class="co-card">
+      <img class="co-foto" src="{{asset:assets/img/coordenador-leonardo.webp}}" width="360" height="360" alt="Foto do professor Leonardo Garcia Tampelini, coordenador dos cursos" loading="lazy" decoding="async">
+      <div class="co-txt">
+        <p class="in-k">Fale com o coordenador</p>
+        <h2 id="in-co-t" class="co-nome">Prof. Leonardo Garcia Tampelini</h2>
+        <p class="co-cargo">Coordenador dos cursos de Ciência de Dados e Inteligência Artificial</p>
+        <ul class="co-cv">
+          <li>Mestre em Ciência da Computação pela <b>Unicamp</b></li>
+          <li>Especialista em Mineração de Dados Complexos pela <b>Unicamp</b></li>
+          <li>Bacharel em Informática pela <b>Unioeste</b></li>
+          <li>Professor no ensino superior desde <b>2013</b>, com experiência em autorização e reconhecimento de cursos junto ao MEC e em consultoria de projetos de tecnologia</li>
+        </ul>
+        <p class="co-convite">Ficou com dúvida sobre os cursos, a matriz, os projetos ou a carreira? Mande uma mensagem direto para o coordenador.</p>
+        <div class="hero-actions">
+          <a class="btn primary co-wa" href="https://wa.me/5545998068562?text=Ol%C3%A1%2C%20professor%20Leonardo%21%20Vim%20pelo%20site%20dos%20cursos%20de%20Ci%C3%AAncia%20de%20Dados%20e%20IA%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida." target="_blank" rel="noopener noreferrer"><span aria-hidden="true">💬</span> WhatsApp do coordenador: (45) 99806-8562<span class="sr-only"> (abre em nova aba)</span></a>
+          <a class="btn" href="http://lattes.cnpq.br/8859478385930696" target="_blank" rel="noopener noreferrer">Currículo Lattes<span class="sr-only"> (abre em nova aba)</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="block cta-band" id="inicio-inscricao" aria-labelledby="in-cta-t">
   <div class="wrap">
     <div class="cta-box escuro">
