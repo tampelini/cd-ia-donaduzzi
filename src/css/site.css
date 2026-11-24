@@ -990,6 +990,19 @@ h1, h2, h3, h4, .big-h, .hx-h, .hero h1, .faz h3, .exit h3, .hx-facts .pv, #aba-
 .bn-cards p { margin: 0; color: var(--ink-2); }
 .bn-ic { font-size: 1.6rem; }
 @media (max-width: 860px) { .bn-faixas { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bn-f.bn-top { grid-column: 1 / -1; min-height: 0; } }
+
+/* fale com o coordenador */
+.co-card { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: center; padding: clamp(22px, 4vw, 40px); border-radius: 24px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.co-foto { width: 100%; height: auto; aspect-ratio: 1; border-radius: 50%; background: #e9e6de; box-shadow: 0 0 0 6px #fff, 0 0 0 9px var(--brand-gold), 0 18px 40px rgba(61, 18, 32, .18); }
+.co-nome { margin: 4px 0 0; font-family: var(--f-display); font-weight: 900; font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem); line-height: 1.08; color: var(--brand-wine); }
+.co-cargo { margin: 6px 0 0; font-weight: 700; color: var(--brand-carmine); }
+.co-cv { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.co-cv li { position: relative; padding-left: 22px; color: var(--ink-2); }
+.co-cv li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 9px; height: 9px; border-radius: 50%; background: var(--brand-gold); }
+.co-convite { margin: 14px 0 0; font-size: 1.05rem; color: var(--ink); }
+.btn.primary.co-wa { background: #1f8f4e; border-color: #1f8f4e; color: #fff; }
+.btn.primary.co-wa:hover { background: #18773f; border-color: #18773f; }
+@media (max-width: 700px) { .co-card { grid-template-columns: minmax(0, 1fr); justify-items: start; } .co-foto { max-width: 170px; } }
 /* carreiras: o que faz e onde atua */
 .cr-tabs { margin-top: clamp(20px, 3vw, 30px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .cr-tab { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: 14px; align-items: center; padding: 16px 20px; border-radius: 18px; background: var(--surface); border: 2px solid var(--line); transition: transform .2s, background .25s, border-color .25s, color .25s, box-shadow .25s; }
