@@ -1,0 +1,108 @@
+{
+  "cd": {
+    "nome": "Cientista de dados",
+    "ic": "📊",
+    "curso": "Ciência de Dados · Tecnólogo · 2,5 anos",
+    "curso2": "Também faz parte do bacharelado em IA",
+    "frase": "Transforma dados em decisões e em previsões.",
+    "faz": [
+      [
+        "💻",
+        "Programa",
+        "Escreve código em Python e SQL para buscar e tratar dados.",
+        "Junta os dados de curtidas de um app."
+      ],
+      [
+        "🗂️",
+        "Lê e organiza dados",
+        "Coleta, limpa e organiza dados de muitas fontes.",
+        "Organiza milhões de posts, curtidas e comentários."
+      ],
+      [
+        "📊",
+        "Analisa o passado",
+        "Cria dashboards para a empresa decidir melhor.",
+        "Mostra em que horário os posts têm mais curtidas."
+      ],
+      [
+        "🔮",
+        "Prevê o futuro",
+        "Usa aprendizado de máquina para fazer previsões.",
+        "Prevê quais vídeos vão viralizar."
+      ]
+    ],
+    "como": [
+      "Cientista de dados",
+      "Analista de dados",
+      "Engenheiro de dados",
+      "Analista de BI",
+      "Desenvolvedor de software"
+    ],
+    "vagas": [
+      "Data Scientist",
+      "Data Analyst",
+      "Data Engineer",
+      "BI Analyst",
+      "Analytics Engineer"
+    ],
+    "fam": [
+      "Ciência de Dados",
+      "Análise de Dados",
+      "Business Intelligence",
+      "Engenharia de Dados"
+    ]
+  },
+  "ia": {
+    "nome": "Bacharel em Inteligência Artificial",
+    "ic": "🤖",
+    "curso": "Inteligência Artificial · Bacharelado · 4 anos",
+    "curso2": "Inclui toda a formação de Ciência de Dados",
+    "frase": "Cria sistemas inteligentes que aprendem e agem sozinhos.",
+    "faz": [
+      [
+        "✅",
+        "Tudo do cientista de dados",
+        "Programa, organiza, analisa e prevê.",
+        "A base dos 5 primeiros semestres."
+      ],
+      [
+        "🧠",
+        "Cria e customiza modelos",
+        "Treina e ajusta redes neurais e modelos de linguagem.",
+        "O filtro de câmera que reconhece o seu rosto."
+      ],
+      [
+        "⚙️",
+        "Constrói sistemas que agem sozinhos",
+        "Agentes, visão computacional e IA generativa.",
+        "O assistente que responde mensagens sozinho."
+      ],
+      [
+        "👑",
+        "Lidera a estratégia de IA",
+        "Decide onde e como a empresa investe em IA.",
+        "Define se o app vai ganhar um assistente com IA."
+      ]
+    ],
+    "como": [
+      "Engenheiro de IA",
+      "Engenheiro de machine learning",
+      "Especialista em visão computacional",
+      "Engenheiro de IA generativa",
+      "Líder de IA"
+    ],
+    "vagas": [
+      "AI Engineer",
+      "Machine Learning Engineer",
+      "Computer Vision Engineer",
+      "Generative AI Engineer",
+      "MLOps Engineer",
+      "AI Agent Engineer"
+    ],
+    "fam": [
+      "Engenharia de ML/IA",
+      "Analista/especialista em IA",
+      "Liderança em dados/IA"
+    ]
+  }
+}

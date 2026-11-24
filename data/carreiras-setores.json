@@ -1,0 +1,309 @@
+[
+  [
+    "redes",
+    "📱",
+    "Redes sociais e entretenimento",
+    [
+      [
+        "Meta",
+        "EUA",
+        "Mede o que as pessoas curtem e compartilham no Instagram e no WhatsApp.",
+        "Cria o algoritmo que monta o seu feed e os modelos de IA da empresa."
+      ],
+      [
+        "ByteDance (TikTok)",
+        "China",
+        "Analisa quanto tempo cada vídeo prende a atenção.",
+        "Constrói a recomendação que escolhe o próximo vídeo."
+      ],
+      [
+        "Netflix",
+        "EUA",
+        "Descobre quais séries fazem as pessoas assinar ou cancelar.",
+        "Cria o sistema que recomenda o próximo filme."
+      ],
+      [
+        "Spotify",
+        "Suécia",
+        "Analisa o que se ouve em cada cidade e horário.",
+        "Monta playlists personalizadas com IA."
+      ],
+      [
+        "Globo",
+        "Brasil",
+        "Mede a audiência da TV e do Globoplay.",
+        "Recomenda conteúdo para cada pessoa no Globoplay."
+      ],
+      [
+        "Electronic Arts",
+        "EUA",
+        "Analisa como os jogadores jogam para equilibrar o game.",
+        "Cria personagens e adversários que aprendem."
+      ]
+    ]
+  ],
+  [
+    "bancos",
+    "🏦",
+    "Bancos e fintechs",
+    [
+      [
+        "Nubank",
+        "Brasil",
+        "Analisa o uso do app e prevê quem pode atrasar a fatura.",
+        "Cria modelos que aprovam crédito e barram fraudes."
+      ],
+      [
+        "Itaú Unibanco",
+        "Brasil",
+        "Mede riscos e organiza dados de milhões de clientes.",
+        "Desenvolve IA generativa para o atendimento."
+      ],
+      [
+        "Sicredi",
+        "Brasil",
+        "Analisa o crédito dos associados, inclusive do agro.",
+        "Automatiza a análise de crédito com aprendizado de máquina."
+      ],
+      [
+        "Stone",
+        "Brasil",
+        "Acompanha as vendas dos lojistas nas maquininhas.",
+        "Detecta fraudes em pagamentos."
+      ],
+      [
+        "Visa",
+        "EUA",
+        "Analisa bilhões de compras com cartão.",
+        "Bloqueia fraudes em milissegundos."
+      ],
+      [
+        "JPMorgan Chase",
+        "EUA",
+        "Analisa riscos do mercado financeiro.",
+        "Cria IA para investimentos e atendimento."
+      ]
+    ]
+  ],
+  [
+    "tech",
+    "🛒",
+    "Tecnologia e comércio",
+    [
+      [
+        "Google",
+        "EUA",
+        "Mede como bilhões de pessoas usam a busca e o YouTube.",
+        "Pesquisa e cria modelos de IA como o Gemini."
+      ],
+      [
+        "Microsoft",
+        "EUA",
+        "Analisa dados de nuvem e de produtos.",
+        "Constrói o Copilot e a IA da nuvem Azure."
+      ],
+      [
+        "Amazon",
+        "EUA",
+        "Prevê a demanda para abastecer os estoques.",
+        "Cria a Alexa e a recomendação de produtos."
+      ],
+      [
+        "Mercado Livre",
+        "Argentina",
+        "Analisa vendas, preços e entregas.",
+        "Cria a busca e a recomendação de produtos."
+      ],
+      [
+        "iFood",
+        "Brasil",
+        "Prevê os horários de pico de pedidos.",
+        "Otimiza as rotas dos entregadores."
+      ],
+      [
+        "Magazine Luiza",
+        "Brasil",
+        "Analisa o comportamento de compra online e na loja.",
+        "Cria a assistente virtual e as recomendações."
+      ]
+    ]
+  ],
+  [
+    "ia",
+    "🤖",
+    "Empresas de IA",
+    [
+      [
+        "OpenAI",
+        "EUA",
+        "Avalia a qualidade dos dados de treinamento.",
+        "Cria modelos como o ChatGPT."
+      ],
+      [
+        "Anthropic",
+        "EUA",
+        "Analisa como os modelos se comportam.",
+        "Cria modelos como o Claude."
+      ],
+      [
+        "NVIDIA",
+        "EUA",
+        "Analisa o desempenho de chips e sistemas.",
+        "Cria o hardware e o software usados para treinar IA."
+      ],
+      [
+        "Google DeepMind",
+        "Reino Unido",
+        "Organiza dados científicos para pesquisa.",
+        "Pesquisa IA de ponta, da biologia aos jogos."
+      ],
+      [
+        "Hugging Face",
+        "EUA e França",
+        "Organiza e publica conjuntos de dados abertos.",
+        "Mantém a maior comunidade de modelos de IA abertos."
+      ],
+      [
+        "Accenture",
+        "Irlanda",
+        "Leva projetos de dados a empresas de todos os setores.",
+        "Implanta soluções de IA em grandes clientes."
+      ]
+    ]
+  ],
+  [
+    "industria",
+    "🏭",
+    "Indústria, energia e agro",
+    [
+      [
+        "Petrobras",
+        "Brasil",
+        "Analisa sensores de plataformas e refinarias.",
+        "Prevê falhas em equipamentos antes que aconteçam."
+      ],
+      [
+        "WEG",
+        "Brasil",
+        "Analisa dados de motores e fábricas.",
+        "Leva a indústria 4.0 com manutenção preditiva."
+      ],
+      [
+        "Ambev",
+        "Brasil",
+        "Prevê a demanda de bebidas em cada região.",
+        "Otimiza a logística de entrega."
+      ],
+      [
+        "Embraer",
+        "Brasil",
+        "Analisa dados de voo e de manutenção.",
+        "Desenvolve sistemas autônomos para aeronaves."
+      ],
+      [
+        "John Deere",
+        "EUA",
+        "Analisa dados das máquinas na lavoura.",
+        "Usa visão computacional para aplicar defensivo só onde precisa."
+      ],
+      [
+        "Tesla",
+        "EUA",
+        "Analisa dados de milhões de carros.",
+        "Desenvolve a direção autônoma."
+      ]
+    ]
+  ],
+  [
+    "saude",
+    "🩺",
+    "Saúde",
+    [
+      [
+        "Hospital Israelita Albert Einstein",
+        "Brasil",
+        "Analisa dados clínicos para pesquisa.",
+        "Cria IA que apoia os médicos no diagnóstico."
+      ],
+      [
+        "Dasa",
+        "Brasil",
+        "Analisa exames de milhões de pacientes.",
+        "Faz diagnóstico por imagem com IA."
+      ],
+      [
+        "Prati-Donaduzzi",
+        "Toledo, PR",
+        "Analisa produção e qualidade farmacêutica.",
+        "Otimiza processos da indústria farmacêutica."
+      ],
+      [
+        "Roche",
+        "Suíça",
+        "Analisa dados de estudos clínicos.",
+        "Trabalha com medicina de precisão."
+      ],
+      [
+        "Siemens Healthineers",
+        "Alemanha",
+        "Analisa dados de equipamentos médicos.",
+        "Cria diagnóstico assistido por IA em exames de imagem."
+      ],
+      [
+        "Philips",
+        "Holanda",
+        "Analisa o uso de equipamentos hospitalares.",
+        "Usa visão computacional em imagens médicas."
+      ]
+    ]
+  ],
+  [
+    "regiao",
+    "📍",
+    "Aqui no Oeste do Paraná",
+    [
+      [
+        "Prati-Donaduzzi",
+        "Toledo",
+        "Analisa produção e qualidade farmacêutica.",
+        "Otimiza processos da indústria farmacêutica."
+      ],
+      [
+        "BRF",
+        "Toledo e região",
+        "Acompanha produção e cadeia de suprimentos.",
+        "Aplica visão computacional na indústria de alimentos."
+      ],
+      [
+        "C.Vale",
+        "Palotina",
+        "Analisa dados de safra e dos cooperados.",
+        "Agricultura de precisão."
+      ],
+      [
+        "Coopavel",
+        "Cascavel",
+        "Analisa produção agrícola e industrial.",
+        "Agricultura de precisão e automação."
+      ],
+      [
+        "Sicoob",
+        "Oeste do PR",
+        "Analisa dados financeiros dos cooperados.",
+        "Modelos de crédito com aprendizado de máquina."
+      ],
+      [
+        "Itaipu Parquetec",
+        "Foz do Iguaçu",
+        "Pesquisa aplicada em energia.",
+        "Projetos de inovação com IA."
+      ],
+      [
+        "Empresas do Biopark",
+        "Toledo",
+        "Projetos integradores e estágios no próprio parque.",
+        "Pesquisa, desenvolvimento e inovação com IA."
+      ]
+    ]
+  ]
+]

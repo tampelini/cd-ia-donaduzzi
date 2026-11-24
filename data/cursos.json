@@ -1,0 +1,1569 @@
+{
+  "versao": "2026-10-20",
+  "comum": {
+    "segmentos": [
+      [
+        "1º",
+        "Programação e dados",
+        "Python · SQL · estatística"
+      ],
+      [
+        "2º",
+        "Engenharia de dados",
+        "ETL · NoSQL · álgebra"
+      ],
+      [
+        "3º",
+        "IA, web e nuvem",
+        "web scraping · cloud · data warehouse"
+      ],
+      [
+        "4º",
+        "Machine learning e MLOps",
+        "modelos · produção · ética"
+      ],
+      [
+        "5º",
+        "Padrões e inovação",
+        "agrupamento · pesquisa · negócio"
+      ],
+      [
+        "6º",
+        "Algoritmos, IoT e apps",
+        "sensores · Android · liderança"
+      ],
+      [
+        "7º",
+        "Deep learning e visão",
+        "Transformers · IA generativa · Green AI"
+      ],
+      [
+        "8º",
+        "Agentes inteligentes",
+        "agentes · tecnologias emergentes · artigo"
+      ]
+    ],
+    "comparacao": [
+      [
+        "Grau",
+        "Curso superior de tecnologia",
+        "Bacharelado"
+      ],
+      [
+        "Duração",
+        "5 semestres · 2 anos e meio",
+        "8 semestres · 4 anos"
+      ],
+      [
+        "Carga horária",
+        "2.100 horas",
+        "3.300 horas-aula"
+      ],
+      [
+        "Avaliação do MEC",
+        "Conceito 5 · reconhecido com nota máxima",
+        "Conceito 5 · nota máxima na avaliação"
+      ],
+      [
+        "Foco da formação",
+        "Transformar dados em informações, previsões, modelos e infraestrutura para apoiar decisões",
+        "Projetar, desenvolver, otimizar e liderar a implantação de sistemas inteligentes"
+      ],
+      [
+        "Principais atividades",
+        "Dashboards e indicadores, modelagem estatística, previsão, aprendizado de máquina, engenharia de dados, pipelines e integração",
+        "Algoritmos inteligentes, deep learning, visão computacional, linguagem natural, IA generativa, agentes, IoT e liderança de projetos de IA"
+      ],
+      [
+        "Trabalho de conclusão",
+        "Não há",
+        "Sim, em dois semestres"
+      ],
+      [
+        "Perfis profissionais",
+        "Analista de Dados · Analista de BI · Cientista de Dados · Engenheiro de Dados · Analista de Machine Learning · Analista de MLOps · Analista de Governança de Dados",
+        "Engenheiro de IA · Engenheiro de Machine Learning · Engenheiro de MLOps · Especialista em Visão Computacional · Especialista em Linguagem Natural · Desenvolvedor de Agentes · Arquiteto de Soluções de IA · Líder de Projetos de IA"
+      ],
+      [
+        "Relação entre eles",
+        "Os cinco primeiros semestres são a mesma matriz. Ciência de Dados permite entrar mais cedo no mercado.",
+        "Inclui toda a Ciência de Dados e acrescenta três semestres de criação, otimização e liderança de sistemas inteligentes."
+      ]
+    ],
+    "institucional": [
+      [
+        "Onde a aula acontece",
+        "Dentro do Biopark",
+        "Os cursos funcionam no Biopark, parque tecnológico de Toledo eleito pela Anprotec o melhor hub de inovação do país. Empresas, startups e centros de pesquisa ficam a poucos passos da sala de aula, e os desafios dos projetos vêm deles.",
+        "3"
+      ],
+      [
+        "Metodologia",
+        "Aprender fazendo, em equipe",
+        "O ensino é baseado em projetos. As turmas trabalham em ilhas de seis estudantes com perfis diferentes, com problemas reais de empresas e da comunidade.",
+        "5"
+      ],
+      [
+        "Projeto de estudantes",
+        "Do projeto de aula à empresa incubada",
+        "Estudantes de Ciência de Dados e IA criaram o Peso na Granja, que estima o peso de suínos por câmera e redes neurais. O projeto foi premiado no Hackathon do Show Rural Digital 2026 e entrou na trilha de incubação do Biopark.",
+        "3"
+      ],
+      [
+        "Empregabilidade",
+        "Trabalho e estágio durante o curso",
+        "Programa de empregabilidade desde o ingresso, com estágios e oportunidades no ecossistema do Biopark. Em agosto de 2025, 94% dos estudantes de IA estavam trabalhando ou estagiando.",
+        "2"
+      ],
+      [
+        "Comunidade",
+        "Conferência IA 360",
+        "A coordenação organiza com o Biopark e a Fundação Araucária a IA 360, conferência de inteligência artificial em Toledo, com dia acadêmico e dia voltado a empresas.",
+        "2"
+      ],
+      [
+        "Pesquisa",
+        "Parcerias e bolsas",
+        "Projetos de pesquisa aplicada com instituições parceiras, abertos a estudantes de graduação, com possibilidade de bolsa de iniciação científica.",
+        "1"
+      ]
+    ],
+    "coordenacao": {
+      "nome": "Leonardo Garcia Tampelini",
+      "cargo": "Coordenador de Ciência de Dados e Inteligência Artificial",
+      "bio": [
+        "Mestre em Ciência da Computação pela Unicamp, com especialização em Mineração de Dados Complexos pela Unicamp e graduação em Informática pela Unioeste.",
+        "Professor do ensino superior desde 2013 e coordenador dos dois cursos desde 2024. Une sala de aula, gestão acadêmica (com experiência em autorização e reconhecimento de cursos no MEC) e prática profissional em desenvolvimento de sistemas e consultoria em tecnologia da informação.",
+        "Coordena projetos de pesquisa aplicada em inteligência artificial com orientação de estudantes de graduação e tem produção técnica registrada como programas de computador."
+      ],
+      "tags": [
+        "Mestrado · Unicamp",
+        "Especialização · Unicamp",
+        "Graduação · Unioeste",
+        "Docente desde 2013"
+      ]
+    },
+    "ingresso": [
+      "Seletiva+ (redação no estilo do Enem e avaliação de perfil, com agendamento)",
+      "Nota do Enem",
+      "Transferência externa",
+      "Portador de diploma",
+      "Reabertura de matrícula"
+    ],
+    "contato": {
+      "telefone": "(45) 2036-3618",
+      "whatsapp": "(45) 9 9147-6872",
+      "wa": "https://wa.me/5545991476872",
+      "endereco": "Rod. PR-182, km 320/321, Biopark, Toledo (PR), CEP 85919-899"
+    },
+    "fontes": [
+      [
+        "Matrizes, cargas horárias, eixos, ferramentas, áreas de atuação e perguntas frequentes",
+        "modelo de referência dos cursos da coordenação de CD e IA (out/2026)",
+        null
+      ],
+      [
+        "Biopark com 130+ empresas e 94% dos estudantes de IA trabalhando ou estagiando",
+        "Biopark, 22/08/2025",
+        "https://biopark.com.br/2025/08/22/conferencia-ia360-evento-de-inteligencia-artificial-traz-grandes-especialistas-do-setor-para-toledo/"
+      ],
+      [
+        "Anprotec e projeto Peso na Granja",
+        "Toledo News, 26/02/2026",
+        "https://www.toledonews.com.br/noticia/biopark-e-faculdade-donaduzzi-levam-inteligencia-artificial-ao-campo"
+      ],
+      [
+        "Primeiro bacharelado presencial em IA do Paraná",
+        "Academia Donaduzzi, 13/03/2024",
+        "https://academiadonaduzzi.com.br/primeiro-curso-inteligencia-artificial-graduacao/"
+      ],
+      [
+        "Metodologia em ilhas, Seletiva+ e empregabilidade",
+        "Toledo News, 20/11/2025",
+        "https://www.toledonews.com.br/noticia/com-oito-cursos-faculdade-donaduzzi-apresenta-novo-modelo-de-ensino-e-processo-seletivo-personalizado-saiba-mais-toledo"
+      ]
+    ],
+    "porque_curto": [
+      [
+        "Aula dentro do Biopark",
+        "O curso funciona num parque tecnológico eleito pela Anprotec o melhor hub de inovação do país, ao lado de empresas e startups.",
+        "3"
+      ],
+      [
+        "Projeto real todo semestre",
+        "Projetos integradores com problemas de empresas. O Peso na Granja, de alunos de CD e IA, foi premiado no Show Rural Digital 2026.",
+        "3"
+      ],
+      [
+        "Trabalho durante o curso",
+        "Aulas à noite e programa de empregabilidade: em agosto de 2025, 94% dos alunos de IA trabalhavam ou estagiavam.",
+        "2"
+      ]
+    ],
+    "periodos": [
+      {
+        "n": 1,
+        "titulo": "Fundamentos de dados",
+        "h": 420,
+        "resumo": "Você aprende a programar em Python, a modelar bancos de dados, a usar estatística e a explorar dados com gráficos e indicadores. Também entende o computador por dentro: Linux, linha de comando e contêineres.",
+        "disc": [
+          {
+            "n": "Programação para Ciência de Dados",
+            "h": 80,
+            "d": "Lógica e algoritmos desde o início até listas, filas, pilhas, árvores e grafos, com introdução à orientação a objetos.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Abstração e Modelagem de Dados",
+            "h": 80,
+            "d": "Projeto de bancos de dados relacionais: modelo conceitual e lógico, normalização e primeiras consultas em SQL.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Análise de Dados Qualitativos e Quantitativos",
+            "h": 80,
+            "d": "Estatística para dados: média e dispersão, probabilidade, regressão linear e testes de hipóteses.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Análise Exploratória de Dados",
+            "h": 80,
+            "d": "Tratar, visualizar e resumir dados em gráficos, métricas e KPIs, com projetos de problemas reais de negócio.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Sistemas Computacionais e Construção de Protótipos",
+            "h": 80,
+            "d": "Como funcionam o computador e o sistema operacional, linha de comando em Linux e Windows, virtualização e contêineres.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Atividades Complementares I",
+            "h": 20,
+            "d": "Eventos, cursos, monitoria e iniciação científica, conforme o regulamento institucional.",
+            "tipo": "ac"
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "titulo": "Engenharia de dados",
+        "h": 420,
+        "resumo": "Você passa a guardar e mover dados em escala: SQL avançado e NoSQL, pipelines de ETL, álgebra linear em Python e orientação a objetos. Começam os projetos integradores, com um problema real de empresa ou comunidade.",
+        "disc": [
+          {
+            "n": "Armazenamento de Dados e Otimização",
+            "h": 80,
+            "d": "SQL avançado, transações, otimização de consultas e quando usar bancos NoSQL.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Pipeline de Dados",
+            "h": 80,
+            "d": "Limpeza e preparação de dados e processos de ETL (extração, transformação e carga), com visualização de padrões e anomalias.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Aplicação de Álgebra na Ciência de Dados",
+            "h": 80,
+            "d": "Vetores, matrizes, autovalores e decomposições, implementados em Python com NumPy e SciPy.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Orientação a Objetos e UML",
+            "h": 80,
+            "d": "Classes, herança, polimorfismo, testes automatizados e modelagem de software com UML.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Projeto Integrador de Extensão I",
+            "h": 80,
+            "d": "Projeto prático que junta o que foi estudado até aqui e atende a uma demanda real de empresas, escolas, serviços públicos ou da comunidade.",
+            "tipo": "pie"
+          },
+          {
+            "n": "Atividades Complementares II",
+            "h": 20,
+            "d": "Eventos, cursos, monitoria e iniciação científica, conforme o regulamento institucional.",
+            "tipo": "ac"
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "titulo": "IA, web e nuvem",
+        "h": 420,
+        "resumo": "Primeiro contato com a inteligência artificial. Você coleta dados da web, administra servidores e serviços em nuvem, monta um data warehouse e descobre como funcionam os buscadores.",
+        "disc": [
+          {
+            "n": "Introdução à Inteligência Artificial",
+            "h": 80,
+            "d": "História e fundamentos da IA, métodos de busca (cega, heurística e competitiva) e algoritmos bioinspirados.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Sites e Captura de Dados Web",
+            "h": 80,
+            "d": "Webscraping com Python (BeautifulSoup e Scrapy), APIs, JSON e XML, com cuidados legais e éticos.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Gestão de Servidores e Cloud Computing",
+            "h": 80,
+            "d": "Administração de servidores Linux, contêineres e orquestração, e serviços de nuvem (IaaS, PaaS e SaaS).",
+            "tipo": "disc"
+          },
+          {
+            "n": "Recuperação de Informação",
+            "h": 40,
+            "d": "Como funcionam os buscadores: ranking e recuperação de textos, imagens e vídeos.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Data Warehouse",
+            "h": 40,
+            "d": "Ciclo de vida do data warehouse e modelagem dimensional para análise de negócios.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Projeto Integrador de Extensão II",
+            "h": 80,
+            "d": "Projeto prático que junta o que foi estudado até aqui e atende a uma demanda real de empresas, escolas, serviços públicos ou da comunidade.",
+            "tipo": "pie"
+          },
+          {
+            "n": "Atividades Complementares III",
+            "h": 20,
+            "d": "Eventos, cursos, monitoria e iniciação científica, conforme o regulamento institucional.",
+            "tipo": "ac"
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "titulo": "Machine learning e MLOps",
+        "h": 420,
+        "resumo": "Você treina e avalia os primeiros modelos de aprendizado de máquina e aprende a colocá-los em produção com MLOps. Junto, otimização matemática, segurança de dados e ética.",
+        "disc": [
+          {
+            "n": "Aprendizagem de Máquina Supervisionada",
+            "h": 80,
+            "d": "Classificação e regressão com k-vizinhos, Naïve Bayes, árvores, florestas aleatórias e ensembles, com validação cruzada e métricas.",
+            "tipo": "disc"
+          },
+          {
+            "n": "MLOps",
+            "h": 80,
+            "d": "Modelos em produção: contêineres, versionamento de código, dados e modelos, CI/CD, APIs e monitoramento.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Modelagem Matemática e Otimização",
+            "h": 80,
+            "d": "Derivadas para maximizar e minimizar, pesquisa operacional, método Simplex e programação linear inteira.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Segurança de Dados e Ética",
+            "h": 80,
+            "d": "Ética na tecnologia, aspectos jurídicos da internet, direitos autorais, auditoria e segurança de sistemas.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Projeto Integrador de Extensão III",
+            "h": 80,
+            "d": "Projeto prático que junta o que foi estudado até aqui e atende a uma demanda real de empresas, escolas, serviços públicos ou da comunidade.",
+            "tipo": "pie"
+          },
+          {
+            "n": "Atividades Complementares IV",
+            "h": 20,
+            "d": "Eventos, cursos, monitoria e iniciação científica, conforme o regulamento institucional.",
+            "tipo": "ac"
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "titulo": "Padrões, pesquisa e inovação",
+        "h": 420,
+        "resumo": "Você encontra padrões em dados sem rótulo, escreve e apresenta como pesquisador, entende redes e transforma ideias em negócio. Ao fim deste semestre, você é Tecnólogo em Ciência de Dados.",
+        "disc": [
+          {
+            "n": "Aprendizagem de Máquina Não Supervisionada",
+            "h": 80,
+            "d": "Agrupamento (k-means, DBSCAN), regras de associação, detecção de anomalias e redução de dimensionalidade.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Produção Científica e Seminários",
+            "h": 80,
+            "d": "Pesquisa e escrita acadêmica, leitura crítica e seminários com especialistas em tecnologia, IA e sustentabilidade.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Infraestrutura de Redes",
+            "h": 40,
+            "d": "Redes TCP/IP, endereçamento, roteamento, serviços como DNS e VPN e segurança de redes.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Empreendedorismo e Inovação",
+            "h": 40,
+            "d": "Encontrar oportunidades, validar hipóteses com clientes e desenhar modelos de negócio com o Business Model Canvas.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Eletiva I",
+            "h": 80,
+            "d": "Escolhida entre as optativas do catálogo (veja a lista abaixo).",
+            "tipo": "eletiva"
+          },
+          {
+            "n": "Projeto Integrador de Extensão IV",
+            "h": 80,
+            "d": "Projeto prático que junta o que foi estudado até aqui e atende a uma demanda real de empresas, escolas, serviços públicos ou da comunidade.",
+            "tipo": "pie"
+          },
+          {
+            "n": "Atividades Complementares V",
+            "h": 20,
+            "d": "Eventos, cursos, monitoria e iniciação científica, conforme o regulamento institucional.",
+            "tipo": "ac"
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "titulo": "Algoritmos, IoT e apps",
+        "h": 400,
+        "so_ia": true,
+        "resumo": "Começa a parte exclusiva do bacharelado: algoritmos eficientes, dados que vêm de sensores e dispositivos IoT, apps Android e liderança de equipes de inovação.",
+        "disc": [
+          {
+            "n": "Projeto e Otimização de Algoritmos",
+            "h": 80,
+            "d": "Análise de complexidade e estratégias como divisão e conquista, programação dinâmica e algoritmos gulosos, com benchmarks.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Obtenção de Dados e Processamento IoT",
+            "h": 80,
+            "d": "Sensores, microcontroladores, protocolos como MQTT e o caminho do dado do dispositivo até a nuvem.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Desenvolvimento para Dispositivos Móveis I",
+            "h": 80,
+            "d": "Apps Android com Kotlin e Jetpack Compose, da interface à arquitetura e ao armazenamento.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Liderança para Inovação",
+            "h": 80,
+            "d": "Liderar times de produto e tecnologia: visão, cultura, comunicação, feedback e gestão de conflitos.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Projeto Integrador de Extensão V",
+            "h": 80,
+            "d": "Projeto prático que junta o que foi estudado até aqui e atende a uma demanda real de empresas, escolas, serviços públicos ou da comunidade.",
+            "tipo": "pie"
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "titulo": "Deep learning, visão e IA generativa",
+        "h": 400,
+        "so_ia": true,
+        "resumo": "O núcleo da IA: redes neurais profundas, Transformers e modelos generativos, visão computacional para veículos autônomos e computação sustentável. Começa o TCC.",
+        "disc": [
+          {
+            "n": "Deep Learning e Inteligência Artificial Generativa",
+            "h": 80,
+            "d": "Redes neurais profundas, atenção e Transformers, ajuste fino e modelos generativos (difusão, autoencoders) para texto, imagem e áudio.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Veículos Autônomos e Visão Computacional",
+            "h": 80,
+            "d": "Redes convolucionais para detecção, segmentação e rastreamento, sensores como câmera e LiDAR, localização e planejamento de trajetória.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Computação Sustentável e Green AI",
+            "h": 80,
+            "d": "Consumo de energia e impacto ambiental da computação e da IA, e como medir e reduzir.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Eletiva II",
+            "h": 80,
+            "d": "Escolhida entre as optativas do catálogo.",
+            "tipo": "eletiva"
+          },
+          {
+            "n": "TCC I – Projeto de Pesquisa",
+            "h": 80,
+            "d": "Tema, problema, revisão da literatura e método da sua pesquisa.",
+            "tipo": "tcc"
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "titulo": "Agentes inteligentes e TCC",
+        "h": 400,
+        "so_ia": true,
+        "resumo": "Você constrói agentes inteligentes, avalia tecnologias emergentes, discute o impacto da IA na sociedade e no meio ambiente e conclui o TCC com um artigo científico.",
+        "disc": [
+          {
+            "n": "Arquitetura para Agentes Inteligentes",
+            "h": 80,
+            "d": "Agentes autônomos e multiagentes: planejamento, memória, uso de ferramentas e APIs e agentes baseados em modelos fundacionais.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Tecnologias Emergentes",
+            "h": 80,
+            "d": "Prospecção de tendências, maturidade tecnológica, provas de conceito e roadmaps.",
+            "tipo": "disc"
+          },
+          {
+            "n": "Computação, Sociedade e Meio Ambiente",
+            "h": 80,
+            "d": "Impactos sociais e ambientais da IA, direitos humanos e relações étnico-raciais, com atividade de extensão.",
+            "tipo": "pie"
+          },
+          {
+            "n": "TCC II – Artigo Científico",
+            "h": 160,
+            "d": "Execução da pesquisa e escrita do artigo científico.",
+            "tipo": "tcc"
+          }
+        ]
+      }
+    ],
+    "eletivas": [
+      [
+        "Libras",
+        ""
+      ],
+      [
+        "Inglês Instrumental",
+        ""
+      ],
+      [
+        "Desenvolvimento para Dispositivos Móveis II",
+        ""
+      ],
+      [
+        "Engenharia de Software para Ciência de Dados",
+        "testes, CI/CD e boas práticas em projetos de dados"
+      ],
+      [
+        "Microsserviços para Ciência de Dados",
+        "serviços e APIs para análise de dados"
+      ],
+      [
+        "Gêmeos Digitais e Simulação Inteligente",
+        "modelos digitais de sistemas reais alimentados por sensores"
+      ]
+    ],
+    "matriz_fonte": "Matriz 2026 do Bacharelado em Inteligência Artificial (protocolo de reconhecimento). Os períodos 1 a 5 formam o tecnólogo em Ciência de Dados.",
+    "campanha": {
+      "ativo_ate": "2026-10-24",
+      "rotulo": "Sábado, 24/10 · 8h às 12h",
+      "titulo": "Donaduzzi de Portas Abertas",
+      "texto": "Oficinas de IA para estudantes, atividades para os pais e vestibular no mesmo dia. Quem fizer a prova e se matricular concorre a uma bolsa de estudos.",
+      "cta": "Quero participar",
+      "wa_msg": "Olá! Quero participar do Donaduzzi de Portas Abertas no sábado."
+    },
+    "wa_msg": {
+      "cd": "Olá! Tenho interesse em Ciência de Dados na Faculdade Donaduzzi. Quero saber sobre inscrição e bolsas.",
+      "ia": "Olá! Tenho interesse em Inteligência Artificial na Faculdade Donaduzzi. Quero saber sobre inscrição e bolsas."
+    },
+    "quiz": {
+      "titulo": "Dados ou IA? Descubra em 3 perguntas",
+      "perguntas": [
+        [
+          "Daqui a três anos, você se imagina…",
+          [
+            [
+              "já trabalhando na área, com diploma na mão",
+              "cd"
+            ],
+            [
+              "ainda estudando para ir mais longe, talvez até um mestrado",
+              "ia"
+            ]
+          ]
+        ],
+        [
+          "O que te dá mais vontade de fazer?",
+          [
+            [
+              "descobrir o que os números dizem e ajudar a empresa a decidir",
+              "cd"
+            ],
+            [
+              "criar sistemas que enxergam, conversam e agem sozinhos",
+              "ia"
+            ]
+          ]
+        ],
+        [
+          "Como você prefere estudar?",
+          [
+            [
+              "direto ao ponto, com foco no mercado",
+              "cd"
+            ],
+            [
+              "com mais profundidade, incluindo pesquisa e TCC",
+              "ia"
+            ]
+          ]
+        ]
+      ],
+      "resultado": {
+        "cd": "Seu perfil combina com Ciência de Dados: formação mais curta, foco no mercado e diploma em 2 anos e meio.",
+        "ia": "Seu perfil combina com Inteligência Artificial: formação completa de 4 anos, com deep learning, agentes e TCC."
+      },
+      "nota": "Os cinco primeiros períodos são iguais nos dois cursos. Dá para mudar de ideia no caminho."
+    },
+    "pais": [
+      [
+        "Dá para estudar e trabalhar",
+        "As aulas são à noite, de segunda a sexta."
+      ],
+      [
+        "Nota máxima no MEC",
+        "Os dois cursos têm conceito 5, a maior nota da avaliação."
+      ],
+      [
+        "Emprego durante o curso",
+        "Em agosto de 2025, 94% dos alunos de IA trabalhavam ou estagiavam."
+      ],
+      [
+        "Mercado que paga bem",
+        "<span data-live='mediana'>—</span> é a mediana salarial das vagas com salário no nosso painel."
+      ]
+    ],
+    "alternativas": {
+      "colunas": [
+        "Graduação na Donaduzzi",
+        "Cursos livres e bootcamps",
+        "Aprender sozinho"
+      ],
+      "linhas": [
+        [
+          "Diploma de graduação reconhecido pelo MEC",
+          "Sim",
+          "Não",
+          "Não"
+        ],
+        [
+          "Projeto com empresa ou comunidade em todo período",
+          "Sim, nos Projetos Integradores",
+          "Às vezes",
+          "Não"
+        ],
+        [
+          "Base de matemática, estatística e dados",
+          "Cinco períodos inteiros",
+          "Em geral, curta",
+          "Depende de você"
+        ],
+        [
+          "Professores e colegas presenciais",
+          "Sim, toda noite",
+          "Em geral, online",
+          "Não"
+        ],
+        [
+          "Rede de contatos em um parque tecnológico",
+          "Sim, no Biopark",
+          "Não",
+          "Não"
+        ],
+        [
+          "Porta aberta para mestrado e concursos de nível superior",
+          "Sim",
+          "Não",
+          "Não"
+        ]
+      ]
+    },
+    "faq_extra": [
+      [
+        "A IA vai acabar com esses empregos?",
+        "Quem cria e opera sistemas de IA é justamente o perfil que as empresas estão procurando. Agora mesmo, <span data-live='ml'>várias</span> vagas do nosso painel pedem machine learning ou IA generativa."
+      ],
+      [
+        "Quanto custa? Tem bolsa?",
+        "Valores e bolsas mudam a cada processo seletivo. Chame no WhatsApp para receber a tabela atual e as bolsas disponíveis."
+      ]
+    ],
+    "depoimentos": [],
+    "investimento": null,
+    "oeste_pr": [
+      "Toledo",
+      "Cascavel",
+      "Palotina",
+      "Cafelândia",
+      "Francisco Beltrão",
+      "Foz do Iguaçu",
+      "Marechal Cândido Rondon",
+      "Medianeira",
+      "Assis Chateaubriand",
+      "Guaíra",
+      "Umuarama",
+      "Pato Branco",
+      "Santa Helena",
+      "Corbélia",
+      "Matelândia",
+      "Céu Azul",
+      "São Miguel do Iguaçu",
+      "Dois Vizinhos",
+      "Realeza",
+      "Goioerê",
+      "Ubiratã",
+      "Nova Aurora",
+      "Tupãssi"
+    ]
+  },
+  "cd": {
+    "id": "cd",
+    "nome": "Ciência de Dados",
+    "grau": "Curso Superior de Tecnologia · Presencial",
+    "titulo": "Do dado bruto à decisão.",
+    "titulo_destaque": "Diploma de graduação em 2 anos e meio.",
+    "lede": "Cinco semestres para aprender a coletar, tratar, analisar e modelar dados, e transformar tudo isso em decisão dentro da empresa. Aulas à noite, no Biopark, em Toledo.",
+    "ficha": [
+      [
+        "Grau",
+        "Tecnólogo"
+      ],
+      [
+        "Duração",
+        "5 semestres"
+      ],
+      [
+        "Carga horária",
+        "2.100 horas"
+      ],
+      [
+        "Modalidade",
+        "Presencial"
+      ],
+      [
+        "Turno",
+        "Noturno"
+      ],
+      [
+        "Vagas",
+        "50 por ano"
+      ]
+    ],
+    "mec": "Conceito 5 no MEC · curso reconhecido com nota máxima",
+    "sobre_t": "Toda empresa gera dados. Poucas conseguem usá-los.",
+    "sobre": [
+      "O Curso Superior de Tecnologia em Ciência de Dados forma o profissional que fecha essa distância. Você aprende o ciclo inteiro do dado: encontrar e capturar a informação onde ela está, inclusive na web; armazená-la em bancos relacionais e não relacionais; construir os pipelines que movem os dados entre sistemas; explorá-los com estatística; criar modelos que classificam, agrupam e preveem; e comunicar o resultado de forma que alguém consiga agir sobre ele.",
+      "A cada semestre, a partir do 2º, há um Projeto Integrador de Extensão: você entrega uma solução completa, não um exercício. Ao final, sai com portfólio e com um diploma de graduação reconhecido pelo MEC."
+    ],
+    "exemplos": [
+      "Prever a demanda da próxima safra.",
+      "Entender por que os clientes estão saindo.",
+      "Encontrar padrões numa base de exames.",
+      "Montar o painel que a diretoria olha toda segunda."
+    ],
+    "numeros": [
+      [
+        "2.100",
+        "horas, em cinco semestres de 420 horas"
+      ],
+      [
+        "4",
+        "projetos integradores de extensão, um por semestre a partir do 2º"
+      ],
+      [
+        "63%",
+        "da carga horária do bacharelado em IA já cumprida ao concluir"
+      ],
+      [
+        "50",
+        "vagas por ano, em turma única no período noturno"
+      ]
+    ],
+    "eixos_t": "Seis eixos, do primeiro dia ao último.",
+    "eixos": [
+      [
+        "Programação e fundamentos",
+        "Escrever código para manipular e analisar dados e entender como o computador executa o que você escreve.",
+        "Sistemas Computacionais · Abstração e Modelagem de Dados · Programação para Ciência de Dados"
+      ],
+      [
+        "Estatística e análise exploratória",
+        "Descrever, comparar e testar dados; encontrar padrões, tendências e anomalias antes de qualquer modelo.",
+        "Análise de Dados Qualitativos e Quantitativos · Análise Exploratória de Dados"
+      ],
+      [
+        "Engenharia e arquitetura de dados",
+        "Construir os caminhos por onde o dado circula: capturar, armazenar, integrar e otimizar bases relacionais e não relacionais.",
+        "Pipeline de Dados · Armazenamento e Otimização · Data Warehouse · Captura de Dados na Web · Recuperação de Informação"
+      ],
+      [
+        "Matemática para dados",
+        "A base formal dos algoritmos: vetores, matrizes, decomposições e otimização, sempre implementados em código.",
+        "Aplicações de Álgebra na Ciência de Dados · Modelagem Matemática e Otimização"
+      ],
+      [
+        "Aprendizado de máquina",
+        "Treinar, avaliar e comparar modelos supervisionados e não supervisionados, inclusive com dados de imagem.",
+        "Introdução a IA · Aprendizado Não Supervisionado · Aprendizado Supervisionado · Imagens Digitais"
+      ],
+      [
+        "Produção, ética e negócio",
+        "Colocar modelos em operação, mantê-los funcionando e situar a solução no contexto da organização e da lei.",
+        "MLOps · Microsserviços · Engenharia de Software · Segurança de Dados e Ética · Planejamento Estratégico de Negócios"
+      ]
+    ],
+    "porque": [
+      [
+        "Você domina o ciclo completo dos dados",
+        "Captura, armazenamento, pipeline, tratamento, análise, modelagem e comunicação. Muitos cursos formam apenas quem monta painéis; aqui você entende o que acontece antes do painel e resolve o problema na origem."
+      ],
+      [
+        "Diploma de graduação em dois anos e meio",
+        "Cinco semestres é pouco tempo para uma graduação. Você entra no mercado com formação reconhecida enquanto a área ainda absorve profissionais, e pode continuar estudando depois."
+      ],
+      [
+        "Quatro entregas reais, não quatro provas",
+        "Do 2º ao 5º semestre, cada Projeto Integrador de Extensão exige uma solução completa e apresentada. Você termina com um portfólio para mostrar na entrevista técnica."
+      ],
+      [
+        "MLOps e microsserviços dentro do tecnólogo",
+        "Treinar um modelo é diferente de colocá-lo em produção e mantê-lo funcionando. MLOps, microsserviços e engenharia de software tratam disso, conteúdo raro em cursos de tecnólogo da área."
+      ],
+      [
+        "Matemática com propósito",
+        "Álgebra, modelagem e otimização são ensinadas a partir do problema de dados que resolvem, com implementação em Python."
+      ],
+      [
+        "Conceito 5 no MEC",
+        "O curso foi reconhecido pelo Ministério da Educação com conceito 5, a nota máxima da avaliação."
+      ]
+    ],
+    "ferramentas": [
+      [
+        "Linguagens e bases",
+        [
+          "Python",
+          "SQL",
+          "NoSQL",
+          "PostgreSQL",
+          "MongoDB",
+          "HTML · CSS",
+          "JSON · XML"
+        ]
+      ],
+      [
+        "Análise de dados",
+        [
+          "pandas",
+          "NumPy",
+          "SciPy",
+          "Matplotlib",
+          "Seaborn",
+          "Jupyter"
+        ]
+      ],
+      [
+        "Visualização e BI",
+        [
+          "Power BI",
+          "Tableau",
+          "Streamlit"
+        ]
+      ],
+      [
+        "Captura e integração",
+        [
+          "BeautifulSoup",
+          "Scrapy",
+          "APIs REST",
+          "ETL"
+        ]
+      ],
+      [
+        "Aprendizado de máquina",
+        [
+          "scikit-learn",
+          "XGBoost",
+          "OpenCV"
+        ]
+      ],
+      [
+        "Operação e versionamento",
+        [
+          "Git · GitHub",
+          "Docker",
+          "MLflow",
+          "FastAPI"
+        ]
+      ]
+    ],
+    "atuacao_t": "Sete caminhos abertos ao final do curso.",
+    "atuacao": [
+      [
+        "Analista de Dados",
+        "Usa as bases da organização para responder perguntas de negócio: por que a receita caiu num canal, qual segmento cresce, onde está o gargalo.",
+        [
+          "agroindústria",
+          "saúde",
+          "varejo",
+          "setor público"
+        ],
+        "fam:Análise de Dados"
+      ],
+      [
+        "Analista de Business Intelligence",
+        "Define métricas, modela o data warehouse e mantém os painéis que a gestão usa no dia a dia.",
+        [
+          "cooperativas",
+          "indústria",
+          "hospitais",
+          "distribuição"
+        ],
+        "fam:Business Intelligence"
+      ],
+      [
+        "Engenheiro de Dados",
+        "Desenvolve a infraestrutura que leva o dado da origem ao ponto de uso: pipelines, integrações, bancos e otimização de consultas. Cargo de entrada: analista de engenharia de dados.",
+        [
+          "tecnologia",
+          "indústria",
+          "agronegócio",
+          "e-commerce"
+        ],
+        "fam:Engenharia de Dados"
+      ],
+      [
+        "Cientista de Dados",
+        "Usa estatística, programação e aprendizado de máquina para prever demanda, risco de inadimplência, probabilidade de falha e segmentar clientes.",
+        [
+          "agronegócio",
+          "seguros",
+          "crédito",
+          "saúde"
+        ],
+        "fam:Ciência de Dados"
+      ],
+      [
+        "Analista de Dados Não Estruturados",
+        "Trabalha com texto, páginas web e imagens: estrutura, indexa e torna pesquisável um acervo que antes ninguém conseguia usar.",
+        [
+          "saúde",
+          "jurídico",
+          "mídia",
+          "pesquisa"
+        ],
+        "rx:n[aã]o estruturad|texto|documento"
+      ],
+      [
+        "Analista de Operação de Modelos (MLOps)",
+        "Cuida do que vem depois do treinamento: publicação como serviço, versionamento, monitoramento e retreinamento.",
+        [
+          "startups",
+          "times de dados",
+          "tecnologia"
+        ],
+        "rx:mlops"
+      ],
+      [
+        "Analista de Governança e Segurança de Dados",
+        "Garante o uso do dado dentro da lei: classificação de informação sensível, controle de acesso, LGPD e documentação.",
+        [
+          "financeiro",
+          "saúde",
+          "órgãos públicos"
+        ],
+        "rx:governan|lgpd|seguran[cç]a d"
+      ]
+    ],
+    "faq": [
+      [
+        "Preciso saber programar antes de começar?",
+        "Não. O curso começa por Sistemas Computacionais e Construção de Protótipos e por Programação para Ciência de Dados, que partem do início. Ajuda gostar de resolver problemas e ter disposição para praticar fora da aula."
+      ],
+      [
+        "O curso exige matemática avançada?",
+        "Exige matemática, ensinada a partir do problema. Álgebra e otimização aparecem aplicadas a dados e implementadas em código. Quem vem do Ensino Médio com base regular acompanha com estudo."
+      ],
+      [
+        "Qual é a titulação recebida?",
+        "Tecnólogo em Ciência de Dados: um diploma de graduação de nível superior, reconhecido pelo MEC, com o mesmo valor legal de qualquer graduação para trabalho e pós-graduação."
+      ],
+      [
+        "Qual a diferença entre tecnólogo e bacharelado?",
+        "O tecnólogo é mais curto e focado na aplicação profissional direta (aqui, cinco semestres). O bacharelado é mais longo e amplo, com mais base teórica e trabalho de conclusão (em IA, oito semestres). Os dois são graduações."
+      ],
+      [
+        "Quanto tempo dura e em que horário?",
+        "Cinco semestres, ou dois anos e meio, com 2.100 horas. Aulas presenciais à noite, de segunda a sexta, no Biopark, em Toledo."
+      ],
+      [
+        "Posso continuar depois para o bacharelado em IA?",
+        "Sim. Os cinco semestres do tecnólogo correspondem aos cinco primeiros semestres do bacharelado em Inteligência Artificial. Quem conclui o tecnólogo pode ingressar no bacharelado e solicitar aproveitamento de estudos, seguindo para os três semestres restantes: mais um ano e meio. O aproveitamento segue as normas acadêmicas e depende de análise e deferimento da Secretaria Acadêmica."
+      ],
+      [
+        "O curso tem estágio obrigatório?",
+        "Não. A prática profissional acontece nos Projetos Integradores de Extensão, um por semestre. A instituição também apoia o acesso a estágios não obrigatórios remunerados."
+      ],
+      [
+        "Onde o profissional formado pode trabalhar?",
+        "Em qualquer organização que gere dados: agroindústria e cooperativas, saúde, indústria, varejo, serviços financeiros, tecnologia e setor público. Os cargos de entrada mais comuns são analista de dados, analista de BI e analista de engenharia de dados."
+      ]
+    ],
+    "cta_t": "Dois anos e meio até o seu primeiro diploma.",
+    "cta": "Vagas para a próxima turma de Ciência de Dados no Biopark, em Toledo. Aulas presenciais, no período noturno.",
+    "url": "https://faculdadedonaduzzi.com.br/cursos-de-graduacao/graduacao-ciencia-de-dados/",
+    "landing": {
+      "kicker": "Tecnólogo · 5 semestres · Noturno",
+      "h1": [
+        "Do dado",
+        "à decisão."
+      ],
+      "lede": "Aprenda a coletar, organizar e modelar dados e saia com diploma de graduação em 2 anos e meio.",
+      "fatos": [
+        [
+          "5",
+          "Conceito máximo no MEC"
+        ],
+        [
+          "2,5 anos",
+          "5 semestres, à noite"
+        ],
+        [
+          "63%",
+          "do bacharelado em IA já cumprido"
+        ],
+        [
+          "50",
+          "vagas por ano"
+        ]
+      ],
+      "faz_t": "O que você vai saber fazer",
+      "faz": [
+        [
+          "Organizar e mover dados",
+          "Bancos relacionais e NoSQL, pipelines de ETL, data warehouse e captura de dados na web.",
+          [
+            "SQL",
+            "PostgreSQL",
+            "MongoDB",
+            "Scrapy"
+          ]
+        ],
+        [
+          "Analisar e prever",
+          "Estatística, análise exploratória e machine learning para responder perguntas e antecipar resultados.",
+          [
+            "Python",
+            "pandas",
+            "scikit-learn",
+            "Power BI"
+          ]
+        ],
+        [
+          "Colocar em produção",
+          "MLOps, servidores e computação em nuvem para o modelo funcionar no dia a dia da empresa.",
+          [
+            "Docker",
+            "MLflow",
+            "Cloud",
+            "Git"
+          ]
+        ]
+      ],
+      "carreiras": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "faq": [
+        0,
+        1,
+        5,
+        6
+      ],
+      "cta_t": "Seu primeiro diploma em 2 anos e meio."
+    },
+    "matriz_resumo": [
+      [
+        "Carga horária",
+        "2.100 h (5 × 420 h)"
+      ],
+      [
+        "Extensão",
+        "320 h (Projetos Integradores I a IV)"
+      ],
+      [
+        "Atividades complementares",
+        "100 h"
+      ],
+      [
+        "Integralização",
+        "mínimo 5 · máximo 8 semestres"
+      ]
+    ]
+  },
+  "ia": {
+    "id": "ia",
+    "nome": "Inteligência Artificial",
+    "grau": "Bacharelado · Presencial",
+    "titulo": "Existe diferença entre usar IA e construir IA.",
+    "titulo_destaque": "Aqui você aprende a construir.",
+    "lede": "Oito semestres para dominar os dados e depois aprofundar em deep learning, visão computacional, linguagem natural e agentes inteligentes. Aulas à noite, no Biopark, em Toledo.",
+    "ficha": [
+      [
+        "Grau",
+        "Bacharelado"
+      ],
+      [
+        "Duração",
+        "8 semestres"
+      ],
+      [
+        "Carga horária",
+        "3.300 h-aula"
+      ],
+      [
+        "Modalidade",
+        "Presencial"
+      ],
+      [
+        "Turno",
+        "Noturno"
+      ],
+      [
+        "Extensão",
+        "480 horas"
+      ]
+    ],
+    "mec": "Conceito 5 no MEC · nota máxima na avaliação",
+    "sobre_t": "Inclui toda a Ciência de Dados e vai além.",
+    "sobre": [
+      "Nos cinco primeiros semestres você constrói o domínio dos dados: programação, estatística, álgebra, bancos relacionais e não relacionais, pipelines, data warehouse, captura na web, aprendizado supervisionado e não supervisionado, MLOps e ética. É a mesma matriz do tecnólogo em Ciência de Dados.",
+      "Nos três semestres seguintes você aprofunda no que caracteriza a profissão: aprendizado profundo e processamento de linguagem natural, visão computacional aplicada a veículos autônomos, otimização de algoritmos, cloud computing, desenvolvimento para dispositivos móveis, sensores e IoT, agentes inteligentes e tecnologias emergentes, com Trabalho de Conclusão de Curso em dois semestres."
+    ],
+    "exemplos": [
+      "Fazer um sistema identificar uma alteração numa imagem médica.",
+      "Interpretar texto em escala.",
+      "Automatizar uma inspeção industrial por câmera.",
+      "Manter um modelo funcionando quando os dados mudam."
+    ],
+    "numeros": [
+      [
+        "3.300",
+        "horas-aula, mais 1.207 horas de trabalho discente efetivo"
+      ],
+      [
+        "480",
+        "horas de extensão, 14,55% da carga horária"
+      ],
+      [
+        "5",
+        "projetos integradores de extensão ao longo do curso"
+      ],
+      [
+        "2",
+        "semestres dedicados ao Trabalho de Conclusão de Curso"
+      ]
+    ],
+    "eixos_t": "Oito eixos, dos dados aos agentes.",
+    "eixos": [
+      [
+        "Fundamentos e programação",
+        "Programar com fluência e entender arquitetura, abstração e desempenho computacional.",
+        "Sistemas Computacionais · Abstração e Modelagem de Dados · Programação para Ciência de Dados"
+      ],
+      [
+        "Matemática e otimização",
+        "A base formal dos algoritmos de aprendizado e a formulação de problemas de otimização.",
+        "Aplicações de Álgebra · Modelagem Matemática e Otimização · Projeto e Otimização de Algoritmos"
+      ],
+      [
+        "Aquisição e preparação de dados",
+        "Construir a infraestrutura de dados que alimenta qualquer sistema inteligente.",
+        "Pipeline de Dados · Armazenamento e Otimização · Data Warehouse · Captura de Dados na Web · Recuperação de Informação"
+      ],
+      [
+        "Aprendizado de máquina",
+        "Treinar, avaliar e comparar modelos e entender quando um modelo falha e por quê.",
+        "Introdução a IA · Aprendizado Não Supervisionado · Aprendizado Supervisionado"
+      ],
+      [
+        "Aprendizado profundo e percepção",
+        "Redes neurais profundas para imagem, vídeo e linguagem, com aplicação em veículos autônomos.",
+        "Deep Learning e PLN · Veículos Autônomos e Visão Computacional · Imagens Digitais"
+      ],
+      [
+        "Engenharia de sistemas de IA",
+        "Levar o modelo do experimento à produção, com desempenho, escala e manutenção.",
+        "Gestão de Servidores e Cloud Computing · MLOps · Microsserviços · Engenharia de Software"
+      ],
+      [
+        "IA no mundo físico e emergente",
+        "Integrar sensores, dispositivos móveis e tecnologias novas a sistemas autônomos.",
+        "Obtenção de Dados e Processamento IoT · Dispositivos Móveis · Agentes Inteligentes · Tecnologias Emergentes"
+      ],
+      [
+        "Ética, liderança e pesquisa",
+        "Avaliar impacto, garantir conformidade, liderar equipes e comunicar resultados com rigor científico.",
+        "Segurança de Dados e Ética · Computação, Sociedade e Meio Ambiente · Liderança para Inovação · Produção Científica · TCC I e II"
+      ]
+    ],
+    "porque": [
+      [
+        "Você aprende dados antes de aprender IA",
+        "Cinco semestres de fundamentos antes do aprofundamento. Modelo bom sobre dado ruim não existe: essa sequência separa quem sabe treinar um modelo de quem sabe fazer um sistema funcionar."
+      ],
+      [
+        "Três semestres nas áreas centrais da IA",
+        "Deep learning, linguagem natural, visão computacional e agentes inteligentes são disciplinas próprias, não tópicos dentro de outra matéria."
+      ],
+      [
+        "Engenharia de verdade, não só notebooks",
+        "Cloud computing, otimização de algoritmos, desenvolvimento mobile e microsserviços formam quem integra o modelo a um produto real, a competência que mais falta em quem aprendeu IA em cursos livres."
+      ],
+      [
+        "TCC em dois semestres",
+        "Projeto de pesquisa no 7º semestre e artigo científico no 8º: tempo para produzir algo que sustente uma candidatura de emprego ou a entrada no mestrado."
+      ],
+      [
+        "Ética e impacto como disciplinas obrigatórias",
+        "Quem constrói sistemas que decidem sobre pessoas precisa saber avaliar viés, privacidade e consequências."
+      ],
+      [
+        "Uma graduação no meio do caminho",
+        "Como os cinco primeiros semestres correspondem ao tecnólogo em Ciência de Dados, existe um ponto de chegada profissional antes do fim do bacharelado."
+      ]
+    ],
+    "ferramentas": [
+      [
+        "Linguagens e bases",
+        [
+          "Python",
+          "SQL",
+          "NoSQL",
+          "PostgreSQL",
+          "MongoDB"
+        ]
+      ],
+      [
+        "Análise e visualização",
+        [
+          "pandas",
+          "NumPy",
+          "SciPy",
+          "Power BI",
+          "Tableau",
+          "Streamlit"
+        ]
+      ],
+      [
+        "Aprendizado de máquina",
+        [
+          "scikit-learn",
+          "XGBoost",
+          "MLflow"
+        ]
+      ],
+      [
+        "Aprendizado profundo",
+        [
+          "TensorFlow",
+          "Keras",
+          "PyTorch"
+        ],
+        true
+      ],
+      [
+        "Visão computacional",
+        [
+          "OpenCV",
+          "YOLO",
+          "CNNs"
+        ],
+        true
+      ],
+      [
+        "Linguagem natural e IA generativa",
+        [
+          "Hugging Face",
+          "spaCy · NLTK",
+          "LLMs",
+          "Engenharia de prompt",
+          "Agentes"
+        ],
+        true
+      ],
+      [
+        "Infraestrutura e operação",
+        [
+          "Docker",
+          "Git · GitHub",
+          "FastAPI",
+          "Cloud computing",
+          "Programação paralela"
+        ]
+      ],
+      [
+        "IoT e dispositivos",
+        [
+          "Sensores e microcontroladores",
+          "Desenvolvimento mobile"
+        ],
+        true
+      ]
+    ],
+    "atuacao_t": "Dez caminhos ao final do bacharelado.",
+    "atuacao": [
+      [
+        "Engenheiro de Inteligência Artificial",
+        "Projeta e desenvolve sistemas inteligentes de ponta a ponta: escolhe a abordagem, otimiza os algoritmos, integra o modelo ao produto e avalia riscos e impactos.",
+        [
+          "produtos de IA",
+          "indústria",
+          "saúde",
+          "tecnologia"
+        ],
+        "rx:engenh\\w*(\\(a\\))? de (ia|intelig)|ai engineer|ia engineer|engenheira de ia|engenheiro de ia"
+      ],
+      [
+        "Engenheiro de Machine Learning",
+        "Projeta, treina e avalia modelos para funcionarem em escala, dentro de um produto.",
+        [
+          "recomendação",
+          "detecção de fraude",
+          "previsão de falha"
+        ],
+        "rx:machine learning|\\bml\\b|mlops"
+      ],
+      [
+        "Especialista em Visão Computacional",
+        "Sistemas que interpretam imagem e vídeo: contam, medem, identificam e detectam anomalias, inclusive em veículos autônomos.",
+        [
+          "saúde",
+          "inspeção industrial",
+          "agronegócio",
+          "mobilidade"
+        ],
+        "rx:vis[aã]o comput|computer vision"
+      ],
+      [
+        "Especialista em Linguagem Natural",
+        "Sistemas que leem, interpretam e produzem texto: classificação de documentos, busca semântica e assistentes conversacionais.",
+        [
+          "jurídico",
+          "saúde",
+          "atendimento",
+          "setor público"
+        ],
+        "rx:\\bnlp\\b|linguagem|llm|generativ|genai"
+      ],
+      [
+        "Desenvolvedor de Agentes Inteligentes",
+        "Sistemas autônomos que percebem o ambiente, decidem e executam ações, de assistentes corporativos a automações de processo.",
+        [
+          "automação",
+          "operações",
+          "produtos digitais"
+        ],
+        "rx:agente|agent"
+      ],
+      [
+        "Engenheiro de MLOps",
+        "Cuida do ciclo de vida do modelo depois do treinamento: publicação, versionamento, monitoramento e retreinamento.",
+        [
+          "startups",
+          "times de dados",
+          "tecnologia"
+        ],
+        "rx:mlops"
+      ],
+      [
+        "Arquiteto de Soluções de IA",
+        "Desenha como a IA se encaixa no sistema e no negócio: abordagem, arquitetura, nuvem e viabilidade técnica e de custo.",
+        [
+          "consultorias",
+          "integradores",
+          "indústria"
+        ],
+        "rx:arquitet|staff|especialista"
+      ],
+      [
+        "Especialista em Automação Inteligente e IoT",
+        "Conecta modelos a sensores e equipamentos, levando a decisão automática para o chão de fábrica e a lavoura.",
+        [
+          "manutenção preditiva",
+          "agro",
+          "energia",
+          "logística"
+        ],
+        "rx:\\biot\\b|automa"
+      ],
+      [
+        "Líder de Projetos de IA",
+        "Coordena equipes, avalia soluções e apoia decisões sobre adoção e investimento em IA. Competência construída ao longo da carreira, não cargo de primeiro emprego.",
+        [
+          "gestão de projetos",
+          "inovação",
+          "estratégia"
+        ],
+        "fam:Liderança em dados/IA"
+      ],
+      [
+        "Pesquisa e Desenvolvimento",
+        "Investiga e adapta métodos para problemas sem solução pronta, na universidade ou em P&D corporativo. Caminho natural para o mestrado.",
+        [
+          "institutos",
+          "centros de P&D",
+          "base tecnológica"
+        ],
+        "fam:Pesquisa e bolsas|Docência (professor/a)"
+      ]
+    ],
+    "faq": [
+      [
+        "Preciso saber programar antes de entrar?",
+        "Não. As disciplinas de programação começam do zero no 1º semestre. É um curso técnico e exigente: quem chega com curiosidade e disposição para praticar fora da aula avança mais rápido."
+      ],
+      [
+        "Preciso ser muito bom em matemática?",
+        "Você precisa aceitar estudar matemática. Álgebra, otimização e estatística são a base de tudo que a IA faz. Elas são ensinadas de forma aplicada, com implementação em código."
+      ],
+      [
+        "Qual é a titulação e a duração?",
+        "Bacharel em Inteligência Artificial, em oito semestres (quatro anos), com 3.300 horas-aula. Aulas presenciais à noite, no Biopark, em Toledo."
+      ],
+      [
+        "Qual é a diferença para o curso de Ciência de Dados?",
+        "Os cinco primeiros semestres são a mesma matriz. Ciência de Dados forma analistas, cientistas e engenheiros de dados. Inteligência Artificial inclui toda essa base e acrescenta projeto e otimização de algoritmos, deep learning, visão computacional, linguagem natural, agentes, IA generativa e liderança de projetos."
+      ],
+      [
+        "Que projetos vou desenvolver?",
+        "Cinco Projetos Integradores de Extensão, do 2º ao 6º semestre: dashboard de apoio à decisão, extração e tratamento de imagens, classificação de dados, descoberta de informação com microsserviços e implementação de software com boas práticas. No 7º e no 8º, o TCC: projeto de pesquisa e artigo científico."
+      ],
+      [
+        "O curso tem estágio obrigatório?",
+        "Não. A prática profissional acontece nos Projetos Integradores e no TCC. A instituição apoia o acesso a estágios não obrigatórios remunerados."
+      ],
+      [
+        "Já tenho o tecnólogo em Ciência de Dados. Posso aproveitar?",
+        "Sim. Os cinco semestres do tecnólogo correspondem aos cinco primeiros deste bacharelado. Quem concluiu o tecnólogo pode ingressar e solicitar aproveitamento de estudos, seguindo para os três semestres restantes: mais um ano e meio. O aproveitamento segue as normas acadêmicas e depende de análise e deferimento da Secretaria Acadêmica."
+      ],
+      [
+        "Qual é a avaliação do curso no MEC?",
+        "O curso obteve conceito 5 na avaliação do MEC, a nota máxima. O processo de reconhecimento segue em tramitação no Ministério da Educação."
+      ]
+    ],
+    "cta_t": "Comece pelos dados. Termine construindo os sistemas.",
+    "cta": "Vagas para a próxima turma do bacharelado em Inteligência Artificial no Biopark, em Toledo. Aulas presenciais, no período noturno.",
+    "url": "https://faculdadedonaduzzi.com.br/cursos-de-graduacao/inteligencia-artificial/",
+    "landing": {
+      "kicker": "Bacharelado · 8 semestres · Noturno",
+      "h1": [
+        "Não só use IA.",
+        "Construa."
+      ],
+      "lede": "Domine os dados nos cinco primeiros semestres. Depois, aprofunde em deep learning, visão computacional, IA generativa e agentes inteligentes.",
+      "fatos": [
+        [
+          "5",
+          "Conceito máximo no MEC"
+        ],
+        [
+          "4 anos",
+          "8 semestres, à noite"
+        ],
+        [
+          "1º",
+          "bacharelado presencial em IA do Paraná"
+        ],
+        [
+          "TCC",
+          "em dois semestres, com artigo"
+        ]
+      ],
+      "faz_t": "O que você vai saber construir",
+      "faz": [
+        [
+          "Sistemas que enxergam",
+          "Visão computacional e redes convolucionais para inspeção, saúde e veículos autônomos.",
+          [
+            "OpenCV",
+            "YOLO",
+            "PyTorch"
+          ]
+        ],
+        [
+          "Sistemas que leem e criam",
+          "Deep learning, Transformers e IA generativa para texto, imagem e áudio.",
+          [
+            "Transformers",
+            "LLMs",
+            "PyTorch"
+          ]
+        ],
+        [
+          "Agentes que agem",
+          "Agentes inteligentes, IoT e apps, do protótipo ao produto em produção.",
+          [
+            "Agentes",
+            "IoT",
+            "Kotlin",
+            "Cloud"
+          ]
+        ]
+      ],
+      "carreiras": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        9
+      ],
+      "faq": [
+        0,
+        1,
+        6,
+        3
+      ],
+      "cta_t": "Comece pelos dados. Termine construindo os sistemas."
+    },
+    "matriz_resumo": [
+      [
+        "Carga horária",
+        "3.300 h-aula (2.886,67 h + 413,33 h de TDE)"
+      ],
+      [
+        "Extensão",
+        "480 h (14,55%)"
+      ],
+      [
+        "TCC",
+        "240 h, em dois semestres"
+      ],
+      [
+        "Estágio",
+        "não obrigatório"
+      ]
+    ]
+  }
+}
