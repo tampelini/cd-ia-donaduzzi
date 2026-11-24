@@ -74,6 +74,7 @@ cd-ia-donaduzzi/
 │     ├─ laboratorio.js   laboratório "Treine sua IA"
 │     ├─ jogo.js          jogo "Dirija pelo Biopark"
 │     ├─ movimento.js     animações decorativas
+│     ├─ rastreamento.js  eventos de clique para o Google Tag Manager do marketing
 │     └─ imagens.js       lista das fotos usadas no site
 ├─ data/
 │  ├─ cursos.json                 matriz, disciplinas e textos dos cursos
@@ -130,6 +131,12 @@ Para rodar os testes:
 pip install playwright && python3 -m playwright install chromium
 python3 tests/test_site.py
 ```
+
+## Google Tag Manager (marketing)
+
+A tag do contêiner **GTM-WC3R45MP** fica logo no início do `<head>`, em `src/index.html`. O arquivo `src/js/rastreamento.js` envia eventos para o `dataLayer` quando alguém clica no WhatsApp (`clique_whatsapp`, com destino `coordenador` ou `faculdade`), em um link de inscrição (`clique_inscricao`), nos depoimentos (`video_depoimentos`) ou nas profissões (`carreiras_perfil`). Nenhum dado pessoal é enviado. No GTM, o marketing cria acionadores do tipo "Evento personalizado" com esses nomes.
+
+Se o contêiner passar a usar cookies de publicidade ou de análise, a LGPD pede um aviso de consentimento na página.
 
 ## Dados com validade
 
