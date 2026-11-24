@@ -1047,7 +1047,8 @@ h1, h2, h3, h4, .big-h, .hx-h, .hero h1, .faz h3, .exit h3, .hx-facts .pv, #aba-
 .cr-emp { display: grid; grid-template-columns: 46px 1fr; gap: 4px 12px; align-items: start; padding: 14px; border-radius: 16px; background: #fff; border: 1px solid var(--line); transition: transform .2s, box-shadow .2s, border-color .2s; }
 .cr-emp:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--brand-gold); }
 .mv-on .cr-emps li { animation: crPop .45s cubic-bezier(.2, .8, .2, 1.2) both; animation-delay: calc(var(--k) * 50ms); }
-.cr-mono { grid-row: span 2; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.05rem; color: #fff; letter-spacing: -.02em; }
+.cr-mono img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #fff; padding: 5px; box-sizing: border-box; border-radius: inherit; border: 1px solid var(--line); }
+.cr-mono { position: relative; grid-row: span 2; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 900; font-size: 1.05rem; color: #fff; letter-spacing: -.02em; }
 .cr-en { font-weight: 800; line-height: 1.2; }
 .cr-en small { font-weight: 600; font-size: .72rem; color: var(--muted); margin-left: 6px; white-space: nowrap; }
 .cr-eo { font-size: .88rem; color: var(--ink-2); line-height: 1.35; }
@@ -6454,6 +6455,8 @@ void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
   var CORES = ["#642032", "#9E2238", "#B8650A", "#3D1220", "#7A3B52", "#A0522D", "#5B2A3C", "#C27C0E"];
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function sigla(n) { n = n.replace(/\(.*?\)/g, ""); var p = n.split(/[\s.&-]+/).filter(function (w) { return w && !/^(de|da|do|das|dos|e)$/i.test(w); }); return (p.length > 1 ? p[0][0] + p[1][0] : n.replace(/[^A-Za-zÀ-ú0-9]/g, "").slice(0, 2)).toUpperCase(); }
+  function slug(n) { return n.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+  window.crLogoErro = function (im) { if (/\.svg$/.test(im.src)) im.src = im.src.replace(/\.svg$/, ".png"); else im.remove(); };
   function cor(n) { var h = 0; for (var i = 0; i < n.length; i++) h = (h * 31 + n.charCodeAt(i)) >>> 0; return CORES[h % CORES.length]; }
   function vivo(p) {
     var V = (window.__VAGAS__ && window.__VAGAS__.vagas) || [], m = {}, t = 0;
@@ -6474,7 +6477,7 @@ void main(){ vec2 pc = gl_PointCoord - 0.5; float a; vec3 cor;
       '<ul class="cr-como"><li class="k">Pode trabalhar como:</li>' + p.como.map(function (x) { return '<li>' + x + '</li>'; }).join("") + '</ul>' +
       '<ul class="cr-como"><li class="k">Nas vagas aparece como:</li>' + p.vagas.map(function (x) { return '<li lang="en">' + x + '</li>'; }).join("") + '</ul>' +
       '<p class="cr-h4">Onde atua</p><ul class="cr-setores">' + S.map(function (x) { return '<li><button type="button" class="cr-set" data-s="' + x[0] + '" aria-pressed="' + (x[0] === st[0]) + '">' + x[1] + ' ' + x[2] + '</button></li>'; }).join("") + '</ul>' +
-      '<ul class="cr-emps">' + st[3].map(function (e, k) { return '<li class="cr-emp" style="--k:' + k + '"><span class="cr-mono" style="background:' + cor(e[0]) + '" aria-hidden="true">' + sigla(e[0]) + '</span><span class="cr-en">' + esc(e[0]) + '<small>' + esc(e[1]) + '</small></span><span class="cr-eo">' + esc(e[ix]) + '</span></li>'; }).join("") + '</ul>' +
+      '<ul class="cr-emps">' + st[3].map(function (e, k) { return '<li class="cr-emp" style="--k:' + k + '"><span class="cr-mono" style="background:' + cor(e[0]) + '" aria-hidden="true">' + sigla(e[0]) + '<img src="logos/' + slug(e[0]) + '.svg" alt="" loading="lazy" onerror="crLogoErro(this)"></span><span class="cr-en">' + esc(e[0]) + '<small>' + esc(e[1]) + '</small></span><span class="cr-eo">' + esc(e[ix]) + '</span></li>'; }).join("") + '</ul>' +
       vivo(perfil) +
       '<p class="cr-nota">Exemplos do tipo de trabalho que essa profissão faz em cada empresa' + (st[0] === "regiao" ? ', com o potencial de aplicação na região' : '') + '. Não indicam parceria com a Faculdade nem vagas abertas.</p>';
     if (!anima) { c.innerHTML = h; return; }
