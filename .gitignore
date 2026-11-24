@@ -1,0 +1,15 @@
+# gerado pelo build
+dist/
+__pycache__/
+*.pyc
+# arquivos grandes de trabalho do mapa (ficam no Drive)
+*.dwg
+*.dxf
+*.blend
+*.blend1
+*.pkl
+*.npy
+mp.json
+# sistema
+.DS_Store
+Thumbs.db
