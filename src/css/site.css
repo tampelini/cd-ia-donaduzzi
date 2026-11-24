@@ -1005,6 +1005,14 @@ h1, h2, h3, h4, .big-h, .hx-h, .hero h1, .faz h3, .exit h3, .hx-facts .pv, #aba-
 .cr-top { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: end; justify-content: space-between; }
 .cr-top h3 { margin: 0; font-family: var(--f-display); font-weight: 900; font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem); line-height: 1.05; color: var(--brand-wine); }
 .cr-top p { margin: 6px 0 0; font-size: 1.1rem; color: var(--ink-2); }
+.cr-chamada { margin: 14px 0 0; font-family: var(--f-display); font-weight: 800; font-size: clamp(1.25rem, 1rem + 1.1vw, 1.85rem); line-height: 1.22; color: var(--ink); max-width: 46ch; }
+.cr-acoes { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.cr-acoes li { display: inline-flex; gap: 8px; align-items: center; padding: 9px 16px; border-radius: 99px; background: var(--brand-wine); color: #fff; font-weight: 700; font-size: .98rem; }
+.cr-acoes li span { font-size: 1.15rem; }
+.cr-corpo[data-p="cd"] .cr-acoes li { background: var(--brand-gold); color: #3D1220; }
+.mv-on .cr-acoes li { animation: crPop .45s cubic-bezier(.2, .8, .2, 1.2) both; animation-delay: calc(var(--i) * 70ms); }
+.cr-onde { margin: 14px 0 0; padding: 12px 16px; border-radius: 14px; background: #fbf7ec; border-left: 4px solid var(--brand-gold); font-size: 1.02rem; color: var(--ink-2); }
+.cr-onde b { color: var(--brand-wine); }
 .cr-curso { text-align: right; font-size: .85rem; color: var(--muted); }
 .cr-curso b { display: block; color: var(--brand-carmine); font-size: .95rem; }
 .cr-h4 { margin: clamp(22px, 3vw, 30px) 0 12px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; color: var(--brand-carmine); }
