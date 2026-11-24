@@ -50,7 +50,27 @@
       "Análise de Dados",
       "Business Intelligence",
       "Engenharia de Dados"
-    ]
+    ],
+    "chamada": "Você vai trabalhar analisando dados, fazendo previsões e criando as recomendações de produtos, filmes e músicas que aparecem no seu celular.",
+    "acoes": [
+      [
+        "📊",
+        "Analisar dados"
+      ],
+      [
+        "🔮",
+        "Fazer previsões"
+      ],
+      [
+        "🛒",
+        "Recomendar produtos"
+      ],
+      [
+        "📈",
+        "Criar painéis para decisões"
+      ]
+    ],
+    "onde": "Bancos, redes sociais, apps de delivery, games, indústrias, agronegócio, hospitais e empresas de tecnologia."
   },
   "ia": {
     "nome": "Bacharel em Inteligência Artificial",
@@ -103,6 +123,26 @@
       "Engenharia de ML/IA",
       "Analista/especialista em IA",
       "Liderança em dados/IA"
-    ]
+    ],
+    "chamada": "Você vai criar a inteligência por trás dos apps: assistentes que conversam, câmeras que reconhecem o que veem e sistemas que decidem sozinhos.",
+    "acoes": [
+      [
+        "💬",
+        "Criar assistentes e chatbots"
+      ],
+      [
+        "👁️",
+        "Ensinar máquinas a enxergar"
+      ],
+      [
+        "⚙️",
+        "Automatizar decisões"
+      ],
+      [
+        "🧠",
+        "Treinar modelos de IA"
+      ]
+    ],
+    "onde": "Bancos, redes sociais, apps de delivery, games, indústrias, agronegócio, hospitais e empresas de tecnologia."
   }
 }
